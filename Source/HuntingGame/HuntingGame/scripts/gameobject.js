@@ -1,3 +1,3 @@
 function GameObject(coordinate) {
-    this.coordinate = coordinate;
+    this.position = coordinate;
 }
