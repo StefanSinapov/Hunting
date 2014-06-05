@@ -1,4 +1,4 @@
-function Controler(renderer, blaze) {
+function Controller(renderer, blaze) {
     var s = renderer.stage;
 
     s.on("click", function () {
@@ -8,7 +8,7 @@ function Controler(renderer, blaze) {
         var y = mousePos.y;
         var coordinate = new Coordinate(x, y);
 
-        console.log("Click move " + coordinate.toString());
+        console.log("Click " + coordinate.toString());
     })
 
     s.on("mousemove", function () {
@@ -23,7 +23,7 @@ function Controler(renderer, blaze) {
 }
 
 
-Controler.prototype.getMouseCoordinates = function () {
+Controller.prototype.getMouseCoordinates = function () {
     // var mousePosition = this.getMouseCoordinates();
     // var x = mousePosition.x;
     // var y = mousePosition.y;

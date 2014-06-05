@@ -5,16 +5,14 @@ function init() {
     renderer.drawTest();
     var coord = new Coordinate(5, 1);
     var blaze = new Blaze(coord);
-    var controler = new Controler(renderer, blaze);
+    var controller = new Controller(renderer, blaze);
     var eggman = new Eggman(coord);
     var game = new Game(renderer);
 
     game.start();
     var d = document.getElementById('container');
 
-    d.addEventListener("click", function (ev) {
-        controler.getMouseCoordinates();
-    }, false)
+
 
 
 }
