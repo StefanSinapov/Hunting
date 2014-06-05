@@ -8,9 +8,6 @@ function Renderer(height, width) {
         width: width,
         height: height
     });
-
-
-
 }
 
 
