@@ -3,11 +3,13 @@ function Renderer(height, width) {
 
     this.width = width;
     this.height = height;
-    this.stage =  new Kinetic.Stage({
+    var s  =  new Kinetic.Stage({
         container: 'container',
         width: width,
         height: height
     });
+
+    this.stage= s;
 }
 
 
@@ -16,7 +18,7 @@ Renderer.prototype.drawTest= function(){
     var layer = new Kinetic.Layer();
 
     var rect = new Kinetic.Rect({
-        x: 239,
+        x: 240,
         y: 75,
         width: 100,
         height: 50,
