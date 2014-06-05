@@ -9,12 +9,15 @@ function Renderer(height, width) {
         height: height
     });
 
-   this.layer = new Kinetic.Layer();
+
 
 }
 
 
 Renderer.prototype.drawTest= function(){
+
+    var layer = new Kinetic.Layer();
+
     var rect = new Kinetic.Rect({
         x: 239,
         y: 75,
@@ -26,13 +29,29 @@ Renderer.prototype.drawTest= function(){
     });
 
     // add the shape to the layer
-    this.layer.add(rect);
+   layer.add(rect);
 
     // add the layer to the stage
-    this.stage.add(this.layer);
+    this.stage.add(layer);
 };
 
 
 Renderer.prototype.drawAll = function(){
 
 };
+
+Renderer.prototype.drawBackground = function(){
+    var layer = new Kinetic.Layer();
+
+    console.log(this.width + " "+ this.height);
+    var rect = new Kinetic.Rect({
+        x: 0,
+        y: 0,
+        width: this.width,
+        height: this.height,
+        fill: 'blue'
+    });
+
+    layer.add(rect);
+    this.stage.add(layer);
+}
