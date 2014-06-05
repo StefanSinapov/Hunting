@@ -10,4 +10,4 @@ Coordinate.prototype.equals = function(other){
     }
 
     return result;
-}
+};

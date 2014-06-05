@@ -4,4 +4,4 @@ function Eggman(coordinate) {
 
 Eggman.prototype = new GameObject();
 
-Eggman.prototype.constructor = GameObject
+Eggman.prototype.constructor = GameObject;
