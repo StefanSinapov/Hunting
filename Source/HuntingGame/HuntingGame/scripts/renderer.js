@@ -11,7 +11,7 @@ function Renderer(height, width) {
 
    this.layer = new Kinetic.Layer();
 
-};
+}
 
 
 Renderer.prototype.drawTest= function(){
@@ -30,4 +30,9 @@ Renderer.prototype.drawTest= function(){
 
     // add the layer to the stage
     this.stage.add(this.layer);
-}
+};
+
+
+Renderer.prototype.drawAll = function(){
+
+};
