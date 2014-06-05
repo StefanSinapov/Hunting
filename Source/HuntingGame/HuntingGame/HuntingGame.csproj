@@ -65,6 +65,17 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="index.html" />
+    <Content Include="scripts\blaze.js" />
+    <Content Include="scripts\coordinate.js" />
+    <Content Include="scripts\eggman.js" />
+    <Content Include="scripts\game.js" />
+    <Content Include="scripts\gameobject.js" />
+    <Content Include="scripts\init.js" />
+    <Content Include="scripts\kinetic-v5.1.0.min.js" />
+    <Content Include="scripts\renderer.js" />
+    <Content Include="scripts\require.js" />
+    <Content Include="style.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
