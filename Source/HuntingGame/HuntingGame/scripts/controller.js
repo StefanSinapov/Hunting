@@ -8,7 +8,7 @@ function Controller(renderer, blaze) {
         var y = mousePos.y;
         var coordinate = new Coordinate(x, y);
 
-        console.log("Click " + coordinate.toString());
+       // console.log("Click " + coordinate.toString());
     })
 
     s.on("mousemove", function () {
@@ -18,7 +18,7 @@ function Controller(renderer, blaze) {
         var y = mousePos.y;
         var coordinate = new Coordinate(x, y);
 
-        console.log("Mouse move " + coordinate.toString());
+      //  console.log("Mouse move " + coordinate.toString());
     })
 }
 
