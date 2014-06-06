@@ -7,6 +7,7 @@ function init() {
     var blaze = new Blaze(coord);
     var controller = new Controller(renderer, blaze);
     var eggman = new Eggman(coord);
+    console.log(eggman.toString());
     var game = new Game(renderer);
 
     game.start();
