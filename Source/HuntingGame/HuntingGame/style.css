@@ -10,3 +10,8 @@ body {
     margin: 30px;
     padding: 0;
 }
+
+
+canvas:hover{
+    cursor:none;
+}
