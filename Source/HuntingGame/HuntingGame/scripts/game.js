@@ -32,6 +32,12 @@ Game.prototype.start = function () {
     var controller = new Controller(); // controller object
     // renderer.drawAll(blaze);
 
+
+    if (controller.mousePosition !== undefined) {
+        blaze.position = controller.mousePosition;
+    }
+
+
     setTimeout(function () {
         animationLoop(renderer, controller, blaze, eggmen);
     }, INITIAL_WAIT_TIME);
@@ -40,11 +46,39 @@ Game.prototype.start = function () {
 /*
  *   Function for animation loop of the game.
  */
-function animationLoop(renderer, controller, blaze, eggmen) {
+function animationLoop(renderer, controller, blaze, eggman) {
 
     if (controller.mousePosition !== undefined) {
         blaze.position = controller.mousePosition;
     }
+
+    /*
+    if (eggman.onScreen === true) {
+        eggman.Move();
+        // When the drawing is done, fix this
+        if ((eggman.position.x + 50 > renderer.width) || (eggman.position.x < 0)) {
+            eggman.speed = -eggman.speed;
+        }
+
+        if (controller.mouseClick) {
+            if ((controller.mouseClick.x > eggman.position.x) &&
+                (controller.mouseClick.x < eggman.position.x + 20) &&
+                (controller.mouseClick.y > eggman.position.y) &&
+                (controller.mouseClick.y < eggman.position.y + 20)
+                ) {
+
+                eggman.onScreen = false;
+                controller.mouseClick = undefined;
+
+            }
+        }
+    }
+    else {
+        // if timeForNewEggman
+        eggman.MoveTo(new Coordinate(20, 20));
+        eggman.onScreen = true;
+
+    } */
 
     requestAnimFrame(function () {
         animationLoop(renderer, controller, blaze, eggmen);
