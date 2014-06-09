@@ -105,7 +105,7 @@ function animationLoop(renderer, controller, blaze, eggman) {
         animationLoop(renderer, controller, blaze, eggman);
     });
 
-    renderer.drawAll(blaze);
+    renderer.drawAll(blaze, eggman);
 }
 
 /*

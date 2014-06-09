@@ -50,7 +50,7 @@ Renderer.CONFIG = function () {
 
     return {
         get: function (name) {
-            return constants[playerName];
+            return constants[name];
         }
     };
 }();
