@@ -2,14 +2,11 @@
  *   Initializes a new instance of the Renderer class.
  */
 function Renderer(width, height) {
-
-
     this.width = width;
     this.height = height;
 
     this.drawBackground();
 
-    //  this.drawBackground();
     var canvas = document.createElement('canvas');
     canvas.setAttribute('id', 'drawing');
     canvas.setAttribute('width', width.toString());
@@ -17,7 +14,6 @@ function Renderer(width, height) {
     canvas.style.position = 'fixed';
     canvas.style.left = '0px';
     canvas.style.top = '0px';
-
 
     document.body.appendChild(canvas);
 
@@ -41,17 +37,20 @@ Renderer.prototype.drawAll = function (blaze, eggman) {
  *   Constants for the game object.
  */
 Renderer.CONFIG = function () {
-    var private = {
+    var constants = {
         'BLAZE_LINE_LENGTH': 60,
         'BLAZE_INNER_RADIUS': 10,
         'BLAZE_OUTER_RADIUS': 20,
-        'BLAZE_COLOR': 'red',
-        'SVG_NS': 'http://www.w3.org/2000/svg'
+        'BLAZE_COLOR': 'white',
+        'SVG_NS': 'http://www.w3.org/2000/svg',
+        'BULLET_WIDTH': 20,
+        'BULLET_HEIGHT': 30,
+        'BULLET_SPACING': 5
     };
 
     return {
         get: function (name) {
-            return private[name];
+            return constants[name];
         }
     };
 }();
@@ -93,23 +92,20 @@ function _drawBlaze(context, blaze) {
     context.stroke();
 }
 
-//Draws Bullets // TODO: add global consts and change here.
+/*
+ *   Draws the clip (available bullets).
+ */
 function _drawClip(context, blaze) {
-    var BULLET_WIDHT = 20,
-        BULLET_HEIGHT = 30,
-        SPACING = 5,
-        sx = 20,
-        sy = context.canvas.height - BULLET_HEIGHT - 10,
-        bulletsCount = blaze.bullets;
+    var sx = 20;
+    var sy = context.canvas.height - Renderer.CONFIG.get('BULLET_HEIGHT') - 10;
+    var bulletsCount = blaze.bullets;
+    var image = new Image();
+    image.src = 'imgs/bullet.png';
 
-    context.beginPath();
     for (var i = 0; i < bulletsCount; i += 1) {
-        context.moveTo(sx, sy);
-        context.strokeRect(sx, sy, BULLET_WIDHT, BULLET_HEIGHT);
-        sx = sx + BULLET_WIDHT + SPACING;
+        context.drawImage(image, sx, sy);
+        sx += Renderer.CONFIG.get('BULLET_WIDTH') + Renderer.CONFIG.get('BULLET_SPACING');
     }
-    ;
-    context.stroke();
 }
 
 /*
@@ -127,8 +123,6 @@ function _drawEggman(context, eggman) {
  *   Draws the background.
  */
 Renderer.prototype.drawBackground = function () {
-    // var fragment = document.createDocumentFragment();
-
     var svg = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'svg');
     svg.setAttribute('height', this.height.toString());
     svg.setAttribute('width', this.width.toString());
@@ -145,8 +139,6 @@ Renderer.prototype.drawBackground = function () {
     rect.setAttribute('style', 'fill:blue;');
 
     svg.appendChild(rect);
-    // var canvas = document.getElementById('drawing')
-    // document.body.insertBefore(svg,canvas);
 
     for (var i = 0; i < 50; i++) {
         var obj = this.createRandomStar();
@@ -154,16 +146,16 @@ Renderer.prototype.drawBackground = function () {
     }
 
     document.body.appendChild(svg);
-
-
 };
 
-
+/*
+ *   Creates a random star.
+ */
 Renderer.prototype.createRandomStar = function () {
     var polygon = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'polygon');
 
-    var x = getRandomInt(0, this.width);
-    var y = getRandomInt(0, this.height);
+    var x = getRandomInt(20, this.width - 20);
+    var y = getRandomInt(20, this.height - 20);
 
     var point1X = x + 2.9389;
     var point1Y = y + 9.0451;
@@ -185,9 +177,8 @@ Renderer.prototype.createRandomStar = function () {
     var rotateText = "rotate(" + angle + " " + x + " " + y + ")";
     polygon.setAttribute('transform', rotateText.toString());
 
-    console.log(polygon);
     return polygon;
-}
+};
 
 
 
