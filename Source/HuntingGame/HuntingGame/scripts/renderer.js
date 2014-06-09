@@ -36,7 +36,7 @@ Renderer.CONFIG = function () {
     var private = {
         'BLAZE_LINE_LENGTH': 60,
         'BLAZE_INNER_RADIUS': 10,
-        'BLAZE_OUTER_RADIUS': 100,
+        'BLAZE_OUTER_RADIUS': 20,
         'BLAZE_COLOR':'red'
     };
 
