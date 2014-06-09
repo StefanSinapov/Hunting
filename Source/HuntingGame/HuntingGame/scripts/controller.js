@@ -1,26 +1,23 @@
-function Controller(stage) {
+function Controller() {
+var self = this;
+    var canvas = document.getElementById('drawing');
 
-    var mousePosition;
-    var mouseClick;
+    this.mouseClick;
+    this.mousePosition;
 
-    stage.on("click", function () {
-        var mousePos = stage.getPointerPosition();
-        mouseClick = new Coordinate(mousePos.x, mousePos.y);
-        //console.log("Click " + this.mouseClick.toString());
+    canvas.addEventListener("click", function (ev) {
+        var rect = canvas.getBoundingClientRect();
+        var x = ev.clientX - rect.left;
+        var y = ev.clientY - rect.top;
+        self.mouseClick = new Coordinate(x, y);
+      // console.log(mouseClick.toString())
     });
 
-    stage.on("mousemove", function () {
-        var mousePos = stage.getPointerPosition();
-        mousePosition = new Coordinate(mousePos.x, mousePos.y);
-        // console.log("Mouse move " + this.mousePosition.toString());
+    canvas.addEventListener("mousemove", function (ev) {
+        var rect = canvas.getBoundingClientRect();
+        var x = ev.clientX - rect.left;
+        var y = ev.clientY - rect.top;
+        self.mousePosition = new Coordinate(x, y);
+       //console.log(mousePosition.toString())
     });
-
-
-    this.getMousePosition = function () {
-        return mousePosition;
-    };
-
-    this.getMouseClick = function () {
-        return mouseClick;
-    };
 }

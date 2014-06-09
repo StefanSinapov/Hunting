@@ -1,7 +1,6 @@
 function init() {
-    var gameWidth = 800;
-    var gameHeight = 600;
-    var game = new Game(gameHeight, gameWidth);
+
+    var game = new Game();
     game.start();
 }
 

@@ -1,64 +1,55 @@
-function Game(height, width) {
+/*
+ *   Game object.
+ */
+function Game() {
     console.log("Game constructor.");
 
-    this.width = width;
-    this.height = height;
+    this.width = 800;
+    this.height = 600;
 
-    this.stage = new Kinetic.Stage({
-        container: 'container',
-        width: width,
-        height: height
-    });
+    window.requestAnimFrame = (function () {
+        return  window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            function (callback) {
+                window.setTimeout(callback, 1000 / 60);
+            };
+    })();
 }
 
-
+/*
+ *   Function that starts the game.
+ */
 Game.prototype.start = function () {
-
+    var INITIAL_WAIT_TIME = 100;
     var blazeInitialCoordinate = new Coordinate(this.width / 2, this.width / 2);
     var blaze = new Blaze(blazeInitialCoordinate);
 
-    var controller = new Controller(this.stage);
+    var renderer = new Renderer(this.width, this.height);
+    renderer.drawTest();
 
-    this.drawBackground();
-    var layer = new Kinetic.Layer();
+    var controller = new Controller();
+    renderer.drawAll(blaze);
 
-    var hexagon = new Kinetic.RegularPolygon({
-        x: this.width / 2,
-        y: this.height / 2,
-        sides: 6,
-        radius: 70,
-        fill: 'red',
-        stroke: 'black',
-        strokeWidth: 4
-    });
+    setTimeout(function () {
+        animationLoop(renderer, controller, blaze);
+    }, INITIAL_WAIT_TIME);
 
-    var width = this.width / 2;
-    var amplitude = 150;
-    var period = 2000;
 
-    layer.add(hexagon);
-    this.stage.add(layer);
-
-    var anim = new Kinetic.Animation(function (frame) {
-        blaze.position = controller.getMousePosition();
-        hexagon.setX(amplitude * Math.sin(frame.time * 2 * Math.PI / period) + width);
-    }, layer);
-
-    anim.start();
 };
 
+/*
+*   Function for animation loop of the game.
+ */
+function animationLoop(renderer, controller, blaze) {
 
-Game.prototype.drawBackground = function () {
-    var layer = new Kinetic.Layer();
-    var rect = new Kinetic.Rect({
-        x: 0,
-        y: 0,
-        width: this.width,
-        height: this.height,
-        fill: 'blue'
+    if (controller.mousePosition !== undefined) {
+        blaze.position = controller.mousePosition;
+    }
+
+    requestAnimFrame(function () {
+        animationLoop(renderer, controller, blaze);
     });
 
-    layer.add(rect);
-    this.stage.add(layer);
+    renderer.drawAll(blaze);
 }
-
