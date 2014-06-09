@@ -2,7 +2,7 @@
  *   Initializes a new instance of the Player class.
  */
 function Player(name, score) {
-    this.playerName = playerName;
+    this.name = name;
     this.score = score;
 }
 
@@ -10,5 +10,5 @@ function Player(name, score) {
  *   Prints the properties of the player on the console.
  */
 Player.prototype.toString = function () {
-    return "Name: " + this.playerName + " Score: " + this.score;
+    return "Name: " + this.name + " Score: " + this.score;
 };
