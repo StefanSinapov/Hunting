@@ -45,7 +45,8 @@ Renderer.CONFIG = function () {
         'BLAZE_LINE_LENGTH': 60,
         'BLAZE_INNER_RADIUS': 10,
         'BLAZE_OUTER_RADIUS': 20,
-        'BLAZE_COLOR': 'red'
+        'BLAZE_COLOR': 'red',
+        'SVG_NS': 'http://www.w3.org/2000/svg'
     };
 
     return {
@@ -127,8 +128,8 @@ function _drawEggman(context, eggman) {
  */
 Renderer.prototype.drawBackground = function () {
     // var fragment = document.createDocumentFragment();
-    var svgNS = 'http://www.w3.org/2000/svg';
-    var svg = document.createElementNS(svgNS, 'svg');
+
+    var svg = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'svg');
     svg.setAttribute('height', this.height.toString());
     svg.setAttribute('width', this.width.toString());
     svg.style.position = 'fixed';
@@ -136,21 +137,57 @@ Renderer.prototype.drawBackground = function () {
     svg.style.left = '0px';
 
 
-    var rect = document.createElementNS(svgNS, 'rect');
-    rect.setAttribute('x', '50');
-    rect.setAttribute('y', '60');
-    rect.setAttribute('width', '50');
-    rect.setAttribute('height', '50');
-    rect.setAttribute('style', 'fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)');
+    var rect = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'rect');
+    rect.setAttribute('x', '0');
+    rect.setAttribute('y', '0');
+    rect.setAttribute('width', this.width.toString());
+    rect.setAttribute('height', this.height.toString());
+    rect.setAttribute('style', 'fill:blue;');
 
     svg.appendChild(rect);
     // var canvas = document.getElementById('drawing')
     // document.body.insertBefore(svg,canvas);
 
+    for (var i = 0; i < 50; i++) {
+        var obj = this.createRandomStar();
+        svg.appendChild(obj);
+    }
+
     document.body.appendChild(svg);
 
 
 };
+
+
+Renderer.prototype.createRandomStar = function () {
+    var polygon = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'polygon');
+
+    var x = getRandomInt(0, this.width);
+    var y = getRandomInt(0, this.height);
+
+    var point1X = x + 2.9389;
+    var point1Y = y + 9.0451;
+
+    var point2X = x + 4.7553;
+    var point2Y = y + 3.4549;
+
+    var point3X = x - 4.7553;
+    var point3Y = y + 3.4549;
+
+    var point4X = x - 2.9389;
+    var point4Y = y + 9.0451;
+
+    var pointsText = x + "," + y + " " + point1X + "," + point1Y + " " + point3X + "," + point3Y + " " + point2X + "," + point2Y + " " + point4X + "," + point4Y;
+    polygon.setAttribute('points', pointsText);
+    polygon.setAttribute('style', 'fill:white');
+
+    var angle = getRandomInt(0, 360);
+    var rotateText = "rotate(" + angle + " " + x + " " + y + ")";
+    polygon.setAttribute('transform', rotateText.toString());
+
+    console.log(polygon);
+    return polygon;
+}
 
 
 
