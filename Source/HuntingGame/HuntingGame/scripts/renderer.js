@@ -1,7 +1,11 @@
+/*
+*   Renderer object responsible for drawing gama objects on the canvas.
+ */
 function Renderer(width, height) {
 
     this.width= width;
     this.height = height;
+
     var canvas = document.createElement('canvas');
     canvas.setAttribute('id', 'drawing');
     canvas.setAttribute('width', width.toString());
@@ -12,28 +16,24 @@ function Renderer(width, height) {
     this.ctx = canvas.getContext('2d');
 
    // this.myCanvas = new MyCanvas(this.ctx);
-
-
 }
 
-
-Renderer.prototype.drawTest = function () {
-
-    this.ctx.strokeRect(50, 50, 50, 50);
-
-};
-
-
+/*
+*   Draws all objects.
+ */
 Renderer.prototype.drawAll = function (blaze) {
     this.ctx.clearRect(0, 0, this.width, this.height);
     drawBlaze(this.ctx, blaze);
 }
 
-
+/*
+*   Draws Blaze.
+ */
 function drawBlaze(context, blaze) {
 
-    var LINE_LENGTH = 50;
-    var RADIUS = 20;
+    var LINE_LENGTH = 30;
+    var RADIUS_1 = 20;
+    var RADIUS_2 = 10;
     var centerX = blaze.position.x;
     var centerY = blaze.position.y;
 
@@ -54,7 +54,9 @@ function drawBlaze(context, blaze) {
     context.moveTo(point3X, point3Y);
     context.lineTo(point4X, point4Y);
     context.moveTo(centerX, centerY);
-    context.arc(centerX, centerY, RADIUS, 0, 2 * Math.PI, false);
+    context.arc(centerX, centerY, RADIUS_1, 0, 2 * Math.PI, false);
+    context.moveTo(centerX, centerY);
+    context.arc(centerX, centerY, RADIUS_2, 0, 2 * Math.PI, false);
     context.strokeStyle='red';
     context.stroke();
 };

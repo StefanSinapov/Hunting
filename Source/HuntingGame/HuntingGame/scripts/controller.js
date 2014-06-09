@@ -1,5 +1,8 @@
+/*
+*   Controller object responsible for getting events
+ */
 function Controller() {
-var self = this;
+    var self = this;
     var canvas = document.getElementById('drawing');
 
     this.mouseClick;
@@ -10,7 +13,7 @@ var self = this;
         var x = ev.clientX - rect.left;
         var y = ev.clientY - rect.top;
         self.mouseClick = new Coordinate(x, y);
-      // console.log(mouseClick.toString())
+        // console.log(mouseClick.toString())
     });
 
     canvas.addEventListener("mousemove", function (ev) {
@@ -18,6 +21,6 @@ var self = this;
         var x = ev.clientX - rect.left;
         var y = ev.clientY - rect.top;
         self.mousePosition = new Coordinate(x, y);
-       //console.log(mousePosition.toString())
+        //console.log(mousePosition.toString())
     });
 }
