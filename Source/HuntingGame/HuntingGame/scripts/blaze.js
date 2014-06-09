@@ -1,5 +1,5 @@
 /*
-*   Blaze object.
+*   Blaze object. Inherits GameObject.
  */
 function Blaze(coordinate) {
     console.log("Blaze constructor.")

@@ -1,5 +1,5 @@
 /*
-*   Eggman object.
+*   Eggman object. Inherits GameObject.
  */
 function Eggman(coordinate) {
     console.log("Eggman constructor");
