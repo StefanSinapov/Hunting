@@ -91,7 +91,7 @@ function _drawClip(context, blaze) {
         SPACING = 5,
         sx = 20,
         sy = context.canvas.height - BULLET_HEIGHT - 10,
-        bulletsCount = blaze.getBulletsCount();
+        bulletsCount = blaze.bullets;
 
     context.beginPath();
     for (var i = 0; i < bulletsCount; i += 1) {
