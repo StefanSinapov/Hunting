@@ -21,15 +21,15 @@ function Renderer(width, height) {
 /*
  *   Draws all objects.
  */
-Renderer.prototype.drawAll = function (blaze, eggmanObjects) {
+Renderer.prototype.drawAll = function (blaze, eggman) {
     this.ctx.clearRect(0, 0, this.width, this.height);
     _drawBlaze(this.ctx, blaze);
     _drawClip(this.ctx, blaze);
 
-    for (var i = 0; i < eggmanObjects.length; i++) {
-        _drawEggman(this.ctx, eggmanObjects[i]);
+    if (eggman) {
+        _drawEggman(this.ctx, eggman);
     }
-}
+};
 
 /*
  *   Draws Blaze.
@@ -64,7 +64,7 @@ function _drawBlaze(context, blaze) {
     context.arc(centerX, centerY, RADIUS_2, 0, 2 * Math.PI, false);
     context.strokeStyle = 'red';
     context.stroke();
-};
+}
 
 //Draws Bullets // TODO: add global consts and change here.
 function _drawClip(context, blaze) {
@@ -93,4 +93,4 @@ function _drawEggman(context, eggman) {
     var eggmanTopLeftY = eggman.position.y;
     context.strokeStyle = 'green';
     context.strokeRect(eggmanTopLeftX, eggmanTopLeftY, eggman.width, eggman.height);
-};
+}
