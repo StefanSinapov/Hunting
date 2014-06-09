@@ -60,3 +60,11 @@ function drawBlaze(context, blaze) {
     context.strokeStyle='red';
     context.stroke();
 };
+
+/*
+ *   Draws Eggman.
+ */
+function drawEggman(context, eggman) {
+
+
+};
