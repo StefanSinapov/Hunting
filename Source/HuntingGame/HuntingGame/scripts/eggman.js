@@ -1,5 +1,5 @@
 /*
- *   Eggman object. Inherits GameObject.
+*   Initializes a new instance of the Eggman class.
  */
 function Eggman(coordinate) {
     console.log("Eggman constructor");
@@ -14,10 +14,14 @@ Eggman.prototype = new GameObject();
 
 Eggman.prototype.constructor = Eggman;
 
+/*
+*   Prints the properties of eggman.
+ */
 Eggman.prototype.toString = function () {
     var result = "Eggman:\n" + GameObject.prototype.toString.call(this);
     return result;
 }
+
 // Moves eggman with own speed
 Eggman.prototype.Move = function () {
     this.position.x += this.speed;

@@ -1,5 +1,5 @@
 /*
- *   Game object.
+ *   Initializes  a new instance of the GameObject class.
  */
 function GameObject(coordinate) {
     this.position = coordinate;
