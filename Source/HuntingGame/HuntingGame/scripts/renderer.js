@@ -5,17 +5,13 @@ function Renderer(width, height) {
     this.width = width;
     this.height = height;
 
-    this.drawBackground();
+    var fragment = document.createDocumentFragment();
+    var svg = this.createBackground();
+    var canvas = this.creteCanvas();
 
-    var canvas = document.createElement('canvas');
-    canvas.setAttribute('id', 'drawing');
-    canvas.setAttribute('width', width.toString());
-    canvas.setAttribute('height', height.toString());
-    canvas.style.position = 'fixed';
-    canvas.style.left = '30px';
-    canvas.style.top = '30px';
-
-    document.body.appendChild(canvas);
+    fragment.appendChild(svg);
+    fragment.appendChild(canvas);
+    document.body.appendChild(fragment);
 
     this.ctx = canvas.getContext('2d');
 }
@@ -25,8 +21,8 @@ function Renderer(width, height) {
  */
 Renderer.prototype.drawAll = function (blaze, eggman) {
     this.ctx.clearRect(0, 0, this.width, this.height);
-    _drawBlaze(this.ctx, blaze);
-    _drawClip(this.ctx, blaze);
+    this.drawBlaze(blaze);
+    this.drawClip(blaze);
     this.drawScore(blaze);
 
     if (eggman) {
@@ -62,7 +58,7 @@ Renderer.CONFIG = function () {
 /*
  *   Draws Blaze.
  */
-function _drawBlaze(context, blaze) {
+Renderer.prototype.drawBlaze = function (blaze) {
 
     var LINE_LENGTH = Renderer.CONFIG.get('BLAZE_LINE_LENGTH');
     var INNER_RADIUS = Renderer.CONFIG.get('BLAZE_INNER_RADIUS');
@@ -83,40 +79,39 @@ function _drawBlaze(context, blaze) {
     var point4X = centerX;
     var point4Y = centerY - LINE_LENGTH / 2;
 
-    context.beginPath();
-    context.moveTo(point1X, point1Y);
-    context.lineTo(point2X, point2Y);
-    context.moveTo(point3X, point3Y);
-    context.lineTo(point4X, point4Y);
-    context.moveTo(centerX, centerY);
-    context.arc(centerX, centerY, INNER_RADIUS, 0, 2 * Math.PI, false);
-    context.moveTo(centerX, centerY);
-    context.arc(centerX, centerY, OUTER_RADIUS, 0, 2 * Math.PI, false);
-    context.strokeStyle = Renderer.CONFIG.get('BLAZE_COLOR');
-    context.stroke();
-}
+    this.ctx.beginPath();
+    this.ctx.moveTo(point1X, point1Y);
+    this.ctx.lineTo(point2X, point2Y);
+    this.ctx.moveTo(point3X, point3Y);
+    this.ctx.lineTo(point4X, point4Y);
+    this.ctx.moveTo(centerX, centerY);
+    this.ctx.arc(centerX, centerY, INNER_RADIUS, 0, 2 * Math.PI, false);
+    this.ctx.moveTo(centerX, centerY);
+    this.ctx.arc(centerX, centerY, OUTER_RADIUS, 0, 2 * Math.PI, false);
+    this.ctx.strokeStyle = Renderer.CONFIG.get('BLAZE_COLOR');
+    this.ctx.stroke();
+};
 
 /*
  *   Draws the clip (available bullets).
  */
-function _drawClip(context, blaze) {
+Renderer.prototype.drawClip = function (blaze) {
     var sx = 20;
-    var sy = context.canvas.height - Renderer.CONFIG.get('BULLET_HEIGHT') - 10;
+    var sy = this.height - Renderer.CONFIG.get('BULLET_HEIGHT') - sx;
     var bulletsCount = blaze.bullets;
     var image = new Image();
     image.src = 'imgs/bullet.png';
 
     for (var i = 0; i < bulletsCount; i += 1) {
-        context.drawImage(image, sx, sy);
+        this.ctx.drawImage(image, sx, sy);
         sx += Renderer.CONFIG.get('BULLET_WIDTH') + Renderer.CONFIG.get('BULLET_SPACING');
     }
-}
+};
 
 /*
  *   Draws Eggman.
  */
 Renderer.prototype.drawEggman = function (eggman) {
-
     var eggmanTopLeftX = eggman.position.x;
     var eggmanTopLeftY = eggman.position.y;
     this.ctx.strokeStyle = 'green';
@@ -124,9 +119,9 @@ Renderer.prototype.drawEggman = function (eggman) {
 };
 
 /*
- *   Draws the background.
+ *   Creates the background.
  */
-Renderer.prototype.drawBackground = function () {
+Renderer.prototype.createBackground = function () {
     // Creates the svg element
     var svg = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'svg');
     svg.setAttribute('height', this.height.toString());
@@ -143,8 +138,17 @@ Renderer.prototype.drawBackground = function () {
     rect.setAttribute('height', this.height.toString());
     var backgroundColorText = 'fill:' + Renderer.CONFIG.get('BACKGROUND_COLOR') + ';';
     rect.setAttribute('style', backgroundColorText);
-
     svg.appendChild(rect);
+
+    var rectAmmo = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'rect');
+    rectAmmo.setAttribute('x', '15');
+    rectAmmo.setAttribute('y', (this.height - 55).toString());
+    rectAmmo.setAttribute('width', (20 * 3 + 10 * 2 + 10).toString());
+    rectAmmo.setAttribute('height', '40');
+
+    rectAmmo.setAttribute('style', 'fill: #dcdcdc;');
+
+    svg.appendChild(rectAmmo);
 
     // Creates the stars
     var starsCount = Renderer.CONFIG.get('BACKGROUND_STARS_COUNT');
@@ -160,7 +164,19 @@ Renderer.prototype.drawBackground = function () {
         svg.appendChild(this.createRandomPlanet());
     }
 
-    document.body.appendChild(svg);
+
+    return svg;
+};
+
+Renderer.prototype.creteCanvas = function () {
+    var canvas = document.createElement('canvas');
+    canvas.setAttribute('id', 'drawing');
+    canvas.setAttribute('width', this.width.toString());
+    canvas.setAttribute('height', this.height.toString());
+    canvas.style.position = 'fixed';
+    canvas.style.left = '30px';
+    canvas.style.top = '30px';
+    return canvas;
 };
 
 /*
@@ -218,6 +234,20 @@ Renderer.prototype.drawScore = function (blaze) {
     this.ctx.font = "30px Comic Sans MS, Arial, Sans";
     this.ctx.fillStyle = '#dcdcdc';
     this.ctx.fillText(scoreText, 10, 30);
+};
+
+/*
+ *   Draws the Intro screen.
+ */
+Renderer.prototype.drawIntro = function () {
+
+};
+
+/*
+ *   Draws the Exit screen
+ */
+Renderer.prototype.drawExit = function () {
+
 };
 
 
