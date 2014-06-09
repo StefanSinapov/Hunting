@@ -1,32 +1,26 @@
-function Controller(renderer, blaze) {
-    var s = renderer.stage;
+function Controller(stage) {
 
-    s.on("click", function () {
+    var mousePosition;
+    var mouseClick;
 
-        var mousePos = s.getPointerPosition();
-        var x = mousePos.x;
-        var y = mousePos.y;
-        var coordinate = new Coordinate(x, y);
+    stage.on("click", function () {
+        var mousePos = stage.getPointerPosition();
+        mouseClick = new Coordinate(mousePos.x, mousePos.y);
+        //console.log("Click " + this.mouseClick.toString());
+    });
 
-       // console.log("Click " + coordinate.toString());
-    })
-
-    s.on("mousemove", function () {
-
-        var mousePos = s.getPointerPosition();
-        var x = mousePos.x;
-        var y = mousePos.y;
-        var coordinate = new Coordinate(x, y);
-
-      //  console.log("Mouse move " + coordinate.toString());
-    })
-}
+    stage.on("mousemove", function () {
+        var mousePos = stage.getPointerPosition();
+        mousePosition = new Coordinate(mousePos.x, mousePos.y);
+        // console.log("Mouse move " + this.mousePosition.toString());
+    });
 
 
-Controller.prototype.getMouseCoordinates = function () {
-    // var mousePosition = this.getMouseCoordinates();
-    // var x = mousePosition.x;
-    // var y = mousePosition.y;
-    // var position = new Coordinate(x,y);
-    // return position;
+    this.getMousePosition = function () {
+        return mousePosition;
+    };
+
+    this.getMouseClick = function () {
+        return mouseClick;
+    };
 }

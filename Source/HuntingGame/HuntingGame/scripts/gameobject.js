@@ -1,6 +1,6 @@
-function GameObject(coordinate, layer) {
+function GameObject(coordinate) {
     this.position = coordinate;
-    this.layer = layer;
+    this.layer = null;
 }
 
 GameObject.prototype.toString = function () {
