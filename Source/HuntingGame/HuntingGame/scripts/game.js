@@ -1,11 +1,9 @@
 /*
- *   Game object.
+ *   Initializes a new instance of the Game class.
  */
 function Game() {
-    console.log("Game constructor.");
-
-    this.width = 800;
-    this.height = 600;
+    this.width = Game.CONFIG.get('WIDTH');
+    this.height = Game.CONFIG.get('HEIGHT');
 
     window.requestAnimFrame = (function () {
         return  window.requestAnimationFrame ||
@@ -21,8 +19,6 @@ function Game() {
  *   Function that starts the game.
  */
 Game.prototype.start = function () {
-    var INITIAL_WAIT_TIME = 100;
-
     var blazeInitialCoordinate = new Coordinate(this.width / 2, this.width / 2);
     var blaze = new Blaze(blazeInitialCoordinate); // blaze object
 
@@ -30,8 +26,6 @@ Game.prototype.start = function () {
     var eggman = []; // array to hold eggman.
 
     var controller = new Controller(); // controller object
-    // renderer.drawAll(blaze);
-
 
     if (controller.mousePosition !== undefined) {
         blaze.position = controller.mousePosition;
@@ -40,8 +34,25 @@ Game.prototype.start = function () {
 
     setTimeout(function () {
         animationLoop(renderer, controller, blaze, eggman);
-    }, INITIAL_WAIT_TIME);
+    }, Game.CONFIG.get('INITIAL_WAIT_TIME'));
 };
+
+/*
+*   Constants for the game object.
+ */
+Game.CONFIG = function () {
+    var private = {
+        'WIDTH': 800,
+        'HEIGHT': 600,
+        'INITIAL_WAIT_TIME': 100
+    };
+
+    return {
+        get: function (name) {
+            return private[name];
+        }
+    };
+}();
 
 /*
  *   Function for animation loop of the game.
@@ -52,33 +63,34 @@ function animationLoop(renderer, controller, blaze, eggman) {
         blaze.position = controller.mousePosition;
     }
 
+
     /*
-    if (eggman.onScreen === true) {
-        eggman.Move();
-        // When the drawing is done, fix this
-        if ((eggman.position.x + 50 > renderer.width) || (eggman.position.x < 0)) {
-            eggman.speed = -eggman.speed;
-        }
+     if (eggman.onScreen === true) {
+     eggman.Move();
+     // When the drawing is done, fix this
+     if ((eggman.position.x + 50 > renderer.width) || (eggman.position.x < 0)) {
+     eggman.speed = -eggman.speed;
+     }
 
-        if (controller.mouseClick) {
-            if ((controller.mouseClick.x > eggman.position.x) &&
-                (controller.mouseClick.x < eggman.position.x + 20) &&
-                (controller.mouseClick.y > eggman.position.y) &&
-                (controller.mouseClick.y < eggman.position.y + 20)
-                ) {
+     if (controller.mouseClick) {
+     if ((controller.mouseClick.x > eggman.position.x) &&
+     (controller.mouseClick.x < eggman.position.x + 20) &&
+     (controller.mouseClick.y > eggman.position.y) &&
+     (controller.mouseClick.y < eggman.position.y + 20)
+     ) {
 
-                eggman.onScreen = false;
-                controller.mouseClick = undefined;
+     eggman.onScreen = false;
+     controller.mouseClick = undefined;
 
-            }
-        }
-    }
-    else {
-        // if timeForNewEggman
-        eggman.MoveTo(new Coordinate(20, 20));
-        eggman.onScreen = true;
+     }
+     }
+     }
+     else {
+     // if timeForNewEggman
+     eggman.MoveTo(new Coordinate(20, 20));
+     eggman.onScreen = true;
 
-    } */
+     } */
 
     requestAnimFrame(function () {
         animationLoop(renderer, controller, blaze, eggman);
