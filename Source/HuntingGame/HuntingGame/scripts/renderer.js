@@ -66,5 +66,6 @@ function drawBlaze(context, blaze) {
  */
 function drawEggman(context, eggman) {
 
-
+    var eggmanTopLeftX = eggman.position.x;
+    var eggmanTopLeftY = eggman.position.y;
 };
