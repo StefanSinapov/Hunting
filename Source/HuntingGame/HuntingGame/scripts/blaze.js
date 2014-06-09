@@ -8,8 +8,14 @@ function Blaze(coordinate) {
     this.bullets = Blaze.CONFIG.get('MAX_BULLETS_COUNT');
 }
 
+/*
+ *   Inherits GameObject
+ */
 Blaze.prototype = new GameObject();
 
+/*
+ *   Corrects the constructor pointer.
+ */
 Blaze.prototype.constructor = Blaze;
 
 /*
