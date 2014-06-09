@@ -2,7 +2,6 @@
  *   Initializes a new instance of the Blaze class.
  */
 function Blaze(coordinate) {
-    console.log("Blaze constructor.")
     GameObject.call(this, coordinate);
 
     this.bullets = Blaze.CONFIG.get('MAX_BULLETS_COUNT');
@@ -42,16 +41,14 @@ Blaze.prototype.reload = function () {
  *   Constants for the game object.
  */
 Blaze.CONFIG = function () {
-    var private = {
+    var constants = {
         'MAX_BULLETS_COUNT': 3,
         'RELOADING_TIME': 3000
-
-
     };
 
     return {
         get: function (name) {
-            return private[name];
+            return constants[name];
         }
     };
 }();
