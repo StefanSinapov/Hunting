@@ -3,13 +3,21 @@
  */
 function Renderer(width, height) {
 
+
     this.width = width;
     this.height = height;
 
+    this.drawBackground();
+
+    //  this.drawBackground();
     var canvas = document.createElement('canvas');
     canvas.setAttribute('id', 'drawing');
     canvas.setAttribute('width', width.toString());
     canvas.setAttribute('height', height.toString());
+    canvas.style.position = 'fixed';
+    canvas.style.left = '0px';
+    canvas.style.top = '0px';
+
 
     document.body.appendChild(canvas);
 
@@ -37,7 +45,7 @@ Renderer.CONFIG = function () {
         'BLAZE_LINE_LENGTH': 60,
         'BLAZE_INNER_RADIUS': 10,
         'BLAZE_OUTER_RADIUS': 20,
-        'BLAZE_COLOR':'red'
+        'BLAZE_COLOR': 'red'
     };
 
     return {
@@ -113,3 +121,35 @@ function _drawEggman(context, eggman) {
     context.strokeStyle = 'green';
     context.strokeRect(eggmanTopLeftX, eggmanTopLeftY, eggman.width, eggman.height);
 }
+
+/*
+ *   Draws the background.
+ */
+Renderer.prototype.drawBackground = function () {
+    // var fragment = document.createDocumentFragment();
+    var svgNS = 'http://www.w3.org/2000/svg';
+    var svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('height', this.height.toString());
+    svg.setAttribute('width', this.width.toString());
+    svg.style.position = 'fixed';
+    svg.style.top = '0px';
+    svg.style.left = '0px';
+
+
+    var rect = document.createElementNS(svgNS, 'rect');
+    rect.setAttribute('x', '50');
+    rect.setAttribute('y', '60');
+    rect.setAttribute('width', '50');
+    rect.setAttribute('height', '50');
+    rect.setAttribute('style', 'fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)');
+
+    svg.appendChild(rect);
+    // var canvas = document.getElementById('drawing')
+    // document.body.insertBefore(svg,canvas);
+
+    document.body.appendChild(svg);
+
+
+};
+
+
