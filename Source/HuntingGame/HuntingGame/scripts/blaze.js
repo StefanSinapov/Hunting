@@ -28,14 +28,14 @@ Blaze.prototype.shoot = function () {
     }
 
     //here to check if hit something?
-}
+};
 
 /*
  *   Reloads the bullets to max bullet count.
  */
 Blaze.prototype.reload = function () {
     this.bullets = Blaze.CONFIG.get('MAX_BULLETS_COUNT');
-}
+};
 
 /*
  *   Constants for the game object.
@@ -57,6 +57,5 @@ Blaze.CONFIG = function () {
  *   Prints Blaze's properties on the console.
  */
 Blaze.prototype.toString = function () {
-    var result = "Blaze:\n" + GameObject.prototype.toString.call(this);
-    return result;
-}
+    return "Blaze:\n" + GameObject.prototype.toString.call(this);
+};

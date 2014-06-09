@@ -41,7 +41,7 @@ Game.prototype.start = function () {
 *   Constants for the game object.
  */
 Game.CONFIG = function () {
-    var private = {
+    var constants = {
         'WIDTH': 800,
         'HEIGHT': 600,
         'INITIAL_WAIT_TIME': 100
@@ -49,7 +49,7 @@ Game.CONFIG = function () {
 
     return {
         get: function (name) {
-            return private[name];
+            return constants[name];
         }
     };
 }();

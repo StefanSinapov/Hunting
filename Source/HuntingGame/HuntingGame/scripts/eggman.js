@@ -26,18 +26,18 @@ Eggman.prototype.constructor = Eggman;
 Eggman.prototype.toString = function () {
     var result = "Eggman:\n" + GameObject.prototype.toString.call(this);
     return result;
-}
+};
 
 // Moves eggman with own speed
 Eggman.prototype.Move = function () {
     this.position.x += this.speed;
     this.position.y += 0;
-}
+};
 
 Eggman.prototype.MoveTo = function (coordinate) {
     this.position = coordinate;
-}
+};
 
 Eggman.prototype.Hide = function () {
     this.onScreen = false;
-}
+};
