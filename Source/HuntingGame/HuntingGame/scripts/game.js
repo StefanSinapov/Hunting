@@ -63,6 +63,13 @@ function animationLoop(renderer, controller, blaze, eggman) {
         blaze.position = controller.mousePosition;
     }
 
+    /* 
+     *  Blaze Shooting
+     */
+    if(controller.mouseClick) {
+        blaze.shoot();
+        controller.mouseClick = undefined;
+    }
 
     /*
      if (eggman.onScreen === true) {
