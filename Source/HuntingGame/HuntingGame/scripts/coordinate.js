@@ -1,5 +1,5 @@
 /*
-*   Coordinate object. Holds x and y coordinates.
+ *   Initializes a new instance of the Coordinate class.
  */
 function Coordinate(x, y) {
     this.x = x;
@@ -7,7 +7,7 @@ function Coordinate(x, y) {
 }
 
 /*
-*   Checks if a coordinate is equal to other coordinate.
+ *   Checks if a coordinate is equal to other coordinate.
  */
 Coordinate.prototype.equals = function (other) {
     var result = false;
@@ -20,7 +20,7 @@ Coordinate.prototype.equals = function (other) {
 };
 
 /*
-*   Prints the coordinate on the console.
+ *   Prints the coordinate on the console.
  */
 Coordinate.prototype.toString = function () {
     var result = "X: " + this.x + " Y: " + this.y;
