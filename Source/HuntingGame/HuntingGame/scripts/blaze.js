@@ -1,50 +1,59 @@
-	// var GlobalConsts = require('GlobalConsts.js');
+/*
+ *   Initializes a new instance of the Blaze class.
+ */
+function Blaze(coordinate) {
+    console.log("Blaze constructor.")
+    GameObject.call(this, coordinate);
 
-	var _maxBulletsCount = 0,
-		_currentBulletsCount = 0,
-		_reloadingTime = 0;
+    this.bullets = Blaze.CONFIG.get('MAX_BULLETS_COUNT');
+}
 
-	/*
-	 *   Blaze object. Inherits GameObject.
-	 */
-	function Blaze(coordinate) {
-		console.log("Blaze constructor.")
-		GameObject.call(this, coordinate);
+Blaze.prototype = new GameObject();
 
-		// _maxBulletsCount = GlobalConsts.PLAYER_BULLETS_COUNT;
-		_maxBulletsCount = 3;
-		_currentBulletsCount = _maxBulletsCount;
-		// _reloadingTime = GlobalConsts.PLAYER_CLIP_REALOADING_TIME;
-		_reloadingTime = 3000; //ms
-	}
+Blaze.prototype.constructor = Blaze;
 
-	Blaze.prototype = new GameObject();
+/*
+ *   Shoots and lowers the count of the total bullets.
+ */
+Blaze.prototype.shoot = function () {
+    this.bullets--;
 
-	Blaze.prototype.constructor = Blaze;
+    if (this.bullets === 0) {
+        this.reload();
+    }
 
-	Blaze.prototype.getBulletsCount = function() {
-		return _currentBulletsCount;
-	}
+    //here to check if hit something?
+}
 
-	Blaze.prototype.shoot = function() {
-		_currentBulletsCount--;
-		if (_currentBulletsCount === 0) {
-			this.reload();
-		}
+/*
+ *   Reloads the bullets to max bullet count.
+ */
+Blaze.prototype.reload = function () {
+    this.bullets = Blaze.CONFIG.get('MAX_BULLETS_COUNT');
+}
 
-		//here to check if hit something?
-	}
-
-	Blaze.prototype.reload = function() {
-		//here to set timeout?
-		_currentBulletsCount = _maxBulletsCount;
-	}
+/*
+ *   Constants for the game object.
+ */
+Blaze.CONFIG = function () {
+    var private = {
+        'MAX_BULLETS_COUNT': 3,
+        'RELOADING_TIME': 3000
 
 
-	/*
-	 *   Prints Blaze's properties on the console.
-	 */
-	Blaze.prototype.toString = function() {
-		var result = "Blaze:\n" + GameObject.prototype.toString.call(this);
-		return result;
-	}
+    };
+
+    return {
+        get: function (name) {
+            return private[name];
+        }
+    };
+}();
+
+/*
+ *   Prints Blaze's properties on the console.
+ */
+Blaze.prototype.toString = function () {
+    var result = "Blaze:\n" + GameObject.prototype.toString.call(this);
+    return result;
+}
