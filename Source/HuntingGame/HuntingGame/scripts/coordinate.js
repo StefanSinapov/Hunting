@@ -23,6 +23,5 @@ Coordinate.prototype.equals = function (other) {
  *   Prints the coordinate on the console.
  */
 Coordinate.prototype.toString = function () {
-    var result = "X: " + this.x + " Y: " + this.y;
-    return result;
-}
+    return  "X: " + this.x + " Y: " + this.y;
+};

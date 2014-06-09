@@ -9,6 +9,5 @@ function GameObject(coordinate) {
  *   Prints the properties of the game object on the console.
  */
 GameObject.prototype.toString = function () {
-    var result = "Current position = " + this.position.toString();
-    return result;
-}
+    return "Current position = " + this.position.toString();
+};
