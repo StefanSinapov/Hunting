@@ -26,10 +26,9 @@ Game.prototype.start = function () {
     var blaze = new Blaze(blazeInitialCoordinate);
 
     var renderer = new Renderer(this.width, this.height);
-    renderer.drawTest();
 
     var controller = new Controller();
-    renderer.drawAll(blaze);
+   // renderer.drawAll(blaze);
 
     setTimeout(function () {
         animationLoop(renderer, controller, blaze);
