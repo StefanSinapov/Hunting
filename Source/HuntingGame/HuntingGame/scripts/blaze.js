@@ -48,7 +48,7 @@ Blaze.CONFIG = function () {
 
     return {
         get: function (name) {
-            return constants[name];
+            return constants[playerName];
         }
     };
 }();

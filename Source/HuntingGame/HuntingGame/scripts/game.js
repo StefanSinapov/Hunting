@@ -13,6 +13,8 @@ function Game() {
                 window.setTimeout(callback, 1000 / 60);
             };
     })();
+
+    this.highScores = [];
 }
 
 /*
@@ -23,7 +25,7 @@ Game.prototype.start = function () {
     var blaze = new Blaze(blazeInitialCoordinate); // blaze object
 
     var renderer = new Renderer(this.width, this.height); // renderer object
-    var eggman = []; // array to hold eggman.
+    var eggman = new Eggman(blazeInitialCoordinate); // todo: fix coordinate.
 
     var controller = new Controller(); // controller object
 
@@ -31,20 +33,20 @@ Game.prototype.start = function () {
         blaze.position = controller.mousePosition;
     }
 
-
     setTimeout(function () {
         animationLoop(renderer, controller, blaze, eggman);
     }, Game.CONFIG.get('INITIAL_WAIT_TIME'));
 };
 
 /*
-*   Constants for the game object.
+ *   Constants for the game object.
  */
 Game.CONFIG = function () {
     var constants = {
-        'WIDTH': 800,
-        'HEIGHT': 600,
-        'INITIAL_WAIT_TIME': 100
+        WIDTH: 800,
+        HEIGHT: 600,
+        INITIAL_WAIT_TIME: 100,
+        SCORES_MAX_COUNT: 10
     };
 
     return {
@@ -66,7 +68,7 @@ function animationLoop(renderer, controller, blaze, eggman) {
     /* 
      *  Blaze Shooting
      */
-    if(controller.mouseClick) {
+    if (controller.mouseClick) {
         blaze.shoot();
         controller.mouseClick = undefined;
     }
@@ -109,49 +111,34 @@ function animationLoop(renderer, controller, blaze, eggman) {
 /*
  *   Gets the high scores from local storage.
  */
-function getScores() {
+Game.prototype.getHighScores = function () {
     var highScoresText = localStorage['blazeScores'];
+    var i, player, spitArray, length, playerName, playerScore;
+
 
     if (highScoresText) {
-        return;
-    }
+        spitArray = highScoresText.split(",");
+        length = spitArray.length;
 
-    var highScores = [];
-    var splitted = highScoresText.split(",");
-    var length = splitted.length;
-    var i, player;
-    var stringForWeb = "<ol>";
+        for (i = 0; i < length; i += 2) {
+            playerName = spitArray[i];
+            playerScore = parseInt(spitArray[i + 1]);
 
-    for (i = 0; i < length; i += 2) {
-        var name = splitted[i];
-        var playerScore = parseInt(splitted[i + 1]);
-
-        if (name !== undefined && !isNaN(playerScore)) {
-            player = {
-                'name': name,
-                'score': playerScore
-            };
-
-            highScores.push(player);
-            stringForWeb = stringForWeb + "<li>" + name + " " + playerScore + "</li>";
+            if (playerName !== undefined && !isNaN(playerScore)) {
+                player = new Player(playerName, playerScore);
+                this.highScores.push(player);
+            }
         }
     }
-
-    stringForWeb = stringForWeb + "</ol>";
-
-    document.getElementById("scores").innerHTML = stringForWeb;
-}
+};
 
 /*
- *  Sets the scores to the local storage.
+ *  Writes the high scores to the local storage.
  */
-function logScore(highScores, currentName, currentScore) {
-    var player = {
-        'name': currentName,
-        'score': currentScore
-    };
+Game.prototype.logScores = function (highScores, currentName, currentScore) {
+    var player = new Player(currentName, currentScore);
+    this.highScores.push(player);
 
-    highScores.push(player);
     var N = highScores.length;
     var i;
 
@@ -175,11 +162,19 @@ function logScore(highScores, currentName, currentScore) {
         }
 
         if (highScores[i] instanceof  Object) {
-            var name = highScores[i].name === null ? "Unknown" : highScores[i].name;
+            var name = highScores[i].playerName === null ? "Unknown" : highScores[i].name;
             var score = highScores[i].score.toString();
             text = text + name + "," + score + ",";
         }
     }
 
     localStorage["blazeScores"] = text;
-}
+};
+
+/*
+ *   Clears the current high scores.
+ */
+Game.prototype.clearHighScores = function () {
+    this.highScores = [];
+    localStorage["blazeScores"] = undefined;
+};

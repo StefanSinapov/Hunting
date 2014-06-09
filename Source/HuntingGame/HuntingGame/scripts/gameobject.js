@@ -11,3 +11,10 @@ function GameObject(coordinate) {
 GameObject.prototype.toString = function () {
     return "Current position = " + this.position.toString();
 };
+
+/*
+*   Updates the game object.
+ */
+GameObject.prototype.update = function(coordinate){
+
+};
