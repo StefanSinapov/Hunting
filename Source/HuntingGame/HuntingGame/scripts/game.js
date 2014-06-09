@@ -21,17 +21,13 @@ function Game() {
  *   Function that starts the game.
  */
 Game.prototype.start = function () {
-    var blazeInitialCoordinate = new Coordinate(this.width / 2, this.width / 2);
-    var blaze = new Blaze(blazeInitialCoordinate); // blaze object
-
+    this.getHighScores();
     var renderer = new Renderer(this.width, this.height); // renderer object
-    var eggman = new Eggman(blazeInitialCoordinate); // todo: fix coordinate.
-
     var controller = new Controller(); // controller object
 
-    if (controller.mousePosition !== undefined) {
-        blaze.position = controller.mousePosition;
-    }
+    var blazeInitialCoordinate = new Coordinate(this.width / 2, this.height / 2);
+    var blaze = new Blaze(blazeInitialCoordinate); // blaze object
+    var eggman = new Eggman(blazeInitialCoordinate); // todo: fix coordinate.
 
     setTimeout(function () {
         animationLoop(renderer, controller, blaze, eggman);
@@ -61,7 +57,8 @@ Game.CONFIG = function () {
  */
 function animationLoop(renderer, controller, blaze, eggman) {
 
-    if (controller.mousePosition !== undefined) {
+    if (controller.mousePosition !== null && controller.mousePosition !== null) {
+        //  console.log(controller.mousePosition);
         blaze.position = controller.mousePosition;
     }
 
@@ -73,33 +70,33 @@ function animationLoop(renderer, controller, blaze, eggman) {
         controller.mouseClick = undefined;
     }
 
-    /*
-     if (eggman.onScreen === true) {
-     eggman.Move();
-     // When the drawing is done, fix this
-     if ((eggman.position.x + 50 > renderer.width) || (eggman.position.x < 0)) {
-     eggman.speed = -eggman.speed;
-     }
 
-     if (controller.mouseClick) {
-     if ((controller.mouseClick.x > eggman.position.x) &&
-     (controller.mouseClick.x < eggman.position.x + 20) &&
-     (controller.mouseClick.y > eggman.position.y) &&
-     (controller.mouseClick.y < eggman.position.y + 20)
-     ) {
+    if (eggman.onScreen === true) {
+        eggman.Move();
+        // When the drawing is done, fix this
+        if ((eggman.position.x + 50 > renderer.width) || (eggman.position.x < 0)) {
+            eggman.speed = -eggman.speed;
+        }
 
-     eggman.onScreen = false;
-     controller.mouseClick = undefined;
+        if (controller.mouseClick) {
+            if ((controller.mouseClick.x > eggman.position.x) &&
+                (controller.mouseClick.x < eggman.position.x + 20) &&
+                (controller.mouseClick.y > eggman.position.y) &&
+                (controller.mouseClick.y < eggman.position.y + 20)
+                ) {
 
-     }
-     }
-     }
-     else {
-     // if timeForNewEggman
-     eggman.MoveTo(new Coordinate(20, 20));
-     eggman.onScreen = true;
+                eggman.onScreen = false;
+                controller.mouseClick = undefined;
 
-     } */
+            }
+        }
+    }
+    else {
+        // if timeForNewEggman
+        eggman.MoveTo(new Coordinate(20, 20));
+        eggman.onScreen = true;
+
+    }
 
     requestAnimFrame(function () {
         animationLoop(renderer, controller, blaze, eggman);
@@ -162,7 +159,7 @@ Game.prototype.logScores = function (highScores, currentName, currentScore) {
         }
 
         if (highScores[i] instanceof  Object) {
-            var name = highScores[i].playerName === null ? "Unknown" : highScores[i].name;
+            var name = highScores[i].name === null ? "Unknown" : highScores[i].name;
             var score = highScores[i].score.toString();
             text = text + name + "," + score + ",";
         }

@@ -2,7 +2,6 @@
  *   Initializes a new instance of the Eggman class.
  */
 function Eggman(coordinate) {
-    console.log("Eggman constructor");
     GameObject.call(this, coordinate);
     this.onScreen = false;
     this.speed = 2;

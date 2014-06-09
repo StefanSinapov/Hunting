@@ -3,17 +3,14 @@ body {
     padding: 0;
 }
 
-#container {
-    width:800px;
-    height:600px;
+canvas {
     border: 1px solid black;
-    margin: 30px;
-    padding: 0;
 }
 
-canvas{
-    border: 1px solid black;
+canvas:hover {
+    cursor: none;
 }
-canvas:hover{
-    cursor:none;
+
+svg:hover {
+    cursor: none;
 }
