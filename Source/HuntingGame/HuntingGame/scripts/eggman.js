@@ -18,7 +18,7 @@ Eggman.prototype.toString = function () {
     var result = "Eggman:\n" + GameObject.prototype.toString.call(this);
     return result;
 }
-
+// Moves eggman with own speed
 Eggman.prototype.Move = function () {
     this.position.x += this.speed;
     this.position.y += 0;
