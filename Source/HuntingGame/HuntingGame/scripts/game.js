@@ -27,7 +27,7 @@ Game.prototype.start = function () {
     var blaze = new Blaze(blazeInitialCoordinate); // blaze object
 
     var renderer = new Renderer(this.width, this.height); // renderer object
-    var eggmen = []; // array to hold eggmen.
+    var eggman = []; // array to hold eggman.
 
     var controller = new Controller(); // controller object
     // renderer.drawAll(blaze);
@@ -39,7 +39,7 @@ Game.prototype.start = function () {
 
 
     setTimeout(function () {
-        animationLoop(renderer, controller, blaze, eggmen);
+        animationLoop(renderer, controller, blaze, eggman);
     }, INITIAL_WAIT_TIME);
 };
 
@@ -81,7 +81,7 @@ function animationLoop(renderer, controller, blaze, eggman) {
     } */
 
     requestAnimFrame(function () {
-        animationLoop(renderer, controller, blaze, eggmen);
+        animationLoop(renderer, controller, blaze, eggman);
     });
 
     renderer.drawAll(blaze);
