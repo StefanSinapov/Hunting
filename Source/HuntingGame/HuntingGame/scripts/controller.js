@@ -1,5 +1,5 @@
 /*
-*   Controller object responsible for getting events
+*   Controller object responsible for getting events.
  */
 function Controller() {
     var self = this;

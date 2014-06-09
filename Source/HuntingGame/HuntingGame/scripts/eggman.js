@@ -1,3 +1,6 @@
+/*
+*   Eggman object.
+ */
 function Eggman(coordinate) {
     console.log("Eggman constructor");
     GameObject.call(this, coordinate);
