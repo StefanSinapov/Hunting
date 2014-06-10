@@ -58,3 +58,8 @@ Blaze.CONFIG = function () {
 Blaze.prototype.toString = function () {
     return "Blaze:\n" + GameObject.prototype.toString.call(this);
 };
+
+
+Blaze.prototype.update = function (position) {
+
+};
