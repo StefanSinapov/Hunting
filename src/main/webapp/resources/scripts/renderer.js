@@ -168,8 +168,6 @@ Renderer.prototype.createBackground = function () {
         svg.appendChild(this.createRandomCloud());
     }
 
-
-
     return svg;
 };
 
@@ -191,7 +189,7 @@ Renderer.prototype.createRandomStar = function () {
     var polygon = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'polygon');
 
     var x = getRandomInt(50, this.width - 50);
-    var y = getRandomInt(50, this.height - 50);
+    var y = getRandomInt(50, this.height - 400);
 
     var point1X = x + 2.9389;
     var point1Y = y + 9.0451;
@@ -222,7 +220,7 @@ Renderer.prototype.createRandomStar = function () {
 Renderer.prototype.createRandomPlanet = function () {
     var circle = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'circle');
     var cx = getRandomInt(50, this.width - 50);
-    var cy = getRandomInt(50, this.height - 50);
+    var cy = getRandomInt(50, this.height - 500);
     var radius = 10;
     circle.setAttribute('cx', cx.toString());
     circle.setAttribute('cy', cy.toString());
@@ -364,7 +362,7 @@ Renderer.prototype.createRandomCloud = function () {
         + "Z";
 
     cloud.setAttribute('d', points);
-    
+
     var style = "fill: white;opacity: 0.8;stroke:black;stroke-width:1;";
     cloud.setAttribute('style', style);
 
