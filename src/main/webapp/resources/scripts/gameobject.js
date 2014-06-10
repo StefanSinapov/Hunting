@@ -13,8 +13,8 @@ GameObject.prototype.toString = function () {
 };
 
 /*
-*   Updates the game object.
+ *   Updates the game object.
  */
-GameObject.prototype.update = function(coordinate){
-
+GameObject.prototype.update = function (coordinate) {
+    this.position = coordinate;
 };

@@ -364,9 +364,9 @@ Renderer.prototype.createRandomCloud = function () {
         + "Z";
 
     cloud.setAttribute('d', points);
+    
     var style = "fill: white;opacity: 0.8;stroke:black;stroke-width:1;";
     cloud.setAttribute('style', style);
-    console.log(cloud);
 
     return cloud;
 };
