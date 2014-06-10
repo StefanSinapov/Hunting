@@ -164,8 +164,10 @@ Renderer.prototype.createBackground = function () {
         svg.appendChild(this.createRandomPlanet());
     }
 
-    var cloud = this.createRandomCloud();
-    svg.appendChild(cloud);
+    for (i = 0; i < 5; i++) {
+        svg.appendChild(this.createRandomCloud());
+    }
+
 
 
     return svg;
@@ -340,7 +342,7 @@ Renderer.prototype.drawB1 = function () {
             'stroke-linecap': 'round',
             'stroke-linejoin': 'round'
         })
-   
+
     paper.path("M" + (x + 50) + "," + (y + 50) + " L" + (x + 100) + "," + (y + 100));
 
 };
@@ -352,7 +354,7 @@ Renderer.prototype.createRandomCloud = function () {
 
     var cloud = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'path');
     var x = getRandomInt(100, this.width - 200);
-    var y = getRandomInt(100, this.height - 500);
+    var y = getRandomInt(50, this.height - 400);
 
     var points = "M" + (x ) + "," + (y) + "C" + (x + 20) + "," + (y + 30) + "," + (x + 10) + "," + (y + 50) + "," + (x - 10 ) + "," + (y + 40)
         + "C" + (x - 20) + "," + (y + 35) + "," + (x - 40) + "," + (y + 45) + "," + (x - 50) + "," + (y + 40)
@@ -362,7 +364,7 @@ Renderer.prototype.createRandomCloud = function () {
         + "Z";
 
     cloud.setAttribute('d', points);
-    var style = "fill: white;opacity: 0.8;"
+    var style = "fill: white;opacity: 0.8;stroke:black;stroke-width:1;";
     cloud.setAttribute('style', style);
     console.log(cloud);
 
