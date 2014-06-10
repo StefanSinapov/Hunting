@@ -255,54 +255,54 @@ Renderer.prototype.drawExit = function () {
 
 Renderer.prototype.drawB1 = function () {
 
-    var paper = Raphael(container, 800, 600);
-    var x = 40,
-        y = 40;
+    var x = 0,
+    y = 0;
+    var paper = Raphael(container, 900, 700);
 
     /*Draw background - sky*/
 
     paper.rect(x, y, 800, 600)
-        .attr({
-            fill: 'lightblue',
-            'stroke-width': 0
-        });
+    .attr({
+        fill: 'lightblue',
+        'stroke-width': 0
+    });
 
     /* Draw sand.*/
 
     paper.rect(x, (y + 400), 800, 200)
-        .attr({
-            fill: '100-darkgoldenrod-gold',
-            opacity: 0.8,
-            'stroke-width': 0
-        });
+    .attr({
+        fill: '100-darkgoldenrod-gold',
+        opacity: 0.8,
+        'stroke-width': 0
+    });
 
     /* Draw sea. */
     paper.rect(x, (y + 350), 800, 50)
-        .attr({
-            fill: '100-blue:2-darkblue:100',
-            opacity: 1,
-            'stroke-width': 3,
-            stroke: '40-blue-darkblue',
-            'stroke-linecap': 'round'
-        });
+    .attr({
+        fill: '100-blue:2-darkblue:50-#010746:80',
+        opacity: 1,
+        'stroke-width': 3,
+        stroke: '40-blue-darkblue',
+        'stroke-linecap': 'round'
+    });
 
     /*
-     *   Draw waves.
-     */
+*   Draw waves.
+*/
     paper.path("M" + (x + 0) + "," + (y + 400)
         + "C" + (x + 50) + "," + (y + 450) + "," + (x + 150) + "," + (y + 400) + "," + (x + 170) + "," + (y + 400)
         + "C" + (x + 170) + "," + (y + 400) + "," + (x + 380) + "," + (y + 470) + "," + (x + 450) + "," + (y + 400)
         + "C" + (x + 450) + "," + (y + 400) + "," + (x + 570) + "," + (y + 440) + "," + (x + 650) + "," + (y + 400)
         + "C" + (x + 650) + "," + (y + 400) + "," + (x + 700) + "," + (y + 450) + "," + (x + 800) + "," + (y + 400)
         + "Z")
-        .attr({
-            fill: '90-white-blue',
-            opacity: 0.9,
-            stroke: '90-#000f48-#ffffff',
-            'stroke-width': 5,
-            'stroke-linecap': 'round',
-            'stroke-linejoin': 'round'
-        });
+    .attr({
+        fill: '90-white-blue',
+        opacity: 0.9,
+        stroke: '90-#000f48-#ffffff',
+        'stroke-width': 5,
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+    });
 
     /*Draw cloud.*/
 
@@ -313,35 +313,124 @@ Renderer.prototype.drawB1 = function () {
         + "C" + (x + 620) + "," + (y + 60) + "," + (x + 655) + "," + (y + 50) + "," + (x + 660) + "," + (y + 45)
         + "C" + (x + 675) + "," + (y + 35) + "," + (x + 680) + "," + (y + 45) + "," + (x + 690) + "," + (y + 40)
         + "Z")
-        .attr({
-            fill: '270-white-azure',
-            opacity: 0.2,
-            stroke: '100-gray-white-blue',
-            'stroke-width': 5,
-            'stroke-linecap': 'round',
-            'stroke-linejoin': 'round'
+    .attr({
+        fill: '270-white-azure',
+        opacity: 0.2,
+        stroke: '100-gray-white-blue',
+        'stroke-width': 5,
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
 
-        });
-
-    /* Draw mountains */
+    });
+    /* Draw back mountains */
 
     paper.path("M" + (x + 0) + "," + (y + 350)
-        + "C" + (x + 130) + "," + (y + 100) + "," + (x + 260) + "," + (y + 340) + "," + (x + 300) + "," + (y + 320)
+        + "L" + (x + 0) + "," + (y + 150)
+        + "C" + (x + 50) + "," + (y + 100) + "," + (x + 100) + "," + (y + 150) + "," + (x + 350) + "," + (y + 350)
+        + "M" + (x + 200) + "," + (y + 350)
+        + "C" + (x + 320) + "," + (y + 150) + "," + (x + 350) + "," + (y + 280) + "," + (x + 480) + "," + (y + 350)
+        + "M" + (x + 200) + "," + (y + 350)
+        + "C" + (x + 550) + "," + (y + 210) + "," + (x + 630) + "," + (y + 200) + "," + (x + 730) + "," + (y + 320)
+        + "M" + (x + 500) + "," + (y + 350)
+        + "C" + (x + 630) + "," + (y + 320) + "," + (x + 800) + "," + (y + 20) + "," + (x + 800) + "," + (y + 150)
+        + "L" + (x + 800) + "," + (y + 150)
+        + "L" + (x + 800) + "," + (y + 350)
+         + "Z")
+    //paper.path("M"+(x -10) 350 C 130 100 260 340 300 320 C 300 320 350 280 400 310 C 400 310 530 280 630 320 C 630 320 900 20 800 350 Z ')
+    .attr({
+        fill: "90-midnightblue-white:90-navy",
+        opacity: 0.01,
+        stroke: "90-black-black",
+        'stroke-width': 5,
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+
+    })
+
+    /* Draw front mountains */
+
+    paper.path("M" + (x + 0) + "," + (y + 350)
+        + "L" + (x + 0) + "," + (y + 300)
+        + "C" + (x + 50) + "," + (y + 200) + "," + (x + 260) + "," + (y + 340) + "," + (x + 300) + "," + (y + 320)
         + "C" + (x + 300) + "," + (y + 320) + "," + (x + 350) + "," + (y + 280) + "," + (x + 400) + "," + (y + 310)
         + "C" + (x + 400) + "," + (y + 310) + "," + (x + 530) + "," + (y + 280) + "," + (x + 630) + "," + (y + 320)
-        + "C" + (x + 630) + "," + (y + 320) + "," + (x + 900) + "," + (y + 20) + "," + (x + 800) + "," + (y + 350)
+        + "C" + (x + 630) + "," + (y + 320) + "," + (x + 800) + "," + (y + 200) + "," + (x + 800) + "," + (y + 350)
+        + "L" + (x + 800) + "," + (y + 350)
         + "Z")
-        //paper.path("M"+(x -10) 350 C 130 100 260 340 300 320 C 300 320 350 280 400 310 C 400 310 530 280 630 320 C 630 320 900 20 800 350 Z ')
+    //paper.path("M"+(x -10) 350 C 130 100 260 340 300 320 C 300 320 350 280 400 310 C 400 310 530 280 630 320 C 630 320 900 20 800 350 Z ')
+    .attr({
+        fill: "100-#002c06-green:30-lightgreen:100",
+        opacity: 0.2,
+        stroke: "100-#002c06-green:30-lightgreen:100",
+        'stroke-width': 5,
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+    })
+
+
+
+    /*Draw some rocks*/
+
+    paper.ellipse((x + 70), (y + 480), 50, 20)
+    .attr({
+        fill: "100-black-darkgray",
+        opacity: 0.6,
+        stroke: "100-black-darkgray",
+        'stroke-width': 5,
+    })
+    paper.ellipse((x + 75), (y + 490), 30, 15)
+    .attr({
+        fill: "100-black-darkgray",
+        opacity: 0.6,
+        stroke: "100-black-darkgray",
+        'stroke-width': 5,
+    })
+    paper.ellipse((x + 55), (y + 495), 20, 10)
+    .attr({
+        fill: "100-black-darkgray",
+        opacity: 0.6,
+        stroke: "100-black-darkgray",
+        'stroke-width': 5,
+    })
+
+    /*draw flower*/
+    paper.ellipse((x + 70), (y + 450), 2, 40)
         .attr({
-            fill: "100-darkgreen-white",
-            opacity: 0.1,
-            stroke: "100-darkgreen-white",
+            fill: "green",
+            stroke: "100-black-darkgray",
             'stroke-width': 5,
-            'stroke-linecap': 'round',
-            'stroke-linejoin': 'round'
+        })
+    paper.ellipse((x + 70), (y + 420), 7, 15)
+        .attr({
+            fill: "deeppink",
+            stroke: "100-black-darkgray",
+            'stroke-width': 5,
         })
 
+    paper.ellipse((x + 70), (y + 420), 2, 15)
+        .attr({
+            fill: "purple",
+            stroke: "100-black-darkgray",
+            'stroke-width': 5,
+        })
+
+
+    /*Insert palm tree*/
+    paper.image("imgs/PalmTree.png", (x + 530), (y + 190), 250, 250);
+
+    /*Колеги, сложила съм и още украса ако пожелаете я погледнете!
+    Първоначално беше на мястото на... цветето и моите камъни, но накрая я махнах и ги направих тях.*/
+
+    //paper.image("imgs/grass.png", (x+40), (y+400), 100, 100);
+    //paper.image("imgs/grass.png",(x+50), (y+410), 100, 100);
+    //paper.image("imgs/grass.png", (x+60), (y+420), 100, 100);
+
+    //paper.image("imgs/Rock.png", (x+70), (y+470), 60, 60);
+
+
+    /*контролна черта*/
     paper.path("M" + (x + 50) + "," + (y + 50) + " L" + (x + 100) + "," + (y + 100));
+
 
 };
 
