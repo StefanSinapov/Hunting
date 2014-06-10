@@ -19,7 +19,7 @@ function Renderer(width, height) {
 /*
  *   Draws all objects.
  */
-Renderer.prototype.drawAll = function (blaze, eggman) {
+Renderer.prototype.drawAll = function(blaze, eggman) {
     this.ctx.clearRect(0, 0, this.width, this.height);
     this.drawBlaze(blaze);
     this.drawClip(blaze);
@@ -33,7 +33,7 @@ Renderer.prototype.drawAll = function (blaze, eggman) {
 /*
  *   Constants for the game object.
  */
-Renderer.CONFIG = function () {
+Renderer.CONFIG = function() {
     var constants = {
         BLAZE_LINE_LENGTH: 60,
         BLAZE_INNER_RADIUS: 10,
@@ -49,7 +49,7 @@ Renderer.CONFIG = function () {
     };
 
     return {
-        get: function (name) {
+        get: function(name) {
             return constants[name];
         }
     };
@@ -58,7 +58,7 @@ Renderer.CONFIG = function () {
 /*
  *   Draws Blaze.
  */
-Renderer.prototype.drawBlaze = function (blaze) {
+Renderer.prototype.drawBlaze = function(blaze) {
 
     var LINE_LENGTH = Renderer.CONFIG.get('BLAZE_LINE_LENGTH');
     var INNER_RADIUS = Renderer.CONFIG.get('BLAZE_INNER_RADIUS');
@@ -95,12 +95,12 @@ Renderer.prototype.drawBlaze = function (blaze) {
 /*
  *   Draws the clip (available bullets).
  */
-Renderer.prototype.drawClip = function (blaze) {
+Renderer.prototype.drawClip = function(blaze) {
     var sx = 20;
     var sy = this.height - Renderer.CONFIG.get('BULLET_HEIGHT') - sx;
     var bulletsCount = blaze.bullets;
     var image = new Image();
-    image.src = 'imgs/bullet.png';
+    image.src = 'resources/imgs/bullet.png';
 
     for (var i = 0; i < bulletsCount; i += 1) {
         this.ctx.drawImage(image, sx, sy);
@@ -111,7 +111,7 @@ Renderer.prototype.drawClip = function (blaze) {
 /*
  *   Draws Eggman.
  */
-Renderer.prototype.drawEggman = function (eggman) {
+Renderer.prototype.drawEggman = function(eggman) {
     var eggmanTopLeftX = eggman.position.x;
     var eggmanTopLeftY = eggman.position.y;
     this.ctx.strokeStyle = 'green';
@@ -121,7 +121,7 @@ Renderer.prototype.drawEggman = function (eggman) {
 /*
  *   Creates the background.
  */
-Renderer.prototype.createBackground = function () {
+Renderer.prototype.createBackground = function() {
     // Creates the svg element
     var svg = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'svg');
     svg.setAttribute('height', this.height.toString());
@@ -168,7 +168,7 @@ Renderer.prototype.createBackground = function () {
     return svg;
 };
 
-Renderer.prototype.creteCanvas = function () {
+Renderer.prototype.creteCanvas = function() {
     var canvas = document.createElement('canvas');
     canvas.setAttribute('id', 'drawing');
     canvas.setAttribute('width', this.width.toString());
@@ -182,7 +182,7 @@ Renderer.prototype.creteCanvas = function () {
 /*
  *   Creates a random star.
  */
-Renderer.prototype.createRandomStar = function () {
+Renderer.prototype.createRandomStar = function() {
     var polygon = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'polygon');
 
     var x = getRandomInt(50, this.width - 50);
@@ -214,7 +214,7 @@ Renderer.prototype.createRandomStar = function () {
 /*
  *   Creates a random planet.
  */
-Renderer.prototype.createRandomPlanet = function () {
+Renderer.prototype.createRandomPlanet = function() {
     var circle = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'circle');
     var cx = getRandomInt(50, this.width - 50);
     var cy = getRandomInt(50, this.height - 50);
@@ -229,7 +229,7 @@ Renderer.prototype.createRandomPlanet = function () {
 /*
  *   Draws the score.
  */
-Renderer.prototype.drawScore = function (blaze) {
+Renderer.prototype.drawScore = function(blaze) {
     var scoreText = "Score: " + (blaze.score | 0); //todo: add blaze score
     this.ctx.font = "30px Comic Sans MS, Arial, Sans";
     this.ctx.fillStyle = '#dcdcdc';
@@ -239,14 +239,14 @@ Renderer.prototype.drawScore = function (blaze) {
 /*
  *   Draws the Intro screen.
  */
-Renderer.prototype.drawIntro = function () {
+Renderer.prototype.drawIntro = function() {
 
 };
 
 /*
  *   Draws the Exit screen
  */
-Renderer.prototype.drawExit = function () {
+Renderer.prototype.drawExit = function() {
 
 };
 
