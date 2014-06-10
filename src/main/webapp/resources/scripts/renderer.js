@@ -250,6 +250,88 @@ Renderer.prototype.drawExit = function() {
 
 };
 
+Renderer.prototype.drawB1 = function () {
+
+    var paper = Raphael(container, 800, 600);
+    var x = 0,
+    y = 0;
+
+    /*Draw background - sky*/
+
+    paper.rect(x, y, 800, 600)
+    .attr({
+        fill: 'lightblue',
+        'stroke-width': 0
+    });
+
+    /* Draw sand.*/
+
+    paper.rect(x, (y + 400), 800, 200)
+    .attr({
+        fill: '100-darkgoldenrod-gold',
+        opacity: 0.8,
+        'stroke-width': 0
+    });
+
+    /* Draw sea. */
+    paper.rect(0, 350, 800, 50)
+    .attr({
+        fill: '100-blue:2-darkblue:100',
+        opacity: 1,
+        'stroke-width': 3,
+        stroke: '40-blue-darkblue',
+        'stroke-linecap': 'round'
+    });
+
+    /*
+    *   Draw waves.
+    */
+    paper.path('M 0 400 C 50 450 150 400 170 400 C 170 400 380 470 450 400  C 450 400 570 440 650 400 C 650 400 700 450 800 400 Z')
+    .attr({
+        fill: '90-white-blue',
+        opacity: 0.9,
+        stroke: '90-#000f48-#ffffff',
+        'stroke-width': 5,
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+    });
+
+    /*Draw cloud.*/
+
+    paper.path('M700 50 C 720 70 710 100 690 90 C 680 110 660 95 650 90 C 630 100 620 90 650 70 C 620 60 655 50 660 45 C 675 35 680 45 690 40 Z')
+    .attr({
+        fill: '270-white-azure',
+        opacity: 0.2,
+        stroke: '100-gray-white-blue',
+        'stroke-width': 5,
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+
+    });
+
+    /* Draw mountains */
+
+    paper.path("M" + (x - 10) + "," + (y + 350)
+        + "C" + (x + 130) + "," + (y + 100) + "," + (x + 260) + "," + (y + 340) + "," + (x + 300) + "," + (y + 320)
+        + "C" + (x + 300) + "," + (y + 320) + "," + (x + 350) + "," + (y + 280) + "," + (x + 400) + "," + (y + 310)
+        + "C" + (x + 400) + "," + (y + 310) + "," + (x + 530) + "," + (y + 280) + "," + (x + 630) + "," + (y + 320)
+        + "C" + (x + 630) + "," + (y + 320) + "," + (x + 900) + "," + (y + 20) + "," + (x + 800) + "," + (y + 350)
+        + "Z")
+    //paper.path("M"+(x -10) 350 C 130 100 260 340 300 320 C 300 320 350 280 400 310 C 400 310 530 280 630 320 C 630 320 900 20 800 350 Z ')
+    .attr({
+        fill: "100-darkgreen-white",
+        opacity: 0.1,
+        stroke: "100-darkgreen-white",
+        'stroke-width': 5,
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+    })
+    /*контролна черта*/
+    paper.path("M" + (x + 50) + "," + (y + 50) + " L" + (x + 100) + "," + (y + 100));
+
+
+};
+
 
 
 
