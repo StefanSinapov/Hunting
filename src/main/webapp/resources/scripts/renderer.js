@@ -268,6 +268,87 @@ Renderer.prototype.drawB1 = function () {
         'stroke-width': 0
     });
 
+    /*Draw sun ;)*/
+
+    paper.ellipse((x + 645), (y + 60), 6, 60)
+        .attr({
+            transform: "r15",
+            fill: "110-orange-yellow",
+            opacity: 0.2,
+            'stroke-width': 0
+        });
+    paper.ellipse((x + 645), (y + 60), 6, 50)
+        .attr({
+            transform: "r35",
+            fill: "110-orange-yellow",
+            opacity: 0.3,
+            'stroke-width': 0
+        });
+    paper.ellipse((x + 645), (y + 60), 6, 60)
+        .attr({
+            transform: "r55",
+            fill: "110-orange-yellow",
+            opacity: 0.2,
+            'stroke-width': 0
+        });
+    paper.ellipse((x + 645), (y + 60), 6, 50)
+        .attr({
+            transform: "r75",
+            fill: "110-orange-yellow",
+            opacity: 0.3,
+            'stroke-width': 0
+        });
+
+    paper.ellipse((x + 645), (y + 60), 6, 60)
+        .attr({
+            transform: "r95",
+            fill: "110-orange-yellow",
+            opacity: 0.2,
+            'stroke-width': 0
+        });
+    paper.ellipse((x + 645), (y + 60), 6, 50)
+        .attr({
+            transform: "r115",
+            fill: "110-orange-yellow",
+            opacity: 0.3,
+            'stroke-width': 0
+        });
+
+    paper.ellipse((x + 645), (y + 60), 6, 60)
+        .attr({
+            transform: "r135",
+            fill: "100-orange-yellow",
+            opacity: 0.2,
+            'stroke-width': 0
+        });
+
+    paper.ellipse((x + 645), (y + 60), 6, 50)
+        .attr({
+            transform: "r155",
+            fill: "80-orange-yellow",
+            opacity: 0.3,
+            'stroke-width': 0
+        });
+
+    paper.ellipse((x + 645), (y + 60), 6, 60)
+        .attr({
+            transform: "r175",
+            fill: "70-orange-yellow",
+            opacity: 0.2,
+            'stroke-width': 0
+        });
+
+
+
+    paper.circle((x + 645), (y + 60), 18)
+    .attr({
+        fill: "90-yellow-orange-yellow",
+        opacity: 0.9,
+        "stroke-width": 0
+
+    })
+
+
     /* Draw sand.*/
 
     paper.rect(x, (y + 400), 800, 200)
@@ -323,6 +404,8 @@ Renderer.prototype.drawB1 = function () {
         'stroke-linejoin': 'round'
 
     });
+
+
     /* Draw back mountains */
 
     paper.path("M" + (x + 0) + "," + (y + 350)
@@ -340,13 +423,9 @@ Renderer.prototype.drawB1 = function () {
     //paper.path("M"+(x -10) 350 C 130 100 260 340 300 320 C 300 320 350 280 400 310 C 400 310 530 280 630 320 C 630 320 900 20 800 350 Z ')
     .attr({
         fill: "90-midnightblue-white:90-navy",
-        opacity: 0.01,
-        stroke: "90-black-black",
-        'stroke-width': 5,
-        'stroke-linecap': 'round',
-        'stroke-linejoin': 'round'
+        opacity: 0.01
 
-    })
+    });
 
     /* Draw front mountains */
 
@@ -358,7 +437,6 @@ Renderer.prototype.drawB1 = function () {
         + "C" + (x + 630) + "," + (y + 320) + "," + (x + 800) + "," + (y + 200) + "," + (x + 800) + "," + (y + 350)
         + "L" + (x + 800) + "," + (y + 350)
         + "Z")
-    //paper.path("M"+(x -10) 350 C 130 100 260 340 300 320 C 300 320 350 280 400 310 C 400 310 530 280 630 320 C 630 320 900 20 800 350 Z ')
     .attr({
         fill: "100-#002c06-green:30-lightgreen:100",
         opacity: 0.2,
@@ -366,10 +444,7 @@ Renderer.prototype.drawB1 = function () {
         'stroke-width': 5,
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round'
-    })
-
-
-
+    });
     /*Draw some rocks*/
 
     paper.ellipse((x + 70), (y + 480), 50, 20)
@@ -378,7 +453,7 @@ Renderer.prototype.drawB1 = function () {
         opacity: 0.6,
         stroke: "100-black-darkgray",
         'stroke-width': 5,
-    })
+    });
 
     /*draw flower*/
     paper.ellipse((x + 70), (y + 450), 1, 40)
@@ -386,13 +461,20 @@ Renderer.prototype.drawB1 = function () {
             fill: "green",
             stroke: "darkgreen",
             'stroke-width': 1,
-        })
+        });
     paper.ellipse((x + 70), (y + 420), 7, 15)
         .attr({
             fill: "hotpink",
             stroke: "white",
             'stroke-width': 3
-        })
+        });
+
+    //paper.ellipse((x + 70), (y + 420), 4, 10)
+    //    .attr({
+    //        fill: "hotpink",
+    //        stroke: "purple",
+    //        'stroke-width': 1
+    //    });
 
     paper.ellipse((x + 63), (y + 420), 2, 18)
         .attr({
@@ -400,21 +482,21 @@ Renderer.prototype.drawB1 = function () {
             fill: "pink",
             stroke: "purple",
             'stroke-width': 2
-        })
+        });
     paper.ellipse((x + 77), (y + 420), 2, 18)
         .attr({
             transform: 'r200',
             fill: "pink",
             stroke: "purple",
             'stroke-width': 2
-        })
+        });
     paper.ellipse((x + 58), (y + 450), 3, 40)
         .attr({
             transform: 'r160',
             fill: "green",
             stroke: "darkgreen",
             'stroke-width': 1
-        })
+        });
 
     paper.ellipse((x + 82), (y + 457), 3, 32)
         .attr({
@@ -422,7 +504,7 @@ Renderer.prototype.drawB1 = function () {
             fill: "green",
             stroke: "darkgreen",
             'stroke-width': 1
-        })
+        });
 
     /*draw more rocks*/
 
@@ -432,17 +514,17 @@ Renderer.prototype.drawB1 = function () {
         opacity: 0.6,
         stroke: "100-black-darkgray",
         'stroke-width': 5,
-    })
+    });
     paper.ellipse((x + 55), (y + 495), 20, 10)
     .attr({
         fill: "100-black-darkgray",
         opacity: 0.6,
         stroke: "100-black-darkgray",
         'stroke-width': 5,
-    })
+    });
 
     /*Insert palm tree*/
-    paper.image("img/Painted_Palm_Tree_PNG_Clipart.png", (x + 530), (y + 190), 250, 250);
+    paper.image("img/PalmTree.png", (x + 530), (y + 190), 250, 250);
 
     /*Колеги, сложила съм и още украса ако пожелаете я погледнете!
     Първоначално беше на мястото на... цветето и моите камъни, но накрая я махнах и ги направих тях.*/
@@ -456,7 +538,6 @@ Renderer.prototype.drawB1 = function () {
 
     /*контролна черта*/
     paper.path("M" + (x + 50) + "," + (y + 50) + " L" + (x + 100) + "," + (y + 100));
-
 
 
 };
