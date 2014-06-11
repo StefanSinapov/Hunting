@@ -255,6 +255,7 @@ Renderer.prototype.drawExit = function () {
 
 Renderer.prototype.drawB1 = function () {
 
+
     var x = 0,
     y = 0;
     var paper = Raphael(container, 900, 700);
@@ -279,7 +280,7 @@ Renderer.prototype.drawB1 = function () {
     /* Draw sea. */
     paper.rect(x, (y + 350), 800, 50)
     .attr({
-        fill: '100-blue:2-darkblue:50-#010746:80',
+        fill: '100-blue:5-darkblue:50-#010746:80',
         opacity: 1,
         'stroke-width': 3,
         stroke: '40-blue-darkblue',
@@ -296,7 +297,7 @@ Renderer.prototype.drawB1 = function () {
         + "C" + (x + 650) + "," + (y + 400) + "," + (x + 700) + "," + (y + 450) + "," + (x + 800) + "," + (y + 400)
         + "Z")
     .attr({
-        fill: '90-white-blue',
+        fill: '90-white:25-blue',
         opacity: 0.9,
         stroke: '90-#000f48-#ffffff',
         'stroke-width': 5,
@@ -378,6 +379,53 @@ Renderer.prototype.drawB1 = function () {
         stroke: "100-black-darkgray",
         'stroke-width': 5,
     })
+
+    /*draw flower*/
+    paper.ellipse((x + 70), (y + 450), 1, 40)
+        .attr({
+            fill: "green",
+            stroke: "darkgreen",
+            'stroke-width': 1,
+        })
+    paper.ellipse((x + 70), (y + 420), 7, 15)
+        .attr({
+            fill: "hotpink",
+            stroke: "white",
+            'stroke-width': 3
+        })
+
+    paper.ellipse((x + 63), (y + 420), 2, 18)
+        .attr({
+            transform: 'r160',
+            fill: "pink",
+            stroke: "purple",
+            'stroke-width': 2
+        })
+    paper.ellipse((x + 77), (y + 420), 2, 18)
+        .attr({
+            transform: 'r200',
+            fill: "pink",
+            stroke: "purple",
+            'stroke-width': 2
+        })
+    paper.ellipse((x + 58), (y + 450), 3, 40)
+        .attr({
+            transform: 'r160',
+            fill: "green",
+            stroke: "darkgreen",
+            'stroke-width': 1
+        })
+
+    paper.ellipse((x + 82), (y + 457), 3, 32)
+        .attr({
+            transform: 'r200',
+            fill: "green",
+            stroke: "darkgreen",
+            'stroke-width': 1
+        })
+
+    /*draw more rocks*/
+
     paper.ellipse((x + 75), (y + 490), 30, 15)
     .attr({
         fill: "100-black-darkgray",
@@ -393,43 +441,22 @@ Renderer.prototype.drawB1 = function () {
         'stroke-width': 5,
     })
 
-    /*draw flower*/
-    paper.ellipse((x + 70), (y + 450), 2, 40)
-        .attr({
-            fill: "green",
-            stroke: "100-black-darkgray",
-            'stroke-width': 5,
-        })
-    paper.ellipse((x + 70), (y + 420), 7, 15)
-        .attr({
-            fill: "deeppink",
-            stroke: "100-black-darkgray",
-            'stroke-width': 5,
-        })
-
-    paper.ellipse((x + 70), (y + 420), 2, 15)
-        .attr({
-            fill: "purple",
-            stroke: "100-black-darkgray",
-            'stroke-width': 5,
-        })
-
-
     /*Insert palm tree*/
-    paper.image("imgs/PalmTree.png", (x + 530), (y + 190), 250, 250);
+    paper.image("img/Painted_Palm_Tree_PNG_Clipart.png", (x + 530), (y + 190), 250, 250);
 
     /*Колеги, сложила съм и още украса ако пожелаете я погледнете!
     Първоначално беше на мястото на... цветето и моите камъни, но накрая я махнах и ги направих тях.*/
 
-    //paper.image("imgs/grass.png", (x+40), (y+400), 100, 100);
-    //paper.image("imgs/grass.png",(x+50), (y+410), 100, 100);
-    //paper.image("imgs/grass.png", (x+60), (y+420), 100, 100);
+    //paper.image("img/grass_strands.png", (x+40), (y+400), 100, 100);
+    //paper.image("img/grass_strands.png",(x+50), (y+410), 100, 100);
+    //paper.image("img/grass_strands.png", (x+60), (y+420), 100, 100);
 
-    //paper.image("imgs/Rock.png", (x+70), (y+470), 60, 60);
+    //paper.image("img/120px-Earth_Island_Medium_Rock.png", (x+70), (y+470), 60, 60);
 
 
     /*контролна черта*/
     paper.path("M" + (x + 50) + "," + (y + 50) + " L" + (x + 100) + "," + (y + 100));
+
 
 
 };
