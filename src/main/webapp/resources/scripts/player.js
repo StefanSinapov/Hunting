@@ -2,6 +2,18 @@
  *   Initializes a new instance of the Player class.
  */
 function Player(name, score) {
+    if (!name) {
+        throw "The parameter for Player's name is missing.";
+    }
+
+    if (!score && score !== 0) {
+        throw "The parameter for Player's score is missing.";
+    }
+
+    if (score < 0) {
+        throw "The parameter for Player's score: " + score + " is less than 0.";
+    }
+
     this.name = name;
     this.score = score;
 }
