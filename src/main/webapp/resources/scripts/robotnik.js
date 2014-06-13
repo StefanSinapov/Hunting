@@ -1,4 +1,4 @@
-﻿function imgToCanvas() {
+﻿function drawRobotnik() {
 
 
     var x = 0,
