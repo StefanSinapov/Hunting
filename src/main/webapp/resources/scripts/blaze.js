@@ -40,7 +40,7 @@ Blaze.prototype.reload = function () {
 };
 
 /*
- *   Constants for the game object.
+ *   Constants for the Blaze object.
  */
 Blaze.CONFIG = function () {
     var constants = {

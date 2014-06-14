@@ -4,9 +4,9 @@
 function Eggman(coordinate) {
     GameObject.call(this, coordinate);
     this.onScreen = false;
-    this.speed = 2;
-    this.width = 60;
-    this.height = 60;
+    this.speed = Eggman.CONFIG.get('EGGMAN_SPEED');
+    this.width = Eggman.CONFIG.get('EGGMAN_WIDTH');
+    this.height = Eggman.CONFIG.get('EGGMAN_HEIGHT');
 }
 
 /*
@@ -26,6 +26,25 @@ Eggman.prototype.toString = function() {
     var result = "Eggman:\n" + GameObject.prototype.toString.call(this);
     return result;
 };
+
+/*
+ *   Constants for the Blaze object.
+ */
+Eggman.CONFIG = function () {
+    var constants = {
+        'EGGMAN_WIDTH': 60,
+        'EGGMAN_HEIGHT': 60,
+        'EGGMAN_SPEED': 2
+
+    };
+
+    return {
+        get: function (name) {
+            return constants[name];
+        }
+    };
+}();
+
 
 // Moves eggman with own speed
 Eggman.prototype.Move = function() {
