@@ -240,7 +240,98 @@ Renderer.prototype.drawScore = function(blaze) {
  *   Draws the Intro screen.
  */
 Renderer.prototype.drawIntro = function() {
+var canvas = document.getElementById("drawing");
+    var ctx = canvas.getContext("2d");
+    var width = canvas.getAttribute('width');
+    var height = canvas.getAttribute('height');
 
+    //canvas background
+    var grd = ctx.createLinearGradient(0, 0, 600, 0);
+    grd.addColorStop(0, "#f210e6");
+    grd.addColorStop(1, "#f41118");
+    ctx.fillStyle = grd;
+    ctx.fillRect(0, 0, width, height);
+    ctx.fillStyle = 'black';
+    ctx.font = "100px Georgia";
+    centerText(ctx, "Blaze Laserlight", 100);
+
+    //buttons
+    var buttonX = [
+        getXCoordsOfMenuItem(ctx, 'Play'),
+        getXCoordsOfMenuItem(ctx, 'Highscores'),
+        getXCoordsOfMenuItem(ctx, 'Exit')
+    ];
+    var buttonY = [height / 2 - 100, height / 2 - 50, height / 2];
+    var menuItems = ['Play', 'Highscores', 'Exit'];
+    ctx.fillStyle = 'yellow';
+    ctx.font = "40px Verdana";
+    centerText(ctx, menuItems[0], buttonY[0]);
+    centerText(ctx, menuItems[1], buttonY[1]);
+    centerText(ctx, menuItems[2], buttonY[2]);
+    centerText(ctx, menuItems[3], buttonY[3]);
+
+    //draw eggman
+    var eggmanImage = new Image();
+    eggmanImage.onload = function () {
+        ctx.drawImage(eggmanImage, 500, 270);
+    }
+    eggmanImage.src = 'http://img4.wikia.nocookie.net/__cb20130617124441/robotsupremacy/images/0/04/Eggman-eggman-club.gif';
+    //draw blaze
+    var blazeImage = new Image();
+    blazeImage.onload = function () {
+        ctx.drawImage(blazeImage, 100, 300, 150, 300);
+    }
+    blazeImage.src = 'http://fc04.deviantart.net/fs71/f/2012/213/2/a/blaze_the_cat_by_bloomphantom-d59gqef.png';
+
+    function centerText(ctx, text, y) {
+        var x = getXCoordsOfMenuItem(ctx, text);
+        ctx.fillText(text, x, y);
+    }
+
+    function getXCoordsOfMenuItem(ctx, text) {
+        var measurement = ctx.measureText(text);
+        var x = (ctx.canvas.width - measurement.width) / 2;
+        return x;
+    }
+
+    //checking the mouse position
+    var mouseX;
+    var mouseY;
+    var time = 0.0;
+    canvas.addEventListener("mouseup", checkClick);
+
+    function checkClick(mouseEvent) {
+        if (mouseEvent.pageX || mouseEvent.pageY == 0) {
+            mouseX = mouseEvent.pageX - this.offsetLeft;
+            mouseY = mouseEvent.pageY - this.offsetTop;
+        } else if (mouseEvent.offsetX || mouseEvent.offsetY == 0) {
+            mouseX = mouseEvent.offsetX;
+            mouseY = mouseEvent.offsetY;
+        }
+        for (var i = 0; i < buttonX.length; i++) {
+            var measure = ctx.measureText(menuItems[i]).width;
+            if (mouseX > buttonX[i] + 2 * measure / 3 && mouseX < buttonX[i] + 5 * measure / 3) {
+                if (mouseY < buttonY[i] && mouseY > buttonY[i] - 40) {
+                    ctx.fillStyle = 'blue';
+                    ctx.font = "40px Verdana";
+                    centerText(ctx, menuItems[i], buttonY[i]);
+                    ctx.fillStyle = 'blue';
+                    fadeOut();
+                    //invoke button finctions here (Play,Highscores or Exit)
+
+                    //
+                }
+            }
+        }
+    }
+
+    function fadeOut() {
+        window.requestAnimationFrame(fadeOut);
+        var alpha = 0.2;
+        alpha += 0.1;
+        ctx.fillStyle = "rgba(0,0,0, "+alpha+")";
+        ctx.fillRect(0, 0, width, height);
+    }
 };
 
 /*
