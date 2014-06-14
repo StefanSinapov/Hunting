@@ -36,6 +36,7 @@ Renderer.prototype.drawAll = function (blaze, eggman) {
  */
 Renderer.CONFIG = function () {
     var constants = {
+        FONTS :'Comic Sans MS, Arial, Sans',
         BLAZE_LINE_LENGTH: 60,
         BLAZE_INNER_RADIUS: 10,
         BLAZE_OUTER_RADIUS: 20,
@@ -122,7 +123,7 @@ Renderer.prototype.drawEggman = function (eggman) {
     this.ctx.arc((x + 40), (y + 22), 8, 0, 2 * Math.PI);
     this.ctx.arc((x + 12), (y + 22), 8, 0, 2 * Math.PI);
     this.ctx.stroke();
-    this.ctx.fillStyle = "gray"
+    this.ctx.fillStyle = "gray";
     this.ctx.fill();
 
     this.ctx.beginPath();
@@ -135,7 +136,7 @@ Renderer.prototype.drawEggman = function (eggman) {
     this.ctx.moveTo((x + 47), (y + 31));
     this.ctx.arc((x + 47), (y + 31), 10, 1.5 * Math.PI, 2 * Math.PI);
     this.ctx.stroke();
-    this.ctx.fillStyle = "yellow"
+    this.ctx.fillStyle = "yellow";
     this.ctx.fill();
 
     this.ctx.beginPath();
@@ -161,19 +162,19 @@ Renderer.prototype.drawEggman = function (eggman) {
     this.ctx.moveTo((x + 30), (y + 8));
     this.ctx.arc((x + 25), (y + 8), 6, 0, 2 * Math.PI);
     this.ctx.stroke();
-    this.ctx.fillStyle = "lightpink"
+    this.ctx.fillStyle = "lightpink";
     this.ctx.fill();
 
     /*Draw Robotnik's eyes*/
     this.ctx.beginPath();
     this.ctx.arc((x + 22), (y + 8), 1.5, 0, 2 * Math.PI);
     this.ctx.stroke();
-    this.ctx.fillStyle = "lightblue"
+    this.ctx.fillStyle = "lightblue";
     this.ctx.fill();
     this.ctx.beginPath();
     this.ctx.arc((x + 25), (y + 8), 1.5, 0, 2 * Math.PI);
     this.ctx.stroke();
-    this.ctx.fillStyle = "lightblue"
+    this.ctx.fillStyle = "lightblue";
     this.ctx.fill();
 
     /*Draw Robotnik'snose and mustaches*/
@@ -186,12 +187,12 @@ Renderer.prototype.drawEggman = function (eggman) {
     this.ctx.lineTo((x + 13), (y + 14));
     this.ctx.lineTo((x + 23), (y + 12));
     this.ctx.stroke();
-    this.ctx.fillStyle = "brown"
+    this.ctx.fillStyle = "brown";
     this.ctx.fill();
     this.ctx.beginPath();
     this.ctx.arc((x + 23), (y + 11), 2, 0, 2 * Math.PI);
     this.ctx.stroke();
-    this.ctx.fillStyle = "salmon"
+    this.ctx.fillStyle = "salmon";
     this.ctx.fill();
     this.ctx.beginPath();
     this.ctx.moveTo((x + 23), (y + 12));
@@ -202,25 +203,25 @@ Renderer.prototype.drawEggman = function (eggman) {
     this.ctx.lineTo((x + 35), (y + 14));
     this.ctx.lineTo((x + 23), (y + 12));
     this.ctx.stroke();
-    this.ctx.fillStyle = "brown"
+    this.ctx.fillStyle = "brown";
     this.ctx.fill();
 
     /*Draw Eggmobile*/
     this.ctx.beginPath();
     this.ctx.arc((x + 25), (y + 28), 23, 1.9 * Math.PI, 1.1 * Math.PI);
     this.ctx.stroke();
-    this.ctx.fillStyle = "lightgray"
+    this.ctx.fillStyle = "lightgray";
     this.ctx.fill();
     this.ctx.beginPath();
     this.ctx.arc((x + 25), (y + 28), 23, 0.25 * Math.PI, 0.75 * Math.PI);
     this.ctx.stroke();
-    this.ctx.fillStyle = "black"
+    this.ctx.fillStyle = "black";
     this.ctx.fill();
     this.ctx.beginPath();
     this.ctx.moveTo((x + 10), (y + 45));
     this.ctx.arc((x + 10), (y + 45), 12, 1.3 * Math.PI, 2 * Math.PI);
     this.ctx.stroke();
-    this.ctx.fillStyle = "black"
+    this.ctx.fillStyle = "black";
     this.ctx.fill();
     this.ctx.beginPath();
     this.ctx.moveTo((x + 25), (y + 22));
@@ -231,7 +232,7 @@ Renderer.prototype.drawEggman = function (eggman) {
     this.ctx.beginPath();
     this.ctx.arc((x + 10), (y + 35), 5, 0, 2 * Math.PI);
     this.ctx.stroke();
-    this.ctx.fillStyle = "yellow"
+    this.ctx.fillStyle = "yellow";
     this.ctx.fill();
     this.ctx.beginPath();
     this.ctx.strokeRect((x + 24), (y + 38), 4, 6);
@@ -259,7 +260,7 @@ Renderer.prototype.drawEggman = function (eggman) {
     this.ctx.beginPath();
     this.ctx.arc((x + 35), (y + 19), 17, 0.23 * Math.PI, 0.76 * Math.PI);
     this.ctx.stroke();
-    this.ctx.fillStyle = "silver"
+    this.ctx.fillStyle = "silver";
     this.ctx.fill();
 };
 
@@ -378,7 +379,7 @@ Renderer.prototype.createRandomPlanet = function () {
  */
 Renderer.prototype.drawScore = function (blaze) {
     var scoreText = "Score: " + (blaze.score | 0); //todo: add blaze score
-    this.ctx.font = "30px Comic Sans MS, Arial, Sans";
+    this.ctx.font = '30px '+Renderer.CONFIG.get('FONTS');
     this.ctx.fillStyle = '#dcdcdc';
     this.ctx.fillText(scoreText, 10, 30);
 };
@@ -395,7 +396,7 @@ Renderer.prototype.drawIntro = function () {
     ctx.fillStyle = grd;
     ctx.fillRect(0, 0, this.width, this.height);
     ctx.fillStyle = 'black';
-    ctx.font = "100px Georgia";
+    ctx.font = "100px " + Renderer.CONFIG.get('FONTS');
     centerText(ctx, "Blaze Laserlight", 100);
 
     //buttons
@@ -407,7 +408,7 @@ Renderer.prototype.drawIntro = function () {
     var buttonY = [this.height / 2 - 100, this.height / 2 - 50, this.height / 2];
     var menuItems = ['Play', 'Highscores', 'Exit'];
     ctx.fillStyle = 'yellow';
-    ctx.font = "40px Verdana";
+    ctx.font = "40px " + Renderer.CONFIG.get('FONTS');
     centerText(ctx, menuItems[0], buttonY[0]);
     centerText(ctx, menuItems[1], buttonY[1]);
     centerText(ctx, menuItems[2], buttonY[2]);
@@ -416,15 +417,15 @@ Renderer.prototype.drawIntro = function () {
     //draw eggman
     var eggmanImage = new Image();
     eggmanImage.onload = function () {
-        ctx.drawImage(eggmanImage, 500, 270);
-    }
-    eggmanImage.src = 'http://img4.wikia.nocookie.net/__cb20130617124441/robotsupremacy/images/0/04/Eggman-eggman-club.gif';
+        ctx.drawImage(eggmanImage, 500, 250,250,300);
+    };
+    eggmanImage.src = 'resources/imgs/eggman.png';
     //draw blaze
     var blazeImage = new Image();
     blazeImage.onload = function () {
-        ctx.drawImage(blazeImage, 100, 300, 150, 300);
-    }
-    blazeImage.src = 'http://fc04.deviantart.net/fs71/f/2012/213/2/a/blaze_the_cat_by_bloomphantom-d59gqef.png';
+        ctx.drawImage(blazeImage, 100, 250, 150, 300);
+    };
+    blazeImage.src = 'resources/imgs/blaze.png';
 
     function centerText(ctx, text, y) {
         var x = getXCoordsOfMenuItem(ctx, text);
