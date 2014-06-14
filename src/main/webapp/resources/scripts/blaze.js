@@ -27,8 +27,10 @@ Blaze.prototype.shoot = function (target) {
 
     if (target.position.x <= this.position.x && this.position.x <= target.position.x + target.width
         && target.position.y <= this.position.y && this.position.y <= target.position.y + target.height) {
-        // console.log('hit at x:' + this.position.x + " y:" + this.position.y);
-        // TODO: if target have health call its method a.k.a target.getHit();
+        //console.log('hit at x:' + this.position.x + " y:" + this.position.y);
+        target.Hit();
+        this.score += target.score;
+        console.log(target.score);
     }
 };
 

@@ -31,7 +31,7 @@ Renderer.prototype.drawAll = function (blaze, eggman) {
     this.drawClip(blaze);
     this.drawScore(blaze);
 
-    if (eggman) {
+    if (eggman.onScreen) {
         this.drawEggman(eggman);
     }
 

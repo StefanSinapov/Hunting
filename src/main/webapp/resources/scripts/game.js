@@ -59,33 +59,7 @@ Game.CONFIG = function () {
  */
 function animationGameLoop(renderer, controller, blaze, eggman) {
     blaze.update(controller, eggman);
-
-    if (eggman.onScreen === true) {
-        eggman.Move();
-        // When the drawing is done, fix this
-        if ((eggman.position.x + 50 > renderer.width) || (eggman.position.x < 0)) {
-            eggman.speed = -eggman.speed;
-        }
-
-        if (controller.mouseClick) {
-            if ((controller.mouseClick.x > eggman.position.x) &&
-                (controller.mouseClick.x < eggman.position.x + 20) &&
-                (controller.mouseClick.y > eggman.position.y) &&
-                (controller.mouseClick.y < eggman.position.y + 20)
-                ) {
-
-                eggman.onScreen = false;
-                controller.mouseClick = undefined;
-
-            }
-        }
-    }
-    else {
-        // if timeForNewEggman
-        eggman.MoveTo(new Coordinate(20, 20));
-        eggman.onScreen = true;
-
-    }
+    eggman.update(renderer);
 
     requestAnimFrame(function () {
         animationGameLoop(renderer, controller, blaze, eggman);
