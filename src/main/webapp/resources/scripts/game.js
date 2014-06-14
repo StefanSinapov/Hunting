@@ -25,12 +25,14 @@ Game.prototype.start = function () {
     var renderer = new Renderer(this.width, this.height); // renderer object
     var controller = new Controller(); // controller object
 
+    renderer.drawIntro();
+
     var blazeInitialCoordinate = new Coordinate(this.width / 2, this.height / 2);
     var blaze = new Blaze(blazeInitialCoordinate); // blaze object
     var eggman = new Eggman(blazeInitialCoordinate); // todo: fix coordinate.
 
     setTimeout(function () {
-        animationLoop(renderer, controller, blaze, eggman);
+        animationGameLoop(renderer, controller, blaze, eggman);
     }, Game.CONFIG.get('INITIAL_WAIT_TIME'));
 };
 
@@ -41,7 +43,7 @@ Game.CONFIG = function () {
     var constants = {
         WIDTH: 800,
         HEIGHT: 600,
-        INITIAL_WAIT_TIME: 100,
+        INITIAL_WAIT_TIME: 10000,
         SCORES_MAX_COUNT: 10
     };
 
@@ -55,7 +57,7 @@ Game.CONFIG = function () {
 /*
  *   Function for animation loop of the game.
  */
-function animationLoop(renderer, controller, blaze, eggman) {
+function animationGameLoop(renderer, controller, blaze, eggman) {
     blaze.update(controller, eggman);
 
     if (eggman.onScreen === true) {
@@ -86,7 +88,7 @@ function animationLoop(renderer, controller, blaze, eggman) {
     }
 
     requestAnimFrame(function () {
-        animationLoop(renderer, controller, blaze, eggman);
+        animationGameLoop(renderer, controller, blaze, eggman);
     });
 
     renderer.drawAll(blaze, eggman);

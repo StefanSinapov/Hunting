@@ -21,13 +21,14 @@ function Renderer(width, height) {
  */
 Renderer.prototype.drawAll = function (blaze, eggman) {
     this.ctx.clearRect(0, 0, this.width, this.height);
-    this.drawBlaze(blaze);
     this.drawClip(blaze);
     this.drawScore(blaze);
 
     if (eggman) {
         this.drawEggman(eggman);
     }
+
+    this.drawBlaze(blaze);
 };
 
 /*
@@ -112,10 +113,154 @@ Renderer.prototype.drawClip = function (blaze) {
  *   Draws Eggman.
  */
 Renderer.prototype.drawEggman = function (eggman) {
-    var eggmanTopLeftX = eggman.position.x;
-    var eggmanTopLeftY = eggman.position.y;
-    this.ctx.strokeStyle = 'green';
-    this.ctx.strokeRect(eggmanTopLeftX, eggmanTopLeftY, eggman.width, eggman.height);
+    var x = eggman.position.x;
+    var y = eggman.position.y;
+
+    /*Some objects that have to stay in the back*/
+
+    this.ctx.beginPath();
+    this.ctx.arc((x + 40), (y + 22), 8, 0, 2 * Math.PI);
+    this.ctx.arc((x + 12), (y + 22), 8, 0, 2 * Math.PI);
+    this.ctx.stroke();
+    this.ctx.fillStyle = "gray"
+    this.ctx.fill();
+
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = "black";
+    this.ctx.strokeRect((x + 45), (y + 31), 12, 7);
+    this.ctx.fillStyle = "lightgray";
+    this.ctx.fillRect((x + 45), (y + 31), 12, 7);
+
+    this.ctx.beginPath();
+    this.ctx.moveTo((x + 47), (y + 31));
+    this.ctx.arc((x + 47), (y + 31), 10, 1.5 * Math.PI, 2 * Math.PI);
+    this.ctx.stroke();
+    this.ctx.fillStyle = "yellow"
+    this.ctx.fill();
+
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = "black";
+    this.ctx.strokeRect((x + 54), (y + 31), 3, 7);
+    this.ctx.fillStyle = "darkgray";
+    this.ctx.fillRect((x + 54), (y + 31), 3, 7);
+
+
+    /*Draw Robotnik's body*/
+    this.ctx.beginPath();
+    this.ctx.fillStyle = "red";
+    this.ctx.fillRect((x + 13), (y + 14), 25, 18);
+    this.ctx.strokeStyle = "black";
+    this.ctx.strokeRect((x + 13), (y + 14), 25, 18);
+    this.ctx.beginPath();
+    this.ctx.fillStyle = "yellow";
+    this.ctx.fillRect((x + 20), (y + 14), 10, 18);
+    this.ctx.strokeRect((x + 20), (y + 14), 10, 18);
+
+    /*Draw Robotnik's head*/
+    this.ctx.beginPath();
+    this.ctx.moveTo((x + 30), (y + 8));
+    this.ctx.arc((x + 25), (y + 8), 6, 0, 2 * Math.PI);
+    this.ctx.stroke();
+    this.ctx.fillStyle = "lightpink"
+    this.ctx.fill();
+
+    /*Draw Robotnik's eyes*/
+    this.ctx.beginPath();
+    this.ctx.arc((x + 22), (y + 8), 1.5, 0, 2 * Math.PI);
+    this.ctx.stroke();
+    this.ctx.fillStyle = "lightblue"
+    this.ctx.fill();
+    this.ctx.beginPath();
+    this.ctx.arc((x + 25), (y + 8), 1.5, 0, 2 * Math.PI);
+    this.ctx.stroke();
+    this.ctx.fillStyle = "lightblue"
+    this.ctx.fill();
+
+    /*Draw Robotnik'snose and mustaches*/
+    this.ctx.beginPath();
+    this.ctx.moveTo((x + 23), (y + 12));
+    this.ctx.lineTo((x + 13), (y + 8));
+    this.ctx.lineTo((x + 15), (y + 10));
+    this.ctx.lineTo((x + 13), (y + 12));
+    this.ctx.lineTo((x + 17), (y + 12));
+    this.ctx.lineTo((x + 13), (y + 14));
+    this.ctx.lineTo((x + 23), (y + 12));
+    this.ctx.stroke();
+    this.ctx.fillStyle = "brown"
+    this.ctx.fill();
+    this.ctx.beginPath();
+    this.ctx.arc((x + 23), (y + 11), 2, 0, 2 * Math.PI);
+    this.ctx.stroke();
+    this.ctx.fillStyle = "salmon"
+    this.ctx.fill();
+    this.ctx.beginPath();
+    this.ctx.moveTo((x + 23), (y + 12));
+    this.ctx.lineTo((x + 36), (y + 8));
+    this.ctx.lineTo((x + 38), (y + 10));
+    this.ctx.lineTo((x + 35), (y + 12));
+    this.ctx.lineTo((x + 39), (y + 12));
+    this.ctx.lineTo((x + 35), (y + 14));
+    this.ctx.lineTo((x + 23), (y + 12));
+    this.ctx.stroke();
+    this.ctx.fillStyle = "brown"
+    this.ctx.fill();
+
+    /*Draw Eggmobile*/
+    this.ctx.beginPath();
+    this.ctx.arc((x + 25), (y + 28), 23, 1.9 * Math.PI, 1.1 * Math.PI);
+    this.ctx.stroke();
+    this.ctx.fillStyle = "lightgray"
+    this.ctx.fill();
+    this.ctx.beginPath();
+    this.ctx.arc((x + 25), (y + 28), 23, 0.25 * Math.PI, 0.75 * Math.PI);
+    this.ctx.stroke();
+    this.ctx.fillStyle = "black"
+    this.ctx.fill();
+    this.ctx.beginPath();
+    this.ctx.moveTo((x + 10), (y + 45));
+    this.ctx.arc((x + 10), (y + 45), 12, 1.3 * Math.PI, 2 * Math.PI);
+    this.ctx.stroke();
+    this.ctx.fillStyle = "black"
+    this.ctx.fill();
+    this.ctx.beginPath();
+    this.ctx.moveTo((x + 25), (y + 22));
+    this.ctx.arc((x + 25), (y + 22), 23, Math.PI, 1.3 * Math.PI);
+    this.ctx.stroke();
+    this.ctx.fillStyle = "rgba(122, 251, 227, 0.44)";
+    this.ctx.fill();
+    this.ctx.beginPath();
+    this.ctx.arc((x + 10), (y + 35), 5, 0, 2 * Math.PI);
+    this.ctx.stroke();
+    this.ctx.fillStyle = "yellow"
+    this.ctx.fill();
+    this.ctx.beginPath();
+    this.ctx.strokeRect((x + 24), (y + 38), 4, 6);
+    this.ctx.fillStyle = "gold";
+    this.ctx.fillRect((x + 24), (y + 38), 4, 6);
+    this.ctx.beginPath();
+    this.ctx.fillStyle = "black";
+    this.ctx.fillRect((x + 38), (y + 36), 1.5, 4);
+    this.ctx.fillStyle = "gold";
+    this.ctx.fillRect((x + 40), (y + 36), 1.5, 4);
+    this.ctx.fillStyle = "black";
+    this.ctx.fillRect((x + 42), (y + 36), 1.5, 4);
+    this.ctx.fillStyle = "gold";
+    this.ctx.fillRect((x + 44), (y + 36), 1, 4);
+    this.ctx.beginPath();
+    this.ctx.arc((x + 35), (y + 31), 5, 0, 2 * Math.PI);
+    this.ctx.stroke();
+    this.ctx.fillStyle = "white";
+    this.ctx.fill();
+    this.ctx.beginPath();
+    this.ctx.arc((x + 35), (y + 31), 2, 0, 2 * Math.PI);
+    this.ctx.stroke();
+    this.ctx.fillStyle = "black";
+    this.ctx.fill();
+    this.ctx.beginPath();
+    this.ctx.arc((x + 35), (y + 19), 17, 0.23 * Math.PI, 0.76 * Math.PI);
+    this.ctx.stroke();
+    this.ctx.fillStyle = "silver"
+    this.ctx.fill();
 };
 
 /*
@@ -145,7 +290,6 @@ Renderer.prototype.createBackground = function () {
     rectAmmo.setAttribute('y', (this.height - 55).toString());
     rectAmmo.setAttribute('width', (20 * 3 + 10 * 2 + 10).toString());
     rectAmmo.setAttribute('height', '40');
-
     rectAmmo.setAttribute('style', 'fill: #dcdcdc;');
 
     svg.appendChild(rectAmmo);
@@ -242,19 +386,14 @@ Renderer.prototype.drawScore = function (blaze) {
 /*
  *   Draws the Intro screen.
  */
-<<<<<<< HEAD
-Renderer.prototype.drawIntro = function() {
-var canvas = document.getElementById("drawing");
-    var ctx = canvas.getContext("2d");
-    var width = canvas.getAttribute('width');
-    var height = canvas.getAttribute('height');
-
+Renderer.prototype.drawIntro = function () {
+    var ctx = this.ctx;
     //canvas background
     var grd = ctx.createLinearGradient(0, 0, 600, 0);
     grd.addColorStop(0, "#f210e6");
     grd.addColorStop(1, "#f41118");
     ctx.fillStyle = grd;
-    ctx.fillRect(0, 0, width, height);
+    ctx.fillRect(0, 0, this.width, this.height);
     ctx.fillStyle = 'black';
     ctx.font = "100px Georgia";
     centerText(ctx, "Blaze Laserlight", 100);
@@ -265,7 +404,7 @@ var canvas = document.getElementById("drawing");
         getXCoordsOfMenuItem(ctx, 'Highscores'),
         getXCoordsOfMenuItem(ctx, 'Exit')
     ];
-    var buttonY = [height / 2 - 100, height / 2 - 50, height / 2];
+    var buttonY = [this.height / 2 - 100, this.height / 2 - 50, this.height / 2];
     var menuItems = ['Play', 'Highscores', 'Exit'];
     ctx.fillStyle = 'yellow';
     ctx.font = "40px Verdana";
@@ -297,49 +436,52 @@ var canvas = document.getElementById("drawing");
         var x = (ctx.canvas.width - measurement.width) / 2;
         return x;
     }
-=======
-Renderer.prototype.drawIntro = function () {
->>>>>>> 0469cb110c9c9b2d4b02e90c9e7e1a0db76cb23d
 
-    //checking the mouse position
-    var mouseX;
-    var mouseY;
-    var time = 0.0;
-    canvas.addEventListener("mouseup", checkClick);
-
-    function checkClick(mouseEvent) {
-        if (mouseEvent.pageX || mouseEvent.pageY == 0) {
-            mouseX = mouseEvent.pageX - this.offsetLeft;
-            mouseY = mouseEvent.pageY - this.offsetTop;
-        } else if (mouseEvent.offsetX || mouseEvent.offsetY == 0) {
-            mouseX = mouseEvent.offsetX;
-            mouseY = mouseEvent.offsetY;
-        }
-        for (var i = 0; i < buttonX.length; i++) {
-            var measure = ctx.measureText(menuItems[i]).width;
-            if (mouseX > buttonX[i] + 2 * measure / 3 && mouseX < buttonX[i] + 5 * measure / 3) {
-                if (mouseY < buttonY[i] && mouseY > buttonY[i] - 40) {
-                    ctx.fillStyle = 'blue';
-                    ctx.font = "40px Verdana";
-                    centerText(ctx, menuItems[i], buttonY[i]);
-                    ctx.fillStyle = 'blue';
-                    fadeOut();
-                    //invoke button finctions here (Play,Highscores or Exit)
-
-                    //
-                }
-            }
-        }
-    }
-
-    function fadeOut() {
-        window.requestAnimationFrame(fadeOut);
-        var alpha = 0.2;
-        alpha += 0.1;
-        ctx.fillStyle = "rgba(0,0,0, "+alpha+")";
-        ctx.fillRect(0, 0, width, height);
-    }
 };
+
+/*
+ Renderer.prototype.drawIntro = function () {
+
+
+ //checking the mouse position
+ var mouseX;
+ var mouseY;
+ var time = 0.0;
+ this.canvas.addEventListener("mouseup", checkClick);
+
+ function checkClick(mouseEvent) {
+ if (mouseEvent.pageX || mouseEvent.pageY == 0) {
+ mouseX = mouseEvent.pageX - this.offsetLeft;
+ mouseY = mouseEvent.pageY - this.offsetTop;
+ } else if (mouseEvent.offsetX || mouseEvent.offsetY == 0) {
+ mouseX = mouseEvent.offsetX;
+ mouseY = mouseEvent.offsetY;
+ }
+ for (var i = 0; i < buttonX.length; i++) {
+ var measure = ctx.measureText(menuItems[i]).width;
+ if (mouseX > buttonX[i] + 2 * measure / 3 && mouseX < buttonX[i] + 5 * measure / 3) {
+ if (mouseY < buttonY[i] && mouseY > buttonY[i] - 40) {
+ ctx.fillStyle = 'blue';
+ ctx.font = "40px Verdana";
+ centerText(ctx, menuItems[i], buttonY[i]);
+ ctx.fillStyle = 'blue';
+ fadeOut();
+ //invoke button finctions here (Play,Highscores or Exit)
+
+ //
+ }
+ }
+ }
+ }
+
+ function fadeOut() {
+ window.requestAnimationFrame(fadeOut);
+ var alpha = 0.2;
+ alpha += 0.1;
+ ctx.fillStyle = "rgba(0,0,0, " + alpha + ")";
+ ctx.fillRect(0, 0, width, height);
+ }
+ };*/
 
 /*
  *   Draws the Exit screen
@@ -352,16 +494,16 @@ Renderer.prototype.drawB1 = function () {
 
 
     var x = 0,
-    y = 0;
+        y = 0;
     var paper = Raphael(container, 900, 700);
 
     /*Draw background - sky*/
 
     paper.rect(x, y, 800, 600)
-    .attr({
-        fill: 'lightblue',
-        'stroke-width': 0
-    });
+        .attr({
+            fill: 'lightblue',
+            'stroke-width': 0
+        });
 
     /*Draw sun ;)*/
 
@@ -434,52 +576,51 @@ Renderer.prototype.drawB1 = function () {
         });
 
 
-
     paper.circle((x + 645), (y + 60), 18)
-    .attr({
-        fill: "90-yellow-orange-yellow",
-        opacity: 0.9,
-        "stroke-width": 0
+        .attr({
+            fill: "90-yellow-orange-yellow",
+            opacity: 0.9,
+            "stroke-width": 0
 
-    })
+        });
 
 
     /* Draw sand.*/
 
     paper.rect(x, (y + 400), 800, 200)
-    .attr({
-        fill: '100-darkgoldenrod-gold',
-        opacity: 0.8,
-        'stroke-width': 0
-    });
+        .attr({
+            fill: '100-darkgoldenrod-gold',
+            opacity: 0.8,
+            'stroke-width': 0
+        });
 
     /* Draw sea. */
     paper.rect(x, (y + 350), 800, 50)
-    .attr({
-        fill: '100-blue:5-darkblue:50-#010746:80',
-        opacity: 1,
-        'stroke-width': 3,
-        stroke: '40-blue-darkblue',
-        'stroke-linecap': 'round'
-    });
+        .attr({
+            fill: '100-blue:5-darkblue:50-#010746:80',
+            opacity: 1,
+            'stroke-width': 3,
+            stroke: '40-blue-darkblue',
+            'stroke-linecap': 'round'
+        });
 
     /*
-*   Draw waves.
-*/
+     *   Draw waves.
+     */
     paper.path("M" + (x + 0) + "," + (y + 400)
         + "C" + (x + 50) + "," + (y + 450) + "," + (x + 150) + "," + (y + 400) + "," + (x + 170) + "," + (y + 400)
         + "C" + (x + 170) + "," + (y + 400) + "," + (x + 380) + "," + (y + 470) + "," + (x + 450) + "," + (y + 400)
         + "C" + (x + 450) + "," + (y + 400) + "," + (x + 570) + "," + (y + 440) + "," + (x + 650) + "," + (y + 400)
         + "C" + (x + 650) + "," + (y + 400) + "," + (x + 700) + "," + (y + 450) + "," + (x + 800) + "," + (y + 400)
         + "Z")
-    .attr({
-        fill: '90-white:25-blue',
-        opacity: 0.9,
-        stroke: '90-#000f48-#ffffff',
-        'stroke-width': 5,
-        'stroke-linecap': 'round',
-        'stroke-linejoin': 'round'
-    });
+        .attr({
+            fill: '90-white:25-blue',
+            opacity: 0.9,
+            stroke: '90-#000f48-#ffffff',
+            'stroke-width': 5,
+            'stroke-linecap': 'round',
+            'stroke-linejoin': 'round'
+        });
 
     /*Draw cloud.*/
 
@@ -490,15 +631,15 @@ Renderer.prototype.drawB1 = function () {
         + "C" + (x + 620) + "," + (y + 60) + "," + (x + 655) + "," + (y + 50) + "," + (x + 660) + "," + (y + 45)
         + "C" + (x + 675) + "," + (y + 35) + "," + (x + 680) + "," + (y + 45) + "," + (x + 690) + "," + (y + 40)
         + "Z")
-    .attr({
-        fill: '270-white-azure',
-        opacity: 0.2,
-        stroke: '100-gray-white-blue',
-        'stroke-width': 5,
-        'stroke-linecap': 'round',
-        'stroke-linejoin': 'round'
+        .attr({
+            fill: '270-white-azure',
+            opacity: 0.2,
+            stroke: '100-gray-white-blue',
+            'stroke-width': 5,
+            'stroke-linecap': 'round',
+            'stroke-linejoin': 'round'
 
-    });
+        });
 
 
     /* Draw back mountains */
@@ -514,13 +655,13 @@ Renderer.prototype.drawB1 = function () {
         + "C" + (x + 630) + "," + (y + 320) + "," + (x + 800) + "," + (y + 20) + "," + (x + 800) + "," + (y + 150)
         + "L" + (x + 800) + "," + (y + 150)
         + "L" + (x + 800) + "," + (y + 350)
-         + "Z")
-    //paper.path("M"+(x -10) 350 C 130 100 260 340 300 320 C 300 320 350 280 400 310 C 400 310 530 280 630 320 C 630 320 900 20 800 350 Z ')
-    .attr({
-        fill: "90-midnightblue-white:90-navy",
-        opacity: 0.01
+        + "Z")
+        //paper.path("M"+(x -10) 350 C 130 100 260 340 300 320 C 300 320 350 280 400 310 C 400 310 530 280 630 320 C 630 320 900 20 800 350 Z ')
+        .attr({
+            fill: "90-midnightblue-white:90-navy",
+            opacity: 0.01
 
-    });
+        });
 
     /* Draw front mountains */
 
@@ -532,30 +673,30 @@ Renderer.prototype.drawB1 = function () {
         + "C" + (x + 630) + "," + (y + 320) + "," + (x + 800) + "," + (y + 200) + "," + (x + 800) + "," + (y + 350)
         + "L" + (x + 800) + "," + (y + 350)
         + "Z")
-    .attr({
-        fill: "100-#002c06-green:30-lightgreen:100",
-        opacity: 0.2,
-        stroke: "100-#002c06-green:30-lightgreen:100",
-        'stroke-width': 5,
-        'stroke-linecap': 'round',
-        'stroke-linejoin': 'round'
-    });
+        .attr({
+            fill: "100-#002c06-green:30-lightgreen:100",
+            opacity: 0.2,
+            stroke: "100-#002c06-green:30-lightgreen:100",
+            'stroke-width': 5,
+            'stroke-linecap': 'round',
+            'stroke-linejoin': 'round'
+        });
     /*Draw some rocks*/
 
     paper.ellipse((x + 70), (y + 480), 50, 20)
-    .attr({
-        fill: "100-black-darkgray",
-        opacity: 0.6,
-        stroke: "100-black-darkgray",
-        'stroke-width': 5,
-    });
+        .attr({
+            fill: "100-black-darkgray",
+            opacity: 0.6,
+            stroke: "100-black-darkgray",
+            'stroke-width': 5
+        });
 
     /*draw flower*/
     paper.ellipse((x + 70), (y + 450), 1, 40)
         .attr({
             fill: "green",
             stroke: "darkgreen",
-            'stroke-width': 1,
+            'stroke-width': 1
         });
     paper.ellipse((x + 70), (y + 420), 7, 15)
         .attr({
@@ -604,37 +745,23 @@ Renderer.prototype.drawB1 = function () {
     /*draw more rocks*/
 
     paper.ellipse((x + 75), (y + 490), 30, 15)
-    .attr({
-        fill: "100-black-darkgray",
-        opacity: 0.6,
-        stroke: "100-black-darkgray",
-        'stroke-width': 5,
-    });
+        .attr({
+            fill: "100-black-darkgray",
+            opacity: 0.6,
+            stroke: "100-black-darkgray",
+            'stroke-width': 5
+        });
     paper.ellipse((x + 55), (y + 495), 20, 10)
-    .attr({
-        fill: "100-black-darkgray",
-        opacity: 0.6,
-        stroke: "100-black-darkgray",
-        'stroke-width': 5,
-    });
+        .attr({
+            fill: "100-black-darkgray",
+            opacity: 0.6,
+            stroke: "100-black-darkgray",
+            'stroke-width': 5
+        });
 
     /*Insert palm tree*/
     paper.image("img/PalmTree.png", (x + 530), (y + 190), 250, 250);
-
-    /*Колеги, сложила съм и още украса ако пожелаете я погледнете!
-    Първоначално беше на мястото на... цветето и моите камъни, но накрая я махнах и ги направих тях.*/
-
-    //paper.image("img/grass_strands.png", (x+40), (y+400), 100, 100);
-    //paper.image("img/grass_strands.png",(x+50), (y+410), 100, 100);
-    //paper.image("img/grass_strands.png", (x+60), (y+420), 100, 100);
-
-    //paper.image("img/120px-Earth_Island_Medium_Rock.png", (x+70), (y+470), 60, 60);
-
-
-    /*контролна черта*/
     paper.path("M" + (x + 50) + "," + (y + 50) + " L" + (x + 100) + "," + (y + 100));
-
-
 };
 
 /*
