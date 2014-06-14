@@ -174,3 +174,4 @@ UpgradeLog*.htm
 FakesAssemblies/
 .idea
 target
+/src/main/webapp/resources/scripts/test.js
