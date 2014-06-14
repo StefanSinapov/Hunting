@@ -4,6 +4,7 @@
 function Blaze(coordinate) {
     GameObject.call(this, coordinate);
     this.bullets = Blaze.CONFIG.get('MAX_BULLETS_COUNT');
+    this.score = 0;
 }
 
 /*
@@ -30,7 +31,7 @@ Blaze.prototype.shoot = function (target) {
         //console.log('hit at x:' + this.position.x + " y:" + this.position.y);
         target.Hit();
         this.score += target.score;
-        console.log(target.score);
+        //console.log(target.score);
     }
 };
 

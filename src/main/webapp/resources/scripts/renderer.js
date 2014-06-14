@@ -393,7 +393,7 @@ Renderer.prototype.createRandomPlanet = function () {
  *   Draws the score.
  */
 Renderer.prototype.drawScore = function (blaze) {
-    var scoreText = "Score: " + (blaze.score | 0); //todo: add blaze score
+    var scoreText = "Score: " + blaze.score;
     this.ctx.font = '30px ' + Renderer.CONFIG.get('FONTS');
     this.ctx.fillStyle = '#dcdcdc';
     this.ctx.fillText(scoreText, 10, 30);
