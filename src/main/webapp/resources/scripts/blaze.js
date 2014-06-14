@@ -21,7 +21,7 @@ Blaze.prototype.constructor = Blaze;
  */
 Blaze.prototype.shoot = function (target) {
     this.bullets--;
-    if (this.bullets === 0) {
+    if (this.bullets === Blaze.CONFIG.get('MIN_BULLETS_COUNT')) {
         this.reload();
     }
 
@@ -45,7 +45,9 @@ Blaze.prototype.reload = function () {
 Blaze.CONFIG = function () {
     var constants = {
         'MAX_BULLETS_COUNT': 3,
+        'MIN_BULLETS_COUNT': 0,
         'RELOADING_TIME': 3000
+
     };
 
     return {

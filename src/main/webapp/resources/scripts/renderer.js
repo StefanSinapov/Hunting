@@ -6,7 +6,7 @@ function Renderer(width, height) {
     this.height = height;
 
     var fragment = document.createDocumentFragment();
-    this.svg = this.createBackground();
+    this.svg = this.createBackgroundSVG();
 
     if (getRandomInt(0, 1)) {
         this.drawDayBackground();
@@ -274,7 +274,7 @@ Renderer.prototype.drawEggman = function (eggman) {
 /*
  *   Creates the background.
  */
-Renderer.prototype.createBackground = function () {
+Renderer.prototype.createBackgroundSVG = function () {
     // Creates the svg element
     var svg = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'svg');
     svg.setAttribute('id', 'container');
@@ -318,7 +318,9 @@ Renderer.prototype.drawNightBackground = function () {
     }
 };
 
-
+/*
+ *   Draws the clip background rectangle.
+ */
 Renderer.prototype.drawClipBackground = function () {
     var rect = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'rect');
     rect.setAttribute('x', '0');
