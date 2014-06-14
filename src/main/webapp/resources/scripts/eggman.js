@@ -4,9 +4,10 @@
 function Eggman(coordinate) {
     GameObject.call(this, coordinate);
     this.onScreen = false;
-    this.speed = Eggman.CONFIG.get('EGGMAN_SPEED');
+    this.cooldown = Eggman.CONFIG.get('EGGMAN_COOLDOWN');
     this.width = Eggman.CONFIG.get('EGGMAN_WIDTH');
     this.height = Eggman.CONFIG.get('EGGMAN_HEIGHT');
+    this.maxSpeed = Eggman.CONFIG.get('EGGMAN_MAXSPEED');
 }
 
 /*
@@ -28,13 +29,14 @@ Eggman.prototype.toString = function() {
 };
 
 /*
- *   Constants for the Blaze object.
+ *   Constants for the Eggman object.
  */
 Eggman.CONFIG = function () {
     var constants = {
         'EGGMAN_WIDTH': 60,
         'EGGMAN_HEIGHT': 60,
-        'EGGMAN_SPEED': 2
+        'EGGMAN_COOLDOWN': 100,
+        'EGGMAN_MAXSPEED': 5
 
     };
 
@@ -47,15 +49,58 @@ Eggman.CONFIG = function () {
 
 
 // Moves eggman with own speed
-Eggman.prototype.Move = function() {
-    this.position.x += this.speed;
-    this.position.y += 0;
+Eggman.prototype.Move = function(renderer) {
+
+    this.position.x += this.speedX;
+    this.position.y += this.speedY;
+    
+    if(this.isHit){
+
+    	if(this.position.y > renderer.height / 2){
+			this.onScreen = false;
+			this.isHit = false;
+			this.cooldown = Eggman.CONFIG.get('EGGMAN_COOLDOWN');
+		}
+
+		return;
+    }
+    
+    if(this.position.x + this.width > renderer.width
+    	|| this.position.x < 0){
+    	this.speedX = -this.speedX;
+    }
+
+    if(this.position.y + this.height > renderer.height / 2
+    	|| this.position.y < 0){
+    	this.speedY = -this.speedY;
+    }
 };
 
-Eggman.prototype.MoveTo = function(coordinate) {
-    this.position = coordinate;
-};
+// Call when Eggman is hit
+Eggman.prototype.Hit = function () {
+	this.isHit = true;
 
-Eggman.prototype.Hide = function() {
-    this.onScreen = false;
-};
+	this.score = (Math.abs(this.speedY) + Math.abs(this.speedX)) * 10;
+
+	this.speedX = 0;
+	this.speedY = 15;
+
+}
+
+Eggman.prototype.update = function(renderer) {
+	if(!this.onScreen){
+	   	--this.cooldown;
+    
+    	if(this.cooldown === 0){
+    	    this.onScreen = true;
+    	    var randomX = parseInt((Math.random() * 2)) * (renderer.width - this.width - 1);
+    	    var randomY = parseInt(Math.random() * (renderer.height / 2 - this.height))
+    	    var randomCoordinates = new Coordinate(randomX, randomY);
+    	    this.position = randomCoordinates;
+    	    this.speedX = parseInt(Math.random() * this.maxSpeed + 1);
+    	    this.speedY = parseInt(Math.random() * this.maxSpeed + 1);
+    	}
+	}
+
+	this.Move(renderer);
+}
