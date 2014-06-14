@@ -53,7 +53,7 @@ Eggman.prototype.Move = function(renderer) {
 
     this.position.x += this.speedX;
     this.position.y += this.speedY;
-    
+
     if(this.isHit){
 
     	if(this.position.y > renderer.height / 2){
@@ -65,9 +65,11 @@ Eggman.prototype.Move = function(renderer) {
 		return;
     }
     
-    if(this.position.x + this.width > renderer.width
-    	|| this.position.x < 0){
-    	this.speedX = -this.speedX;
+    if(this.onScreen && 
+    	(this.position.x > renderer.width || this.position.x + this.width < 0)){
+
+    	this.onScreen = false;
+    	this.cooldown = Eggman.CONFIG.get('EGGMAN_COOLDOWN');
     }
 
     if(this.position.y + this.height > renderer.height / 2
@@ -93,11 +95,14 @@ Eggman.prototype.update = function(renderer) {
     
     	if(this.cooldown === 0){
     	    this.onScreen = true;
-    	    var randomX = parseInt((Math.random() * 2)) * (renderer.width - this.width - 1);
-    	    var randomY = parseInt(Math.random() * (renderer.height / 2 - this.height))
-    	    var randomCoordinates = new Coordinate(randomX, randomY);
-    	    this.position = randomCoordinates;
+    	    var randomX = parseInt((Math.random() * 2)) * (renderer.width + this.width) - this.width;
+    	    var randomY = parseInt(Math.random() * (renderer.height / 2 - this.height));
+    	    
+    	    this.position = new Coordinate(randomX, randomY);
+
     	    this.speedX = parseInt(Math.random() * this.maxSpeed + 1);
+    	    if(randomX > 0) this.speedX = -this.speedX;
+
     	    this.speedY = parseInt(Math.random() * this.maxSpeed + 1);
     	}
 	}
