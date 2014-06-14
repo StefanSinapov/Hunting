@@ -288,21 +288,14 @@ Renderer.prototype.createBackground = function () {
 
 Renderer.prototype.drawNightBackground = function () {
     // Sets the background color.
-    var rect = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'rect');
-    rect.setAttribute('x', '0');
-    rect.setAttribute('y', '0');
-    rect.setAttribute('width', this.width.toString());
-    rect.setAttribute('height', this.height.toString());
-    var backgroundColorText = 'fill:' + Renderer.CONFIG.get('BACKGROUND_COLOR') + ';';
-    rect.setAttribute('style', backgroundColorText);
-    this.svg.appendChild(rect);
+    this.drawClipBackground();
 
     var rectAmmo = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'rect');
     rectAmmo.setAttribute('x', '15');
     rectAmmo.setAttribute('y', (this.height - 55).toString());
     rectAmmo.setAttribute('width', (20 * 3 + 10 * 2 + 10).toString());
     rectAmmo.setAttribute('height', '40');
-    rectAmmo.setAttribute('style', 'fill: #dcdcdc;');
+    rectAmmo.setAttribute('fill', '#dcdcdc');
 
     this.svg.appendChild(rectAmmo);
 
@@ -323,10 +316,18 @@ Renderer.prototype.drawNightBackground = function () {
     for (i = 0; i < 5; i++) {
         this.svg.appendChild(this.createRandomCloud());
     }
+};
 
 
+Renderer.prototype.drawClipBackground = function () {
+    var rect = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'rect');
+    rect.setAttribute('x', '0');
+    rect.setAttribute('y', '0');
+    rect.setAttribute('width', this.width.toString());
+    rect.setAttribute('height', this.height.toString());
+    rect.setAttribute('fill', Renderer.CONFIG.get('BACKGROUND_COLOR').toString());
+    this.svg.appendChild(rect);
 }
-
 
 Renderer.prototype.creteCanvas = function () {
     var canvas = document.createElement('canvas');
@@ -346,7 +347,7 @@ Renderer.prototype.createRandomStar = function () {
     var polygon = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'polygon');
 
     var x = getRandomInt(50, this.width - 50);
-    var y = getRandomInt(50, this.height - 400);
+    var y = getRandomInt(50, this.height - 50);
 
     var point1X = x + 2.9389;
     var point1Y = y + 9.0451;
@@ -376,8 +377,8 @@ Renderer.prototype.createRandomStar = function () {
  */
 Renderer.prototype.createRandomPlanet = function () {
     var circle = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'circle');
-    var cx = getRandomInt(50, this.width - 50);
-    var cy = getRandomInt(50, this.height - 500);
+    var cx = getRandomInt(100, this.width - 100);
+    var cy = getRandomInt(100, this.height - 100);
     var radius = 10;
     circle.setAttribute('cx', cx.toString());
     circle.setAttribute('cy', cy.toString());
@@ -520,7 +521,7 @@ Renderer.prototype.drawExit = function () {
     ];
     var buttonY = [height / 2];
     var menuItems = ['Credits'];
-    var credits = ['Pavel Hristov','Jivka Stoeva','Illiyan Yordanov','Ventsy Konov','Stefan Sinapov','Miroslav Gatsanoga'];
+    var credits = ['Pavel Hristov', 'Jivka Stoeva', 'Illiyan Yordanov', 'Ventsy Konov', 'Stefan Sinapov', 'Miroslav Gatsanoga'];
 
     //draw blaze
     var blazeImage = new Image();
@@ -533,7 +534,6 @@ Renderer.prototype.drawExit = function () {
     ctx.font = "40px Verdana";
     centerText(ctx, 'Credits', buttonY[0]);
 
-    
 
     function centerText(ctx, text, y) {
         var measurement = ctx.measureText(text);
@@ -556,7 +556,7 @@ Renderer.prototype.drawExit = function () {
         }
         for (var i = 0; i < menuItems.length; i++) {
             var measure = ctx.measureText(menuItems[i]).width;
-            if (mouseX > buttonX[i]+35 && mouseX < buttonX[i] + measure+35) {
+            if (mouseX > buttonX[i] + 35 && mouseX < buttonX[i] + measure + 35) {
                 if (mouseY < buttonY[i] && mouseY > buttonY[i] - 40) {
                     ctx.fillStyle = 'blue';
                     ctx.font = "40px Verdana";
@@ -586,12 +586,12 @@ Renderer.prototype.drawExit = function () {
                     ctx.font = "60px Georgia";
                     centerText(ctx, credits[i], creditsItemY + i * 100);
                 }
-            }  
+            }
         }, 30);
-        
+
     }
 
-     function getXCoordsOfMenuItem(ctx, text) {
+    function getXCoordsOfMenuItem(ctx, text) {
         var measurement = ctx.measureText(text);
         var x = (ctx.canvas.width - measurement.width) / 2;
         return x;
@@ -599,6 +599,7 @@ Renderer.prototype.drawExit = function () {
 };
 
 Renderer.prototype.drawDayBackground = function () {
+
     var x = 0,
         y = 0;
     var paper = Raphael(this.svg, 900, 700);
@@ -871,7 +872,7 @@ Renderer.prototype.createRandomCloud = function () {
 
     var cloud = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'path');
     var x = getRandomInt(100, this.width - 200);
-    var y = getRandomInt(50, this.height - 400);
+    var y = getRandomInt(100, this.height - 200);
 
     var points = "M" + (x ) + "," + (y) + "C" + (x + 20) + "," + (y + 30) + "," + (x + 10) + "," + (y + 50) + "," + (x - 10 ) + "," + (y + 40)
         + "C" + (x - 20) + "," + (y + 35) + "," + (x - 40) + "," + (y + 45) + "," + (x - 50) + "," + (y + 40)
