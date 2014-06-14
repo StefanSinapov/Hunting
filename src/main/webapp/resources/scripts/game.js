@@ -56,20 +56,7 @@ Game.CONFIG = function () {
  *   Function for animation loop of the game.
  */
 function animationLoop(renderer, controller, blaze, eggman) {
-
-    if (controller.mousePosition !== null && controller.mousePosition !== null) {
-        //  console.log(controller.mousePosition);
-        blaze.position = controller.mousePosition;
-    }
-
-    /* 
-     *  Blaze Shooting
-     */
-    if (controller.mouseClick) {
-        blaze.shoot();
-        controller.mouseClick = undefined;
-    }
-
+    blaze.update(controller, eggman);
 
     if (eggman.onScreen === true) {
         eggman.Move();

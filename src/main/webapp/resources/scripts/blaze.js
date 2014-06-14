@@ -19,14 +19,17 @@ Blaze.prototype.constructor = Blaze;
 /*
  *   Shoots and lowers the count of the total bullets.
  */
-Blaze.prototype.shoot = function () {
+Blaze.prototype.shoot = function (target) {
     this.bullets--;
-
     if (this.bullets === 0) {
         this.reload();
     }
 
-    //here to check if hit something?
+    if (target.position.x <= this.position.x && this.position.x <= target.position.x + target.width
+        && target.position.y <= this.position.y && this.position.y <= target.position.y + target.height) {
+        // console.log('hit at x:' + this.position.x + " y:" + this.position.y);
+        // TODO: if target have health call its method a.k.a target.getHit();
+    }
 };
 
 /*
@@ -59,7 +62,19 @@ Blaze.prototype.toString = function () {
     return "Blaze:\n" + GameObject.prototype.toString.call(this);
 };
 
+/*
+ *   Updates the state of Blaze.
+ */
+Blaze.prototype.update = function (controller, eggman) {
 
-Blaze.prototype.update = function (position) {
+    if (controller.mousePosition !== null) {
+        //  console.log(controller.mousePosition);
+        GameObject.prototype.update.call(this, controller.mousePosition);
+    }
 
+    if (controller.mouseClick !== null) {
+        this.shoot(eggman);
+        // console.log(controller.mouseClick);
+        controller.mouseClick = null;
+    }
 };

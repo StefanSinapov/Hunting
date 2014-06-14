@@ -19,7 +19,7 @@ function Renderer(width, height) {
 /*
  *   Draws all objects.
  */
-Renderer.prototype.drawAll = function(blaze, eggman) {
+Renderer.prototype.drawAll = function (blaze, eggman) {
     this.ctx.clearRect(0, 0, this.width, this.height);
     this.drawBlaze(blaze);
     this.drawClip(blaze);
@@ -33,7 +33,7 @@ Renderer.prototype.drawAll = function(blaze, eggman) {
 /*
  *   Constants for the game object.
  */
-Renderer.CONFIG = function() {
+Renderer.CONFIG = function () {
     var constants = {
         BLAZE_LINE_LENGTH: 60,
         BLAZE_INNER_RADIUS: 10,
@@ -49,7 +49,7 @@ Renderer.CONFIG = function() {
     };
 
     return {
-        get: function(name) {
+        get: function (name) {
             return constants[name];
         }
     };
@@ -58,7 +58,7 @@ Renderer.CONFIG = function() {
 /*
  *   Draws Blaze.
  */
-Renderer.prototype.drawBlaze = function(blaze) {
+Renderer.prototype.drawBlaze = function (blaze) {
 
     var LINE_LENGTH = Renderer.CONFIG.get('BLAZE_LINE_LENGTH');
     var INNER_RADIUS = Renderer.CONFIG.get('BLAZE_INNER_RADIUS');
@@ -95,7 +95,7 @@ Renderer.prototype.drawBlaze = function(blaze) {
 /*
  *   Draws the clip (available bullets).
  */
-Renderer.prototype.drawClip = function(blaze) {
+Renderer.prototype.drawClip = function (blaze) {
     var sx = 20;
     var sy = this.height - Renderer.CONFIG.get('BULLET_HEIGHT') - sx;
     var bulletsCount = blaze.bullets;
@@ -111,7 +111,7 @@ Renderer.prototype.drawClip = function(blaze) {
 /*
  *   Draws Eggman.
  */
-Renderer.prototype.drawEggman = function(eggman) {
+Renderer.prototype.drawEggman = function (eggman) {
     var eggmanTopLeftX = eggman.position.x;
     var eggmanTopLeftY = eggman.position.y;
     this.ctx.strokeStyle = 'green';
@@ -121,7 +121,7 @@ Renderer.prototype.drawEggman = function(eggman) {
 /*
  *   Creates the background.
  */
-Renderer.prototype.createBackground = function() {
+Renderer.prototype.createBackground = function () {
     // Creates the svg element
     var svg = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'svg');
     svg.setAttribute('height', this.height.toString());
@@ -164,11 +164,14 @@ Renderer.prototype.createBackground = function() {
         svg.appendChild(this.createRandomPlanet());
     }
 
+    for (i = 0; i < 5; i++) {
+        svg.appendChild(this.createRandomCloud());
+    }
 
     return svg;
 };
 
-Renderer.prototype.creteCanvas = function() {
+Renderer.prototype.creteCanvas = function () {
     var canvas = document.createElement('canvas');
     canvas.setAttribute('id', 'drawing');
     canvas.setAttribute('width', this.width.toString());
@@ -182,11 +185,11 @@ Renderer.prototype.creteCanvas = function() {
 /*
  *   Creates a random star.
  */
-Renderer.prototype.createRandomStar = function() {
+Renderer.prototype.createRandomStar = function () {
     var polygon = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'polygon');
 
     var x = getRandomInt(50, this.width - 50);
-    var y = getRandomInt(50, this.height - 50);
+    var y = getRandomInt(50, this.height - 400);
 
     var point1X = x + 2.9389;
     var point1Y = y + 9.0451;
@@ -214,10 +217,10 @@ Renderer.prototype.createRandomStar = function() {
 /*
  *   Creates a random planet.
  */
-Renderer.prototype.createRandomPlanet = function() {
+Renderer.prototype.createRandomPlanet = function () {
     var circle = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'circle');
     var cx = getRandomInt(50, this.width - 50);
-    var cy = getRandomInt(50, this.height - 50);
+    var cy = getRandomInt(50, this.height - 500);
     var radius = 10;
     circle.setAttribute('cx', cx.toString());
     circle.setAttribute('cy', cy.toString());
@@ -229,7 +232,7 @@ Renderer.prototype.createRandomPlanet = function() {
 /*
  *   Draws the score.
  */
-Renderer.prototype.drawScore = function(blaze) {
+Renderer.prototype.drawScore = function (blaze) {
     var scoreText = "Score: " + (blaze.score | 0); //todo: add blaze score
     this.ctx.font = "30px Comic Sans MS, Arial, Sans";
     this.ctx.fillStyle = '#dcdcdc';
@@ -239,6 +242,7 @@ Renderer.prototype.drawScore = function(blaze) {
 /*
  *   Draws the Intro screen.
  */
+<<<<<<< HEAD
 Renderer.prototype.drawIntro = function() {
 var canvas = document.getElementById("drawing");
     var ctx = canvas.getContext("2d");
@@ -293,6 +297,9 @@ var canvas = document.getElementById("drawing");
         var x = (ctx.canvas.width - measurement.width) / 2;
         return x;
     }
+=======
+Renderer.prototype.drawIntro = function () {
+>>>>>>> 0469cb110c9c9b2d4b02e90c9e7e1a0db76cb23d
 
     //checking the mouse position
     var mouseX;
@@ -337,15 +344,16 @@ var canvas = document.getElementById("drawing");
 /*
  *   Draws the Exit screen
  */
-Renderer.prototype.drawExit = function() {
+Renderer.prototype.drawExit = function () {
 
 };
 
 Renderer.prototype.drawB1 = function () {
 
-    var paper = Raphael(container, 800, 600);
-    var x = 40,
-    y = 40;
+
+    var x = 0,
+    y = 0;
+    var paper = Raphael(container, 900, 700);
 
     /*Draw background - sky*/
 
@@ -354,6 +362,87 @@ Renderer.prototype.drawB1 = function () {
         fill: 'lightblue',
         'stroke-width': 0
     });
+
+    /*Draw sun ;)*/
+
+    paper.ellipse((x + 645), (y + 60), 6, 60)
+        .attr({
+            transform: "r15",
+            fill: "110-orange-yellow",
+            opacity: 0.2,
+            'stroke-width': 0
+        });
+    paper.ellipse((x + 645), (y + 60), 6, 50)
+        .attr({
+            transform: "r35",
+            fill: "110-orange-yellow",
+            opacity: 0.3,
+            'stroke-width': 0
+        });
+    paper.ellipse((x + 645), (y + 60), 6, 60)
+        .attr({
+            transform: "r55",
+            fill: "110-orange-yellow",
+            opacity: 0.2,
+            'stroke-width': 0
+        });
+    paper.ellipse((x + 645), (y + 60), 6, 50)
+        .attr({
+            transform: "r75",
+            fill: "110-orange-yellow",
+            opacity: 0.3,
+            'stroke-width': 0
+        });
+
+    paper.ellipse((x + 645), (y + 60), 6, 60)
+        .attr({
+            transform: "r95",
+            fill: "110-orange-yellow",
+            opacity: 0.2,
+            'stroke-width': 0
+        });
+    paper.ellipse((x + 645), (y + 60), 6, 50)
+        .attr({
+            transform: "r115",
+            fill: "110-orange-yellow",
+            opacity: 0.3,
+            'stroke-width': 0
+        });
+
+    paper.ellipse((x + 645), (y + 60), 6, 60)
+        .attr({
+            transform: "r135",
+            fill: "100-orange-yellow",
+            opacity: 0.2,
+            'stroke-width': 0
+        });
+
+    paper.ellipse((x + 645), (y + 60), 6, 50)
+        .attr({
+            transform: "r155",
+            fill: "80-orange-yellow",
+            opacity: 0.3,
+            'stroke-width': 0
+        });
+
+    paper.ellipse((x + 645), (y + 60), 6, 60)
+        .attr({
+            transform: "r175",
+            fill: "70-orange-yellow",
+            opacity: 0.2,
+            'stroke-width': 0
+        });
+
+
+
+    paper.circle((x + 645), (y + 60), 18)
+    .attr({
+        fill: "90-yellow-orange-yellow",
+        opacity: 0.9,
+        "stroke-width": 0
+
+    })
+
 
     /* Draw sand.*/
 
@@ -367,7 +456,7 @@ Renderer.prototype.drawB1 = function () {
     /* Draw sea. */
     paper.rect(x, (y + 350), 800, 50)
     .attr({
-        fill: '100-blue:2-darkblue:100',
+        fill: '100-blue:5-darkblue:50-#010746:80',
         opacity: 1,
         'stroke-width': 3,
         stroke: '40-blue-darkblue',
@@ -384,7 +473,7 @@ Renderer.prototype.drawB1 = function () {
         + "C" + (x + 650) + "," + (y + 400) + "," + (x + 700) + "," + (y + 450) + "," + (x + 800) + "," + (y + 400)
         + "Z")
     .attr({
-        fill: '90-white-blue',
+        fill: '90-white:25-blue',
         opacity: 0.9,
         stroke: '90-#000f48-#ffffff',
         'stroke-width': 5,
@@ -411,26 +500,165 @@ Renderer.prototype.drawB1 = function () {
 
     });
 
-    /* Draw mountains */
+
+    /* Draw back mountains */
 
     paper.path("M" + (x + 0) + "," + (y + 350)
-        + "C" + (x + 130) + "," + (y + 100) + "," + (x + 260) + "," + (y + 340) + "," + (x + 300) + "," + (y + 320)
-        + "C" + (x + 300) + "," + (y + 320) + "," + (x + 350) + "," + (y + 280) + "," + (x + 400) + "," + (y + 310)
-        + "C" + (x + 400) + "," + (y + 310) + "," + (x + 530) + "," + (y + 280) + "," + (x + 630) + "," + (y + 320)
-        + "C" + (x + 630) + "," + (y + 320) + "," + (x + 900) + "," + (y + 20) + "," + (x + 800) + "," + (y + 350)
-        + "Z")
+        + "L" + (x + 0) + "," + (y + 150)
+        + "C" + (x + 50) + "," + (y + 100) + "," + (x + 100) + "," + (y + 150) + "," + (x + 350) + "," + (y + 350)
+        + "M" + (x + 200) + "," + (y + 350)
+        + "C" + (x + 320) + "," + (y + 150) + "," + (x + 350) + "," + (y + 280) + "," + (x + 480) + "," + (y + 350)
+        + "M" + (x + 200) + "," + (y + 350)
+        + "C" + (x + 550) + "," + (y + 210) + "," + (x + 630) + "," + (y + 200) + "," + (x + 730) + "," + (y + 320)
+        + "M" + (x + 500) + "," + (y + 350)
+        + "C" + (x + 630) + "," + (y + 320) + "," + (x + 800) + "," + (y + 20) + "," + (x + 800) + "," + (y + 150)
+        + "L" + (x + 800) + "," + (y + 150)
+        + "L" + (x + 800) + "," + (y + 350)
+         + "Z")
     //paper.path("M"+(x -10) 350 C 130 100 260 340 300 320 C 300 320 350 280 400 310 C 400 310 530 280 630 320 C 630 320 900 20 800 350 Z ')
     .attr({
-        fill: "100-darkgreen-white",
-        opacity: 0.1,
-        stroke: "100-darkgreen-white",
+        fill: "90-midnightblue-white:90-navy",
+        opacity: 0.01
+
+    });
+
+    /* Draw front mountains */
+
+    paper.path("M" + (x + 0) + "," + (y + 350)
+        + "L" + (x + 0) + "," + (y + 300)
+        + "C" + (x + 50) + "," + (y + 200) + "," + (x + 260) + "," + (y + 340) + "," + (x + 300) + "," + (y + 320)
+        + "C" + (x + 300) + "," + (y + 320) + "," + (x + 350) + "," + (y + 280) + "," + (x + 400) + "," + (y + 310)
+        + "C" + (x + 400) + "," + (y + 310) + "," + (x + 530) + "," + (y + 280) + "," + (x + 630) + "," + (y + 320)
+        + "C" + (x + 630) + "," + (y + 320) + "," + (x + 800) + "," + (y + 200) + "," + (x + 800) + "," + (y + 350)
+        + "L" + (x + 800) + "," + (y + 350)
+        + "Z")
+    .attr({
+        fill: "100-#002c06-green:30-lightgreen:100",
+        opacity: 0.2,
+        stroke: "100-#002c06-green:30-lightgreen:100",
         'stroke-width': 5,
         'stroke-linecap': 'round',
         'stroke-linejoin': 'round'
-    })
+    });
+    /*Draw some rocks*/
+
+    paper.ellipse((x + 70), (y + 480), 50, 20)
+    .attr({
+        fill: "100-black-darkgray",
+        opacity: 0.6,
+        stroke: "100-black-darkgray",
+        'stroke-width': 5,
+    });
+
+    /*draw flower*/
+    paper.ellipse((x + 70), (y + 450), 1, 40)
+        .attr({
+            fill: "green",
+            stroke: "darkgreen",
+            'stroke-width': 1,
+        });
+    paper.ellipse((x + 70), (y + 420), 7, 15)
+        .attr({
+            fill: "hotpink",
+            stroke: "white",
+            'stroke-width': 3
+        });
+
+    //paper.ellipse((x + 70), (y + 420), 4, 10)
+    //    .attr({
+    //        fill: "hotpink",
+    //        stroke: "purple",
+    //        'stroke-width': 1
+    //    });
+
+    paper.ellipse((x + 63), (y + 420), 2, 18)
+        .attr({
+            transform: 'r160',
+            fill: "pink",
+            stroke: "purple",
+            'stroke-width': 2
+        });
+    paper.ellipse((x + 77), (y + 420), 2, 18)
+        .attr({
+            transform: 'r200',
+            fill: "pink",
+            stroke: "purple",
+            'stroke-width': 2
+        });
+    paper.ellipse((x + 58), (y + 450), 3, 40)
+        .attr({
+            transform: 'r160',
+            fill: "green",
+            stroke: "darkgreen",
+            'stroke-width': 1
+        });
+
+    paper.ellipse((x + 82), (y + 457), 3, 32)
+        .attr({
+            transform: 'r200',
+            fill: "green",
+            stroke: "darkgreen",
+            'stroke-width': 1
+        });
+
+    /*draw more rocks*/
+
+    paper.ellipse((x + 75), (y + 490), 30, 15)
+    .attr({
+        fill: "100-black-darkgray",
+        opacity: 0.6,
+        stroke: "100-black-darkgray",
+        'stroke-width': 5,
+    });
+    paper.ellipse((x + 55), (y + 495), 20, 10)
+    .attr({
+        fill: "100-black-darkgray",
+        opacity: 0.6,
+        stroke: "100-black-darkgray",
+        'stroke-width': 5,
+    });
+
+    /*Insert palm tree*/
+    paper.image("img/PalmTree.png", (x + 530), (y + 190), 250, 250);
+
+    /*Колеги, сложила съм и още украса ако пожелаете я погледнете!
+    Първоначално беше на мястото на... цветето и моите камъни, но накрая я махнах и ги направих тях.*/
+
+    //paper.image("img/grass_strands.png", (x+40), (y+400), 100, 100);
+    //paper.image("img/grass_strands.png",(x+50), (y+410), 100, 100);
+    //paper.image("img/grass_strands.png", (x+60), (y+420), 100, 100);
+
+    //paper.image("img/120px-Earth_Island_Medium_Rock.png", (x+70), (y+470), 60, 60);
+
+
     /*контролна черта*/
     paper.path("M" + (x + 50) + "," + (y + 50) + " L" + (x + 100) + "," + (y + 100));
 
+
+};
+
+/*
+ *   Creates a random cloud;
+ */
+Renderer.prototype.createRandomCloud = function () {
+
+    var cloud = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'path');
+    var x = getRandomInt(100, this.width - 200);
+    var y = getRandomInt(50, this.height - 400);
+
+    var points = "M" + (x ) + "," + (y) + "C" + (x + 20) + "," + (y + 30) + "," + (x + 10) + "," + (y + 50) + "," + (x - 10 ) + "," + (y + 40)
+        + "C" + (x - 20) + "," + (y + 35) + "," + (x - 40) + "," + (y + 45) + "," + (x - 50) + "," + (y + 40)
+        + "C" + (x - 70) + "," + (y + 50) + "," + (x - 80) + "," + (y + 40) + "," + (x - 50) + "," + (y + 20)
+        + "C" + (x - 60) + "," + (y + 10) + "," + (x - 45) + "," + (y) + "," + (x - 40) + "," + (y - 5)
+        + "C" + (x - 10) + "," + (y - 15) + "," + (x - 20) + "," + (y - 5) + "," + (x - 10) + "," + (y - 10)
+        + "Z";
+
+    cloud.setAttribute('d', points);
+
+    var style = "fill: white;opacity: 0.8;stroke:black;stroke-width:1;";
+    cloud.setAttribute('style', style);
+
+    return cloud;
 };
 
 
