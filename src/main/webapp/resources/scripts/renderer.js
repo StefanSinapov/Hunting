@@ -488,7 +488,102 @@ Renderer.prototype.drawIntro = function () {
  *   Draws the Exit screen
  */
 Renderer.prototype.drawExit = function () {
+    var canvas = document.getElementById("drawing");
+    var ctx = canvas.getContext("2d");
+    var width = canvas.getAttribute('width');
+    var height = canvas.getAttribute('height');
 
+    //canvas background
+    var grd1 = ctx.createLinearGradient(0, 0, 750, 0);
+    grd1.addColorStop(0, "#ffb7f6");
+    grd1.addColorStop(0.5, "#f210e6");
+    grd1.addColorStop(1.0, "#ffb7f6");
+    ctx.fillStyle = grd1;
+    ctx.fillRect(0, 0, width, height);
+    ctx.fillStyle = 'black';
+    ctx.font = "70px Georgia";
+    centerText(ctx, "Thank you for playing!", 100);
+    var buttonX = [
+        getXCoordsOfMenuItem(ctx, 'Credits')
+    ];
+    var buttonY = [height / 2];
+    var menuItems = ['Credits'];
+    var credits = ['Pavel Hristov','Jivka Stoeva','Illiyan Yordanov','Ventsy Konov','Stefan Sinapov','Miroslav Gatsanoga'];
+
+    //draw blaze
+    var blazeImage = new Image();
+    blazeImage.onload = function () {
+        ctx.drawImage(blazeImage, 300, 300, 200, 300);
+    }
+    blazeImage.src = 'http://img3.wikia.nocookie.net/__cb20080120062526/sonic/images/6/67/Sonicchannel_blaze.png';
+
+    ctx.fillStyle = 'yellow';
+    ctx.font = "40px Verdana";
+    centerText(ctx, 'Credits', buttonY[0]);
+
+    
+
+    function centerText(ctx, text, y) {
+        var measurement = ctx.measureText(text);
+        var x = (ctx.canvas.width - measurement.width) / 2;
+        ctx.fillText(text, x, y);
+    }
+
+    var mouseX;
+    var mouseY;
+    var time = 0.0;
+    canvas.addEventListener("mouseup", checkClick);
+
+    function checkClick(mouseEvent) {
+        if (mouseEvent.pageX || mouseEvent.pageY == 0) {
+            mouseX = mouseEvent.pageX - this.offsetLeft;
+            mouseY = mouseEvent.pageY - this.offsetTop;
+        } else if (mouseEvent.offsetX || mouseEvent.offsetY == 0) {
+            mouseX = mouseEvent.offsetX;
+            mouseY = mouseEvent.offsetY;
+        }
+        for (var i = 0; i < menuItems.length; i++) {
+            var measure = ctx.measureText(menuItems[i]).width;
+            if (mouseX > buttonX[i]+35 && mouseX < buttonX[i] + measure+35) {
+                if (mouseY < buttonY[i] && mouseY > buttonY[i] - 40) {
+                    ctx.fillStyle = 'blue';
+                    ctx.font = "40px Verdana";
+                    centerText(ctx, menuItems[i], buttonY[i]);
+                    ctx.fillStyle = 'blue';
+                    //invoke button finctions here (Credits)
+                    showCredits(600);
+                    //
+                }
+            }
+        }
+    }
+
+    function showCredits(creditsItemY) {
+        setInterval(function () {
+            if (creditsItemY <= 80) {
+                ctx.fillStyle = 'yellow';
+                ctx.font = "60px Georgia";
+                centerText(ctx, credits[i], creditsItemY + i * 100);
+            } else {
+                ctx.fillStyle = 'black';
+                ctx.fillRect(0, 0, width, height);
+                var speed = -10;
+                creditsItemY = creditsItemY + speed;
+                for (var i = 0; i < credits.length; i += 1) {
+                    ctx.fillStyle = 'yellow';
+                    ctx.font = "60px Georgia";
+                    centerText(ctx, credits[i], creditsItemY + i * 100);
+                }
+            }  
+        }, 30);
+        
+    }
+
+     function getXCoordsOfMenuItem(ctx, text) {
+        var measurement = ctx.measureText(text);
+        var x = (ctx.canvas.width - measurement.width) / 2;
+        return x;
+    }
 };
 
 Renderer.prototype.drawB1 = function () {
