@@ -9,9 +9,9 @@ function Renderer(width, height) {
     this.svg = this.createBackground();
 
     if (getRandomInt(0, 1)) {
-        this.drawB1();
+        this.drawDayBackground();
     } else {
-        this.drawB2();
+        this.drawNightBackground();
     }
 
     var canvas = this.creteCanvas();
@@ -286,7 +286,7 @@ Renderer.prototype.createBackground = function () {
     return svg;
 };
 
-Renderer.prototype.drawB2 = function () {
+Renderer.prototype.drawNightBackground = function () {
     // Sets the background color.
     var rect = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'rect');
     rect.setAttribute('x', '0');
@@ -598,9 +598,7 @@ Renderer.prototype.drawExit = function () {
     }
 };
 
-Renderer.prototype.drawB1 = function () {
-
-
+Renderer.prototype.drawDayBackground = function () {
     var x = 0,
         y = 0;
     var paper = Raphael(this.svg, 900, 700);
