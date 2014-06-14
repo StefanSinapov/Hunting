@@ -82,7 +82,7 @@ Eggman.prototype.Move = function(renderer) {
 Eggman.prototype.Hit = function () {
 	this.isHit = true;
 
-	this.score = (Math.abs(this.speedY) + Math.abs(this.speedX)) * 10;
+	this.score = Math.abs(this.speedY) * 5 + Math.abs(this.speedX) * 10;
 
 	this.speedX = 0;
 	this.speedY = 15;
