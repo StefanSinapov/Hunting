@@ -43,7 +43,7 @@ Game.CONFIG = function () {
     var constants = {
         WIDTH: 800,
         HEIGHT: 600,
-        INITIAL_WAIT_TIME: 10000,
+        INITIAL_WAIT_TIME: 1000,
         SCORES_MAX_COUNT: 10
     };
 

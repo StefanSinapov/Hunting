@@ -6,10 +6,17 @@ function Renderer(width, height) {
     this.height = height;
 
     var fragment = document.createDocumentFragment();
-    var svg = this.createBackground();
+    this.svg = this.createBackground();
+
+    if (getRandomInt(0, 1)) {
+        this.drawB1();
+    } else {
+        this.drawB2();
+    }
+
     var canvas = this.creteCanvas();
 
-    fragment.appendChild(svg);
+    fragment.appendChild(this.svg);
     fragment.appendChild(canvas);
     document.body.appendChild(fragment);
 
@@ -36,7 +43,7 @@ Renderer.prototype.drawAll = function (blaze, eggman) {
  */
 Renderer.CONFIG = function () {
     var constants = {
-        FONTS :'Comic Sans MS, Arial, Sans',
+        FONTS: 'Comic Sans MS, Arial, Sans',
         BLAZE_LINE_LENGTH: 60,
         BLAZE_INNER_RADIUS: 10,
         BLAZE_OUTER_RADIUS: 20,
@@ -270,12 +277,16 @@ Renderer.prototype.drawEggman = function (eggman) {
 Renderer.prototype.createBackground = function () {
     // Creates the svg element
     var svg = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'svg');
+    svg.setAttribute('id', 'container');
     svg.setAttribute('height', this.height.toString());
     svg.setAttribute('width', this.width.toString());
     svg.style.position = 'fixed';
     svg.style.top = '31px';
     svg.style.left = '31px';
+    return svg;
+};
 
+Renderer.prototype.drawB2 = function () {
     // Sets the background color.
     var rect = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'rect');
     rect.setAttribute('x', '0');
@@ -284,7 +295,7 @@ Renderer.prototype.createBackground = function () {
     rect.setAttribute('height', this.height.toString());
     var backgroundColorText = 'fill:' + Renderer.CONFIG.get('BACKGROUND_COLOR') + ';';
     rect.setAttribute('style', backgroundColorText);
-    svg.appendChild(rect);
+    this.svg.appendChild(rect);
 
     var rectAmmo = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'rect');
     rectAmmo.setAttribute('x', '15');
@@ -293,28 +304,29 @@ Renderer.prototype.createBackground = function () {
     rectAmmo.setAttribute('height', '40');
     rectAmmo.setAttribute('style', 'fill: #dcdcdc;');
 
-    svg.appendChild(rectAmmo);
+    this.svg.appendChild(rectAmmo);
 
     // Creates the stars
     var starsCount = Renderer.CONFIG.get('BACKGROUND_STARS_COUNT');
 
     for (var i = 0; i < starsCount; i++) {
-        svg.appendChild(this.createRandomStar());
+        this.svg.appendChild(this.createRandomStar());
     }
 
     // Creates the planets
     var planetsCount = Renderer.CONFIG.get('BACKGROUND_PLANETS_COUNT');
 
     for (i = 0; i < planetsCount; i++) {
-        svg.appendChild(this.createRandomPlanet());
+        this.svg.appendChild(this.createRandomPlanet());
     }
 
     for (i = 0; i < 5; i++) {
-        svg.appendChild(this.createRandomCloud());
+        this.svg.appendChild(this.createRandomCloud());
     }
 
-    return svg;
-};
+
+}
+
 
 Renderer.prototype.creteCanvas = function () {
     var canvas = document.createElement('canvas');
@@ -379,7 +391,7 @@ Renderer.prototype.createRandomPlanet = function () {
  */
 Renderer.prototype.drawScore = function (blaze) {
     var scoreText = "Score: " + (blaze.score | 0); //todo: add blaze score
-    this.ctx.font = '30px '+Renderer.CONFIG.get('FONTS');
+    this.ctx.font = '30px ' + Renderer.CONFIG.get('FONTS');
     this.ctx.fillStyle = '#dcdcdc';
     this.ctx.fillText(scoreText, 10, 30);
 };
@@ -417,7 +429,7 @@ Renderer.prototype.drawIntro = function () {
     //draw eggman
     var eggmanImage = new Image();
     eggmanImage.onload = function () {
-        ctx.drawImage(eggmanImage, 500, 250,250,300);
+        ctx.drawImage(eggmanImage, 500, 250, 250, 300);
     };
     eggmanImage.src = 'resources/imgs/eggman.png';
     //draw blaze
@@ -496,7 +508,7 @@ Renderer.prototype.drawB1 = function () {
 
     var x = 0,
         y = 0;
-    var paper = Raphael(container, 900, 700);
+    var paper = Raphael(this.svg, 900, 700);
 
     /*Draw background - sky*/
 
@@ -699,19 +711,13 @@ Renderer.prototype.drawB1 = function () {
             stroke: "darkgreen",
             'stroke-width': 1
         });
+
     paper.ellipse((x + 70), (y + 420), 7, 15)
         .attr({
             fill: "hotpink",
             stroke: "white",
             'stroke-width': 3
         });
-
-    //paper.ellipse((x + 70), (y + 420), 4, 10)
-    //    .attr({
-    //        fill: "hotpink",
-    //        stroke: "purple",
-    //        'stroke-width': 1
-    //    });
 
     paper.ellipse((x + 63), (y + 420), 2, 18)
         .attr({
@@ -761,8 +767,8 @@ Renderer.prototype.drawB1 = function () {
         });
 
     /*Insert palm tree*/
-    paper.image("img/PalmTree.png", (x + 530), (y + 190), 250, 250);
-    paper.path("M" + (x + 50) + "," + (y + 50) + " L" + (x + 100) + "," + (y + 100));
+    paper.image("resources/imgs/PalmTree.png", (x + 530), (y + 190), 250, 250);
+    // paper.path("M" + (x + 50) + "," + (y + 50) + " L" + (x + 100) + "," + (y + 100));
 };
 
 /*
@@ -782,10 +788,8 @@ Renderer.prototype.createRandomCloud = function () {
         + "Z";
 
     cloud.setAttribute('d', points);
-
     var style = "fill: white;opacity: 0.8;stroke:black;stroke-width:1;";
     cloud.setAttribute('style', style);
-
     return cloud;
 };
 
