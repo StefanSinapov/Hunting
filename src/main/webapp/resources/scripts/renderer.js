@@ -58,7 +58,8 @@ Renderer.CONFIG = function () {
         BULLET_SPACING: 5,
         BACKGROUND_COLOR: '#181e4b',
         BACKGROUND_STARS_COUNT: 50,
-        BACKGROUND_PLANETS_COUNT: 5
+        BACKGROUND_PLANETS_COUNT: 5,
+        GAME_NAME: 'Blaze Laser Light'
     };
 
     return {
@@ -449,6 +450,7 @@ Renderer.prototype.drawScore = function (blaze) {
  *   Draws the Intro screen.
  */
 Renderer.prototype.drawIntro = function (highScores) {
+    console.log(highScores);
     var self = this;
     var grd = this.ctx.createLinearGradient(0, 0, 600, 0);
     grd.addColorStop(0, "#f210e6");
@@ -457,8 +459,7 @@ Renderer.prototype.drawIntro = function (highScores) {
     this.ctx.fillRect(0, 0, this.width, this.height);
     this.ctx.fillStyle = 'black';
     this.ctx.font = "90px " + Renderer.CONFIG.get('FONTS');
-    this.ctx.fillText('Blaze Laserlight', 50, 100);
-
+    this.ctx.fillText(Renderer.CONFIG.get('GAME_NAME'), 50, 100);
 
     //draw eggman
     var eggmanImage = new Image();
@@ -474,6 +475,18 @@ Renderer.prototype.drawIntro = function (highScores) {
         self.ctx.drawImage(blazeImage, 100, 250, 150, 300);
     };
 
+    var x = this.width / 2  -110;
+    var y = 200;
+    var text = "", player, i;
+
+    this.ctx.font = "25px " + Renderer.CONFIG.get('FONTS');
+    for (i = 0; i < highScores.length; i++) {
+        player = highScores[i];
+        text = player.id + ". " + player.name + " " + player.score;
+        this.ctx.fillText(text, x, y);
+        y += 30;
+    }
+
 };
 
 /*
@@ -481,8 +494,6 @@ Renderer.prototype.drawIntro = function (highScores) {
  */
 Renderer.prototype.drawExit = function () {
     var self = this;
-
-    //canvas background
     var grd1 = this.ctx.createLinearGradient(0, 0, 750, 0);
     grd1.addColorStop(0, "#ffb7f6");
     grd1.addColorStop(0.5, "#f210e6");
@@ -579,8 +590,6 @@ Renderer.prototype.drawExit = function () {
         var x = (ctx.canvas.width - measurement.width) / 2;
         return x;
     }
-
-    //canvas.removeEventListener("mouseup", checkClick);
 };
 
 Renderer.prototype.drawDayBackground = function () {

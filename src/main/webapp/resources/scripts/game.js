@@ -27,7 +27,6 @@ Game.prototype.start = function () {
 
     var renderer = new Renderer(this.width, this.height); // renderer object
     var controller = new Controller(); // controller object
-
     renderer.drawIntro(this.highScores);
 
     var blazeInitialCoordinate = new Coordinate(this.width / 2, this.height / 2);
