@@ -31,6 +31,9 @@ Blaze.prototype.shoot = function (eggman) {
         && eggman.position.y <= this.position.y && this.position.y <= eggman.position.y + eggman.height) {
         this.score += eggman.die();
     }
+    else{
+        ++this.missedCount;
+    }
 };
 
 /*
