@@ -5,7 +5,6 @@ import com.team.blaze.dao.ScoreDAO;
 import com.team.blaze.models.ConnectionType;
 import com.team.blaze.models.Player;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
@@ -64,21 +63,33 @@ public class FormGame implements Serializable
 
     public void saveScores()
     {
+        System.out.println("Need to be implemeted.");
         System.out.println("Saving " + this.formHiddenInput);
+        /*
+         List<Player> list = new ArrayList<>();
 
-        List<Player> list = new ArrayList<>();
+         String[] splitted = this.formHiddenInput.split(",");
 
-        String[] splitted = this.formHiddenInput.split(",");
+         Player player;
+         Player newplayer = null;
+         Player deletePlayer = null;
+         for (int i = 0; i < splitted.length; i = i + 3)
+         {
+         long id = Long.parseLong(splitted[i]);
 
-        Player player;
-        for (int i = 0; i < splitted.length; i = i + 3)
-        {
-            long id = Long.parseLong(splitted[i]);
-            String name = splitted[i + 1];
-            int score = Integer.parseInt(splitted[i + 2]);
-            player = new Player(id, score, name);
-            list.add(player);
-        }
+         String name = splitted[i + 1];
+         int score = Integer.parseInt(splitted[i + 2]);
+         if (id == 11)
+         {
+         newplayer = new Player(id, score, name);
+         }
+         player = new Player(id, score, name);
+         list.add(player);
+         }
+         // find missing player.
+
+         scoreDAO.deletePlayer(deletePlayer);
+         scoreDAO.createPlayer(newplayer);*/
 
     }
 

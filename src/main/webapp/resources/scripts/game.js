@@ -29,20 +29,23 @@ Game.prototype.start = function () {
     this.getHighScores();
     this.logScores();
     var renderer = new Renderer(this.width, this.height); // renderer object
-    var controller = new Controller(); // controller object
+    //var controller = new Controller(); // controller object
 
-    renderer.drawIntro();
+    renderer.drawIntro(this.highScores);
 
-    var blazeInitialCoordinate = new Coordinate(this.width / 2, this.height / 2);
-    var blaze = new Blaze(blazeInitialCoordinate); // blaze object
-    var eggman = new Eggman(blazeInitialCoordinate); // todo: fix coordinate.
+   // var blazeInitialCoordinate = new Coordinate(this.width / 2, this.height / 2);
+    //var blaze = new Blaze(blazeInitialCoordinate); // blaze object
+    //var eggman = new Eggman(blazeInitialCoordinate); // todo: fix coordinate.
 
     var sonicInitialCoordinate = new Coordinate(-80, this.height - 100); // TODO: move numbers as constants
     var sonic = new Sonic(sonicInitialCoordinate);
 
+
+
     setTimeout(function () {
         animationGameLoop(self, renderer, controller, blaze, eggman, sonic);
     }, Game.CONFIG.get('INITIAL_WAIT_TIME'));
+
 };
 
 /*
@@ -116,6 +119,11 @@ function animationGameLoop(game, renderer, controller, blaze, eggman, sonic) {
     renderer.drawAll(blaze, eggman, sonic);
 
     if (blaze.missedCount >= 3) {
+
+        this.isEnd = true;
+        this.logScores();
+        renderer.drawExit();
+
         game.isEnd = true;
         game.logScores('someName', blaze.score);
     }
@@ -167,5 +175,5 @@ Game.prototype.sortHighScores = function () {
         }
     }
     console.log(this.highScores);
-}
+};
 
