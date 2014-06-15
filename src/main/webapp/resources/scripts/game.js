@@ -29,22 +29,22 @@ Game.prototype.start = function () {
     this.getHighScores();
     this.logScores();
     var renderer = new Renderer(this.width, this.height); // renderer object
-    //var controller = new Controller(); // controller object
+    var controller = new Controller(); // controller object
 
-    renderer.drawIntro(this.highScores);
+    //renderer.drawIntro(this.highScores);
 
-   // var blazeInitialCoordinate = new Coordinate(this.width / 2, this.height / 2);
-    //var blaze = new Blaze(blazeInitialCoordinate); // blaze object
-    //var eggman = new Eggman(blazeInitialCoordinate); // todo: fix coordinate.
+    var blazeInitialCoordinate = new Coordinate(this.width / 2, this.height / 2);
+    var blaze = new Blaze(blazeInitialCoordinate); // blaze object
+    var eggman = new Eggman(blazeInitialCoordinate); // todo: fix coordinate.
 
-    var sonicInitialCoordinate = new Coordinate(-80, this.height - 100); // TODO: move numbers as constants
-    var sonic = new Sonic(sonicInitialCoordinate);
+   // var sonicInitialCoordinate = new Coordinate(-80, this.height - 100); // TODO: move numbers as constants
+   // var sonic = new Sonic(sonicInitialCoordinate);
 
 
 
-    setTimeout(function () {
-        animationGameLoop(self, renderer, controller, blaze, eggman, sonic);
-    }, Game.CONFIG.get('INITIAL_WAIT_TIME'));
+   setTimeout(function () {
+       animationGameLoop(renderer, controller, blaze, eggman);
+   }, Game.CONFIG.get('INITIAL_WAIT_TIME'));
 
 };
 
@@ -102,7 +102,7 @@ Game.prototype.logScores = function (currentName, currentScore) {
 /*
  *   Function for animation loop of the game.
  */
-function animationGameLoop(game, renderer, controller, blaze, eggman, sonic) {
+function animationGameLoop(game, renderer, controller, blaze, eggman) {
 
     if (game.isEnd) {
         return; // TODO: Show end screen -> renderer.drawEnd() ?
@@ -110,22 +110,18 @@ function animationGameLoop(game, renderer, controller, blaze, eggman, sonic) {
 
     blaze.update(controller, eggman);
     eggman.update(renderer);
-    sonic.update(renderer);
+   // sonic.update(renderer);
 
     requestAnimFrame(function () {
-        animationGameLoop(game, renderer, controller, blaze, eggman, sonic);
+        animationGameLoop(game, renderer, controller, blaze, eggman);
     });
 
-    renderer.drawAll(blaze, eggman, sonic);
+    renderer.drawAll(blaze, eggman);
 
     if (blaze.missedCount >= 3) {
-
-        this.isEnd = true;
-        this.logScores();
-        renderer.drawExit();
-
         game.isEnd = true;
         game.logScores('someName', blaze.score);
+        renderer.drawExit();
     }
 }
 
