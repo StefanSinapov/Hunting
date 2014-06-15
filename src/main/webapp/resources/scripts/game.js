@@ -66,6 +66,11 @@ function animationGameLoop(renderer, controller, blaze, eggman) {
     });
 
     renderer.drawAll(blaze, eggman);
+
+    if (blaze.missedCount >= 3) {
+        // this.logScores();
+        return;
+    }
 }
 
 /*
