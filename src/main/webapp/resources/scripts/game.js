@@ -5,6 +5,10 @@ function Game() {
     this.width = Game.CONFIG.get('WIDTH');
     this.height = Game.CONFIG.get('HEIGHT');
 
+    this.highScores = [];
+    this.isEnd = Game.CONFIG.get('INITIAL_END');
+    this.scoreHolder = document.getElementById('myform:scores');
+
     window.requestAnimFrame = (function () {
         return  window.requestAnimationFrame ||
             window.webkitRequestAnimationFrame ||
@@ -14,15 +18,14 @@ function Game() {
             };
     })();
 
-    this.highScores = [];
-    this.isEnd = Game.CONFIG.get('INITIAL_END');
-    this.scoreHolder = document.getElementById('myform:scores');
 }
+
 
 /*
  *   Function that starts the game.
  */
 Game.prototype.start = function () {
+    var self = this;
     this.getHighScores();
     this.logScores();
     var renderer = new Renderer(this.width, this.height); // renderer object
@@ -38,7 +41,7 @@ Game.prototype.start = function () {
     var sonic = new Sonic(sonicInitialCoordinate);
 
     setTimeout(function () {
-        animationGameLoop(renderer, controller, blaze, eggman);
+        animationGameLoop(self, renderer, controller, blaze, eggman);
     }, Game.CONFIG.get('INITIAL_WAIT_TIME'));
 };
 
@@ -60,55 +63,6 @@ Game.CONFIG = function () {
         }
     };
 }();
-
-/*
- *   Function for animation loop of the game.
- */
-function animationGameLoop(renderer, controller, blaze, eggman) {
-
-    if (this.isEnd) {
-        return;
-    }
-
-    blaze.update(controller, eggman);
-    eggman.update(renderer);
-
-    requestAnimFrame(function () {
-        animationGameLoop(renderer, controller, blaze, eggman);
-    });
-
-    renderer.drawAll(blaze, eggman);
-
-    if (blaze.missedCount >= 3) {
-        this.isEnd = true;
-        this.logScores();
-    }
-}
-
-/*
- *   Gets the high scores from local storage.
- */
-Game.prototype.getHighScores = function () {
-    var highScoresText = this.scoreHolder.value;
-
-    var i, player, spitArray, length, playerName, playerScore, playerId;
-
-    if (highScoresText) {
-        spitArray = highScoresText.split(',');
-        length = spitArray.length;
-
-        for (i = 0; i < length; i += 3) {
-            playerId = parseInt(spitArray[i]);
-            playerName = spitArray[i + 1];
-            playerScore = parseInt(spitArray[i + 2]);
-
-            if (playerName !== undefined && !isNaN(playerScore)) {
-                player = new Player(playerId, playerName, playerScore);
-                this.highScores.push(player);
-            }
-        }
-    }
-};
 
 /*
  *  Writes the high scores to the local storage.
@@ -143,6 +97,58 @@ Game.prototype.logScores = function (currentName, currentScore) {
 };
 
 /*
+ *   Function for animation loop of the game.
+ */
+function animationGameLoop (game, renderer, controller, blaze, eggman) {
+
+    if (game.isEnd) {
+        return; // TODO: Show end screen -> renderer.drawEnd() ?
+    }
+
+    blaze.update(controller, eggman);
+    eggman.update(renderer);
+
+    requestAnimFrame(function () {
+        animationGameLoop(game, renderer, controller, blaze, eggman);
+    });
+
+    renderer.drawAll(blaze, eggman);
+
+    if (blaze.missedCount >= 3) {
+        game.isEnd = true;
+        game.logScores('someName', blaze.score);
+    }
+}
+
+
+/*
+ *   Gets the high scores from local storage.
+ */
+Game.prototype.getHighScores = function () {
+    var highScoresText = this.scoreHolder.value;
+
+    var i, player, spitArray, length, playerName, playerScore, playerId;
+
+    if (highScoresText) {
+        spitArray = highScoresText.split(',');
+        length = spitArray.length;
+
+        for (i = 0; i < length; i += 3) {
+            playerId = parseInt(spitArray[i]);
+            playerName = spitArray[i + 1];
+            playerScore = parseInt(spitArray[i + 2]);
+
+            if (playerName !== undefined && !isNaN(playerScore)) {
+                player = new Player(playerId, playerName, playerScore);
+                this.highScores.push(player);
+            }
+        }
+    }
+};
+
+
+
+/*
  *  Sorts the high scores.
  */
 Game.prototype.sortHighScores = function () {
@@ -162,3 +168,4 @@ Game.prototype.sortHighScores = function () {
     }
     console.log(this.highScores);
 }
+
