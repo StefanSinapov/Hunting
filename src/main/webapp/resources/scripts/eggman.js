@@ -8,6 +8,7 @@ function Eggman(coordinate) {
     this.width = Eggman.CONFIG.get('EGGMAN_WIDTH');
     this.height = Eggman.CONFIG.get('EGGMAN_HEIGHT');
     this.maxSpeed = Eggman.CONFIG.get('EGGMAN_MAXSPEED');
+    this.dieSound = new Sound(Eggman.CONFIG.get('DIE_SOUND_PATH'),0.3);
 }
 
 /*
@@ -35,7 +36,9 @@ Eggman.CONFIG = function () {
         'EGGMAN_WIDTH': 60,
         'EGGMAN_HEIGHT': 60,
         'EGGMAN_COOLDOWN': 100,
-        'EGGMAN_MAXSPEED': 5
+        'EGGMAN_MAXSPEED': 5,
+        'DIE_SOUND_PATH': 'resources/sounds/die.mp3'
+//        'DIE_SOUND_PATH': 'resources/sounds/die.wav'
     };
 
     return {
@@ -74,6 +77,7 @@ Eggman.prototype.move = function (renderer) {
 
 // Call when Eggman is die
 Eggman.prototype.die = function () {
+    this.dieSound.play();
     this.isHit = true;
     var award = Math.abs(this.speedY) * 5 + Math.abs(this.speedX) * 10;
     this.speedX = 0;
