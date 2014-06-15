@@ -450,7 +450,7 @@ Renderer.prototype.drawScore = function (blaze) {
  *   Draws the Intro screen.
  */
 Renderer.prototype.drawIntro = function (highScores) {
-  
+
     var self = this;
     var grd = this.ctx.createLinearGradient(0, 0, 600, 0);
     grd.addColorStop(0, "#f210e6");
@@ -493,6 +493,8 @@ Renderer.prototype.drawIntro = function (highScores) {
  *   Draws the Exit screen
  */
 Renderer.prototype.drawExit = function () {
+
+    this.ctx.canvas.style.cursor = 'pointer';
     var self = this;
     var grd1 = this.ctx.createLinearGradient(0, 0, 750, 0);
     grd1.addColorStop(0, "#ffb7f6");
@@ -590,6 +592,8 @@ Renderer.prototype.drawExit = function () {
         var x = (ctx.canvas.width - measurement.width) / 2;
         return x;
     }
+
+
 };
 
 Renderer.prototype.drawDayBackground = function () {
