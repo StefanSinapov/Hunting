@@ -6,6 +6,7 @@ function Blaze(coordinate) {
     this.bullets = Blaze.CONFIG.get('MAX_BULLETS_COUNT');
     this.score = Blaze.CONFIG.get('INITIAL_SCORE');
     this.missedCount = Blaze.CONFIG.get('INITIAL_MISSED_EGGMAN');
+    this.shootSound = new Sound(Blaze.CONFIG.get('SHOOT_SOUND_PATH'));
 }
 
 /*
@@ -23,6 +24,7 @@ Blaze.prototype.constructor = Blaze;
  */
 Blaze.prototype.shoot = function (eggman) {
     this.bullets--;
+    this.shootSound.play();
     if (this.bullets === Blaze.CONFIG.get('MIN_BULLETS_COUNT')) {
         this.reload();
     }
@@ -52,7 +54,8 @@ Blaze.CONFIG = function () {
         'MIN_BULLETS_COUNT': 0,
         'RELOADING_TIME': 3000,
         'INITIAL_SCORE': 0,
-        'INITIAL_MISSED_EGGMAN': 0
+        'INITIAL_MISSED_EGGMAN': 0,
+        'SHOOT_SOUND_PATH': 'resources/sounds/shoot.wav'
     };
 
     return {
