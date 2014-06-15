@@ -19,7 +19,6 @@ function Game() {
     })();
 }
 
-
 /*
  *   Function that starts the game.
  */
@@ -66,8 +65,6 @@ Game.CONFIG = function () {
  *  Writes the high scores to the local storage.
  */
 Game.prototype.logScores = function (currentName, currentScore) {
-    currentName = 'Pavel';
-    currentScore = 600;
     var player = new Player(11, currentName, currentScore);
     this.highScores.push(player);
     this.sortHighScores();
