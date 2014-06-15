@@ -36,7 +36,7 @@ Renderer.prototype.drawAll = function (blaze, eggman, sonic) {
     }
 
     if (eggman.isHit && !sonic.isDrawed) {
-        this.drawSonic(sonic);
+        //this.drawSonic(sonic);
     }
 
     this.drawBlaze(blaze);
@@ -375,7 +375,7 @@ Renderer.prototype.drawClipBackground = function () {
     rect.setAttribute('height', this.height.toString());
     rect.setAttribute('fill', Renderer.CONFIG.get('BACKGROUND_COLOR').toString());
     this.svg.appendChild(rect);
-}
+};
 
 Renderer.prototype.creteCanvas = function () {
     var canvas = document.createElement('canvas');
@@ -450,6 +450,7 @@ Renderer.prototype.drawScore = function (blaze) {
  */
 Renderer.prototype.drawIntro = function (highScores) {
     var self = this;
+
     var ctx = this.ctx;
     //canvas background
     var grd = ctx.createLinearGradient(0, 0, 600, 0);
@@ -525,19 +526,26 @@ Renderer.prototype.drawIntro = function (highScores) {
                     centerText(ctx, menuItems[i], buttonY[i]);
                     //invoke button functions here (Play,Highscores or Exit)
                     if(i===0){
-                        var re
-                        var controller = new Controller(); // controller object
-                        var blazeInitialCoordinate = new Coordinate(this.width / 2, this.height / 2);
-                        var blaze = new Blaze(blazeInitialCoordinate); // blaze object
-                        var eggman = new Eggman(blazeInitialCoordinate); // todo: fix coordinate.
+
+                        //var controller = new Controller(); // controller object
+                        //var blazeInitialCoordinate = new Coordinate(this.width / 2, this.height / 2);
+                        //var blaze = new Blaze(blazeInitialCoordinate); // blaze object
+                        //var eggman = new Eggman(blazeInitialCoordinate); // todo: fix coordinate.
 
                         document.getElementById('drawing').style.cursor="none";
                         document.getElementById('container').style.cursor="none";
-                        canvas.removeEventListener("mouseup",checkClick);
 
                         setTimeout(function () {
-                            animationGameLoop(renderer, controller, blaze, eggman);
-                        },Game.CONFIG.get('INITIAL_WAIT_TIME'));
+                            console.log('Play');
+                        },5000);
+
+                        canvas.removeEventListener("mouseup",checkClick);
+
+                        //setTimeout(function () {
+                          //  animationGameLoop(self, controller, blaze, eggman);
+                        //},Game.CONFIG.get('INITIAL_WAIT_TIME'));
+
+
 
                     }else if(i===1){
                         ctx.clearRect(0,0,canvas.width,canvas.height);
