@@ -17,7 +17,6 @@ function Game() {
                 window.setTimeout(callback, 1000 / 60);
             };
     })();
-
 }
 
 
@@ -25,9 +24,7 @@ function Game() {
  *   Function that starts the game.
  */
 Game.prototype.start = function () {
-    var self = this;
     this.getHighScores();
-    this.logScores();
     var renderer = new Renderer(this.width, this.height); // renderer object
     var controller = new Controller(); // controller object
 
@@ -37,14 +34,12 @@ Game.prototype.start = function () {
     var blaze = new Blaze(blazeInitialCoordinate); // blaze object
     var eggman = new Eggman(blazeInitialCoordinate); // todo: fix coordinate.
 
-   // var sonicInitialCoordinate = new Coordinate(-80, this.height - 100); // TODO: move numbers as constants
-   // var sonic = new Sonic(sonicInitialCoordinate);
+    var sonicInitialCoordinate = new Coordinate(-80, this.height - 100); // TODO: move numbers as constants
+    var sonic = new Sonic(sonicInitialCoordinate);
 
-
-
-   setTimeout(function () {
-       animationGameLoop(renderer, controller, blaze, eggman);
-   }, Game.CONFIG.get('INITIAL_WAIT_TIME'));
+    setTimeout(function () {
+        animationGameLoop(renderer, controller, blaze, eggman, sonic);
+    }, Game.CONFIG.get('INITIAL_WAIT_TIME'));
 
 };
 
@@ -95,32 +90,31 @@ Game.prototype.logScores = function (currentName, currentScore) {
         }
     }
 
-
     this.scoreHolder.value = text;
 };
 
 /*
  *   Function for animation loop of the game.
  */
-function animationGameLoop(game, renderer, controller, blaze, eggman) {
+function animationGameLoop(renderer, controller, blaze, eggman, sonic) {
 
-    if (game.isEnd) {
+    if (this.isEnd) {
         return; // TODO: Show end screen -> renderer.drawEnd() ?
     }
 
     blaze.update(controller, eggman);
     eggman.update(renderer);
-   // sonic.update(renderer);
+    sonic.update(renderer);
 
     requestAnimFrame(function () {
-        animationGameLoop(game, renderer, controller, blaze, eggman);
+        animationGameLoop(renderer, controller, blaze, eggman, sonic);
     });
 
     renderer.drawAll(blaze, eggman);
 
     if (blaze.missedCount >= 3) {
-        game.isEnd = true;
-        game.logScores('someName', blaze.score);
+        this.isEnd = true;
+        this.logScores('someName', blaze.score);
         renderer.drawExit();
     }
 }
