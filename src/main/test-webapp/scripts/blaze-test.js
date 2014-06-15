@@ -6,11 +6,11 @@ var x = 5,
 QUnit.test('Blaze Constructor Tests', function(assert){
     assert.ok(blaze instanceof GameObject, 'Blaze child of GameObject');
     assert.ok(blaze instanceof Blaze, 'Blaze Constructor');
-    assert.ok(blaze.bullets, "bullets field exists");
-    assert.ok(blaze.reload, "reload method exists");
-    assert.ok(blaze.shoot, "shoot method exists");
-    assert.ok(blaze.toString, "toString method exists");
-    assert.ok(blaze.update, 'update method exists');
+    assert.ok(blaze.bullets !== undefined, "bullets field exists");
+    assert.ok(blaze.reload !== undefined, "reload method exists");
+    assert.ok(blaze.shoot !== undefined, "shoot method exists");
+    assert.ok(blaze.toString !== undefined, "toString method exists");
+    assert.ok(blaze.update !== undefined, 'update method exists');
 });
 
 QUnit.test('Blaze reload Method Test', function(assert){
