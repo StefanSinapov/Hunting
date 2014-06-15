@@ -22,6 +22,7 @@ function Game() {
  */
 Game.prototype.start = function () {
     this.getHighScores();
+    console.log(this.highScores);
     var renderer = new Renderer(this.width, this.height); // renderer object
     var controller = new Controller(); // controller object
 
@@ -69,15 +70,20 @@ function animationGameLoop(renderer, controller, blaze, eggman) {
     });
 
     renderer.drawAll(blaze, eggman);
+
+    if (blaze.missedCount >= 3) {
+        // this.logScores();
+        return;
+    }
 }
 
 /*
  *   Gets the high scores from local storage.
  */
 Game.prototype.getHighScores = function () {
-    var highScoresText = localStorage['blazeScores'];
-    var i, player, spitArray, length, playerName, playerScore;
+    var highScoresText = document.getElementById('myform:scores').value;
 
+    var i, player, spitArray, length, playerName, playerScore;
 
     if (highScoresText) {
         spitArray = highScoresText.split(",");
@@ -132,12 +138,4 @@ Game.prototype.logScores = function (highScores, currentName, currentScore) {
     }
 
     localStorage["blazeScores"] = text;
-};
-
-/*
- *   Clears the current high scores.
- */
-Game.prototype.clearHighScores = function () {
-    this.highScores = [];
-    localStorage["blazeScores"] = undefined;
 };

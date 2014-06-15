@@ -4,7 +4,8 @@
 function Blaze(coordinate) {
     GameObject.call(this, coordinate);
     this.bullets = Blaze.CONFIG.get('MAX_BULLETS_COUNT');
-    this.score = 0;
+    this.score = Blaze.CONFIG.get('INITIAL_SCORE');
+    this.missedCount = Blaze.CONFIG.get('INITIAL_MISSED_EGGMAN');
 }
 
 /*
@@ -20,18 +21,15 @@ Blaze.prototype.constructor = Blaze;
 /*
  *   Shoots and lowers the count of the total bullets.
  */
-Blaze.prototype.shoot = function (target) {
+Blaze.prototype.shoot = function (eggman) {
     this.bullets--;
     if (this.bullets === Blaze.CONFIG.get('MIN_BULLETS_COUNT')) {
         this.reload();
     }
 
-    if (target.position.x <= this.position.x && this.position.x <= target.position.x + target.width
-        && target.position.y <= this.position.y && this.position.y <= target.position.y + target.height) {
-        //console.log('hit at x:' + this.position.x + " y:" + this.position.y);
-        target.Hit();
-        this.score += target.score;
-        //console.log(target.score);
+    if (eggman.position.x <= this.position.x && this.position.x <= eggman.position.x + eggman.width
+        && eggman.position.y <= this.position.y && this.position.y <= eggman.position.y + eggman.height) {
+        this.score += eggman.die();
     }
 };
 
@@ -49,8 +47,9 @@ Blaze.CONFIG = function () {
     var constants = {
         'MAX_BULLETS_COUNT': 3,
         'MIN_BULLETS_COUNT': 0,
-        'RELOADING_TIME': 3000
-
+        'RELOADING_TIME': 3000,
+        'INITIAL_SCORE': 0,
+        'INITIAL_MISSED_EGGMAN': 0
     };
 
     return {
