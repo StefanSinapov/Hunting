@@ -20,17 +20,17 @@ Blaze.prototype.constructor = Blaze;
 /*
  *   Shoots and lowers the count of the total bullets.
  */
-Blaze.prototype.shoot = function (target) {
+Blaze.prototype.shoot = function (eggman) {
     this.bullets--;
     if (this.bullets === Blaze.CONFIG.get('MIN_BULLETS_COUNT')) {
         this.reload();
     }
 
-    if (target.position.x <= this.position.x && this.position.x <= target.position.x + target.width
-        && target.position.y <= this.position.y && this.position.y <= target.position.y + target.height) {
-        //console.log('hit at x:' + this.position.x + " y:" + this.position.y);
-        target.Hit();
-        this.score += target.score;
+    if (eggman.position.x <= this.position.x && this.position.x <= eggman.position.x + eggman.width
+        && eggman.position.y <= this.position.y && this.position.y <= eggman.position.y + eggman.height) {
+        //console.log('die at x:' + this.position.x + " y:" + this.position.y);
+        eggman.die();
+        this.score += eggman.score;
         //console.log(target.score);
     }
 };

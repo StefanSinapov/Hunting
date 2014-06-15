@@ -3,8 +3,8 @@
  */
 function Eggman(coordinate) {
     GameObject.call(this, coordinate);
-    this.onScreen = false;
-    this.cooldown = Eggman.CONFIG.get('EGGMAN_COOLDOWN');
+    this.isOnScreen = false;
+    this.coolDown = Eggman.CONFIG.get('EGGMAN_COOLDOWN');
     this.width = Eggman.CONFIG.get('EGGMAN_WIDTH');
     this.height = Eggman.CONFIG.get('EGGMAN_HEIGHT');
     this.maxSpeed = Eggman.CONFIG.get('EGGMAN_MAXSPEED');
@@ -47,7 +47,7 @@ Eggman.CONFIG = function () {
 
 
 // Moves eggman with own speed
-Eggman.prototype.Move = function(renderer) {
+Eggman.prototype.move = function(renderer) {
 
     this.position.x += this.speedX;
     this.position.y += this.speedY;
@@ -55,19 +55,19 @@ Eggman.prototype.Move = function(renderer) {
     if(this.isHit){
 
     	if(this.position.y > renderer.height / 2){
-			this.onScreen = false;
+			this.isOnScreen = false;
 			this.isHit = false;
-			this.cooldown = Eggman.CONFIG.get('EGGMAN_COOLDOWN');
+			this.coolDown = Eggman.CONFIG.get('EGGMAN_COOLDOWN');
 		}
 
 		return;
     }
     
-    if(this.onScreen && 
+    if(this.isOnScreen &&
     	(this.position.x > renderer.width || this.position.x + this.width < 0)){
 
-    	this.onScreen = false;
-    	this.cooldown = Eggman.CONFIG.get('EGGMAN_COOLDOWN');
+    	this.isOnScreen = false;
+    	this.coolDown = Eggman.CONFIG.get('EGGMAN_COOLDOWN');
     }
 
     if(this.position.y + this.height > renderer.height / 2
@@ -76,8 +76,8 @@ Eggman.prototype.Move = function(renderer) {
     }
 };
 
-// Call when Eggman is hit
-Eggman.prototype.Hit = function () {
+// Call when Eggman is die
+Eggman.prototype.die = function () {
 	this.isHit = true;
 
 	this.score = Math.abs(this.speedY) * 5 + Math.abs(this.speedX) * 10;
@@ -88,11 +88,11 @@ Eggman.prototype.Hit = function () {
 };
 
 Eggman.prototype.update = function(renderer) {
-	if(!this.onScreen){
-	   	--this.cooldown;
+	if(!this.isOnScreen){
+	   	--this.coolDown;
     
-    	if(this.cooldown === 0){
-    	    this.onScreen = true;
+    	if(this.coolDown === 0){
+    	    this.isOnScreen = true;
     	    var randomX = parseInt((Math.random() * 2)) * (renderer.width + this.width) - this.width;
     	    var randomY = parseInt(Math.random() * (renderer.height / 2 - this.height));
     	    
@@ -105,5 +105,5 @@ Eggman.prototype.update = function(renderer) {
     	}
 	}
 
-	this.Move(renderer);
+	this.move(renderer);
 };

@@ -130,11 +130,3 @@ Game.prototype.logScores = function (highScores, currentName, currentScore) {
 
     localStorage["blazeScores"] = text;
 };
-
-/*
- *   Clears the current high scores.
- */
-Game.prototype.clearHighScores = function () {
-    this.highScores = [];
-    localStorage["blazeScores"] = undefined;
-};

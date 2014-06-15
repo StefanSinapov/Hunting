@@ -8,7 +8,7 @@ function Renderer(width, height) {
     var fragment = document.createDocumentFragment();
     this.svg = this.createBackgroundSVG();
 
-    if (getRandomInt(0, 1)) {
+    if (Common.getRandomInt(0, 1)) {
         this.drawDayBackground();
     } else {
         this.drawNightBackground();
@@ -31,7 +31,7 @@ Renderer.prototype.drawAll = function (blaze, eggman) {
     this.drawClip(blaze);
     this.drawScore(blaze);
 
-    if (eggman.onScreen) {
+    if (eggman.isOnScreen) {
         this.drawEggman(eggman);
     }
 
@@ -348,8 +348,8 @@ Renderer.prototype.creteCanvas = function () {
 Renderer.prototype.createRandomStar = function () {
     var polygon = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'polygon');
 
-    var x = getRandomInt(50, this.width - 50);
-    var y = getRandomInt(50, this.height - 50);
+    var x = Common.getRandomInt(50, this.width - 50);
+    var y = Common.getRandomInt(50, this.height - 50);
 
     var point1X = x + 2.9389;
     var point1Y = y + 9.0451;
@@ -367,7 +367,7 @@ Renderer.prototype.createRandomStar = function () {
     polygon.setAttribute('points', pointsText);
     polygon.setAttribute('style', 'fill:#dcdcdc');
 
-    var angle = getRandomInt(0, 360);
+    var angle = Common.getRandomInt(0, 360);
     var rotateText = 'rotate(' + angle + ' ' + x + ' ' + y + ')';
     polygon.setAttribute('transform', rotateText.toString());
 
@@ -379,8 +379,8 @@ Renderer.prototype.createRandomStar = function () {
  */
 Renderer.prototype.createRandomPlanet = function () {
     var circle = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'circle');
-    var cx = getRandomInt(100, this.width - 100);
-    var cy = getRandomInt(100, this.height - 100);
+    var cx = Common.getRandomInt(100, this.width - 100);
+    var cy = Common.getRandomInt(100, this.height - 100);
     var radius = 10;
     circle.setAttribute('cx', cx.toString());
     circle.setAttribute('cy', cy.toString());
@@ -873,8 +873,8 @@ Renderer.prototype.drawDayBackground = function () {
 Renderer.prototype.createRandomCloud = function () {
 
     var cloud = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'path');
-    var x = getRandomInt(100, this.width - 200);
-    var y = getRandomInt(100, this.height - 200);
+    var x = Common.getRandomInt(100, this.width - 200);
+    var y = Common.getRandomInt(100, this.height - 200);
 
     var points = "M" + (x ) + "," + (y) + "C" + (x + 20) + "," + (y + 30) + "," + (x + 10) + "," + (y + 50) + "," + (x - 10 ) + "," + (y + 40)
         + "C" + (x - 20) + "," + (y + 35) + "," + (x - 40) + "," + (y + 45) + "," + (x - 50) + "," + (y + 40)
