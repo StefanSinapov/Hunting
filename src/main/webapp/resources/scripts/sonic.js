@@ -7,6 +7,7 @@ function Sonic(coordinate) {
     this.width = Sonic.CONFIG.get('SONIC_WIDTH');
     this.height = Sonic.CONFIG.get('SONIC_HEIGHT');
     this.speed = Sonic.CONFIG.get('SONIC_SPEED');
+    this.isDrawed = false;
 }
 
 /*
@@ -74,7 +75,7 @@ Sonic.CONFIG = function () {
         'SONIC_MAXSPEED': 10,
         'SONIC_FRAME_RATE': 18,
         'SONIC_ANIMATIONS': animations,
-        'SONIC_SPRITE': "images/sonic-sprite.png",
+        'SONIC_SPRITE': "resources/imgs/sonic-sprite.png",
         'SONIC_ANIMATION_INIT': 'idle',
         'SONIC_OFFSET_Y': 80
     };

@@ -8,9 +8,9 @@ canvas {
 }
 
 canvas:hover {
-    cursor: none;
+    cursor: pointer;
 }
 
 svg:hover {
-    cursor: none;
+    cursor: pointer;
 }
