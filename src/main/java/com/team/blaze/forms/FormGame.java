@@ -6,11 +6,11 @@ import com.team.blaze.models.ConnectionType;
 import com.team.blaze.models.Player;
 import java.io.Serializable;
 import java.util.List;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 @Named(value = "formGame")
-@SessionScoped
+@RequestScoped
 public class FormGame implements Serializable
 {
     private static final long serialVersionUID = 1L;
@@ -26,11 +26,6 @@ public class FormGame implements Serializable
 
     }
 
-    public void init()
-    {
-        loadScores();
-    }
-
     public void loadScores()
     {
         List<Player> players = scoreDAO.listAllPlayers();
@@ -39,6 +34,8 @@ public class FormGame implements Serializable
 
         for (int i = 0; i < players.size(); i++)
         {
+            sb.append(players.get(i).getPlayerId());
+            sb.append(',');
             sb.append(players.get(i).getName());
             sb.append(',');
             sb.append(players.get(i).getScore());
@@ -49,6 +46,7 @@ public class FormGame implements Serializable
             }
         }
 
+        System.out.println("Log Scores: " + sb.toString());
         this.formHiddenInput = sb.toString();
 
     }
@@ -65,7 +63,8 @@ public class FormGame implements Serializable
 
     public void saveScores()
     {
-        System.out.println("I am active");
+        System.out.println(this.formHiddenInput);
+        System.out.println("Saving scores.");
     }
 
 }
