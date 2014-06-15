@@ -450,7 +450,7 @@ Renderer.prototype.drawScore = function (blaze) {
  *   Draws the Intro screen.
  */
 Renderer.prototype.drawIntro = function (highScores) {
-    console.log(highScores);
+  
     var self = this;
     var grd = this.ctx.createLinearGradient(0, 0, 600, 0);
     grd.addColorStop(0, "#f210e6");
