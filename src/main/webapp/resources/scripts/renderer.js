@@ -36,7 +36,7 @@ Renderer.prototype.drawAll = function (blaze, eggman, sonic) {
     }
 
     if (eggman.isHit && !sonic.isDrawed) {
-        //this.drawSonic(sonic);
+        this.drawSonic(sonic);
     }
 
     this.drawBlaze(blaze);
