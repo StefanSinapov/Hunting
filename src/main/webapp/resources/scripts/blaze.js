@@ -5,6 +5,7 @@ function Blaze(coordinate) {
     GameObject.call(this, coordinate);
     this.bullets = Blaze.CONFIG.get('MAX_BULLETS_COUNT');
     this.score = Blaze.CONFIG.get('INITIAL_SCORE');
+    this.missedCount = Blaze.CONFIG.get('INITIAL_MISSED_EGGMAN');
 }
 
 /*
@@ -28,10 +29,7 @@ Blaze.prototype.shoot = function (eggman) {
 
     if (eggman.position.x <= this.position.x && this.position.x <= eggman.position.x + eggman.width
         && eggman.position.y <= this.position.y && this.position.y <= eggman.position.y + eggman.height) {
-        //console.log('die at x:' + this.position.x + " y:" + this.position.y);
-        eggman.die();
-        this.score += eggman.score;
-        //console.log(target.score);
+        this.score += eggman.die();
     }
 };
 
@@ -50,8 +48,8 @@ Blaze.CONFIG = function () {
         'MAX_BULLETS_COUNT': 3,
         'MIN_BULLETS_COUNT': 0,
         'RELOADING_TIME': 3000,
-        'INITIAL_SCORE': 0
-
+        'INITIAL_SCORE': 0,
+        'INITIAL_MISSED_EGGMAN': 0
     };
 
     return {
