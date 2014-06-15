@@ -102,7 +102,7 @@ Game.prototype.logScores = function (currentName, currentScore) {
 function animationGameLoop (game, renderer, controller, blaze, eggman) {
 
     if (game.isEnd) {
-        return;
+        return; // TODO: Show end screen -> renderer.drawEnd() ?
     }
 
     blaze.update(controller, eggman);
