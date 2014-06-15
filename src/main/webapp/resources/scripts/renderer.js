@@ -449,121 +449,33 @@ Renderer.prototype.drawScore = function (blaze) {
  *   Draws the Intro screen.
  */
 Renderer.prototype.drawIntro = function (highScores) {
-    var self = this;
 
-    var ctx = this.ctx;
+    var self = this;
     //canvas background
-    var grd = ctx.createLinearGradient(0, 0, 600, 0);
+    var grd = this.ctx.createLinearGradient(0, 0, 600, 0);
     grd.addColorStop(0, "#f210e6");
     grd.addColorStop(1, "#f41118");
-    ctx.fillStyle = grd;
-    ctx.fillRect(0, 0, this.width, this.height);
-    ctx.fillStyle = 'black';
-    ctx.font = "100px " + Renderer.CONFIG.get('FONTS');
-    centerText(ctx, "Blaze Laserlight", 100);
+    this.ctx.fillStyle = grd;
+    this.ctx.fillRect(0, 0, this.width, this.height);
+    this.ctx.fillStyle = 'black';
+    this.ctx.font = "90px " + Renderer.CONFIG.get('FONTS');
+    this.ctx.fillText('Blaze Laserlight', 50, 100);
 
-    //buttons
-    var buttonX = [
-        getXCoordsOfMenuItem(ctx, 'Play'),
-        getXCoordsOfMenuItem(ctx, 'Highscores'),
-        getXCoordsOfMenuItem(ctx, 'Exit')
-    ];
-    var buttonY = [this.height / 2 - 100, this.height / 2 - 50, this.height / 2];
-    var menuItems = ['Play', 'Highscores', 'Exit'];
-    ctx.fillStyle = 'yellow';
-    ctx.font = "40px " + Renderer.CONFIG.get('FONTS');
-    centerText(ctx, menuItems[0], buttonY[0]);
-    centerText(ctx, menuItems[1], buttonY[1]);
-    centerText(ctx, menuItems[2], buttonY[2]);
-    centerText(ctx, menuItems[3], buttonY[3]);
 
     //draw eggman
     var eggmanImage = new Image();
-    eggmanImage.onload = function () {
-        ctx.drawImage(eggmanImage, 500, 250, 250, 300);
-    };
     eggmanImage.src = 'resources/imgs/eggman.png';
+    eggmanImage.onload = function () {
+        self.ctx.drawImage(eggmanImage, 500, 250, 250, 300);
+    };
+
     //draw blaze
     var blazeImage = new Image();
-    blazeImage.onload = function () {
-        ctx.drawImage(blazeImage, 100, 250, 150, 300);
-    };
     blazeImage.src = 'resources/imgs/blaze.png';
+    blazeImage.onload = function(){
+        self.ctx.drawImage(blazeImage, 100, 250, 150, 300);
+    };
 
-    function centerText(ctx, text, y) {
-        var x = getXCoordsOfMenuItem(ctx, text);
-        ctx.fillText(text, x, y);
-    }
-
-    function getXCoordsOfMenuItem(ctx, text) {
-        var measurement = ctx.measureText(text);
-        var x = (ctx.canvas.width - measurement.width) / 2;
-        return x;
-    }
-
-    //checking the mouse position
-    var mouseX;
-    var mouseY;
-    var time = 0.0;
-    var canvas = document.getElementById("drawing");
-    canvas.addEventListener("mouseup", checkClick);
-
-    function checkClick(mouseEvent) {
-
-        if (mouseEvent.pageX || mouseEvent.pageY == 0) {
-            mouseX = mouseEvent.pageX - this.offsetLeft;
-            mouseY = mouseEvent.pageY - this.offsetTop;
-        } else if (mouseEvent.offsetX || mouseEvent.offsetY == 0) {
-            mouseX = mouseEvent.offsetX;
-            mouseY = mouseEvent.offsetY;
-        }
-        for (var i = 0; i < buttonX.length; i++) {
-            var measure = ctx.measureText(menuItems[i]).width;
-            if (mouseX > buttonX[i] + 2 * measure / 3 && mouseX < buttonX[i] + 5 * measure / 3) {
-                if (mouseY < buttonY[i] && mouseY > buttonY[i] - 40) {
-                    ctx.fillStyle = 'blue';
-                    ctx.font = "40px " + Renderer.CONFIG.get('FONTS');
-                    centerText(ctx, menuItems[i], buttonY[i]);
-                    //invoke button functions here (Play,Highscores or Exit)
-                    if(i===0){
-
-                        //var controller = new Controller(); // controller object
-                        //var blazeInitialCoordinate = new Coordinate(this.width / 2, this.height / 2);
-                        //var blaze = new Blaze(blazeInitialCoordinate); // blaze object
-                        //var eggman = new Eggman(blazeInitialCoordinate); // todo: fix coordinate.
-
-                        document.getElementById('drawing').style.cursor="none";
-                        document.getElementById('container').style.cursor="none";
-
-                        setTimeout(function () {
-                            console.log('Play');
-                        },5000);
-
-                        canvas.removeEventListener("mouseup",checkClick);
-
-                        //setTimeout(function () {
-                          //  animationGameLoop(self, controller, blaze, eggman);
-                        //},Game.CONFIG.get('INITIAL_WAIT_TIME'));
-
-
-
-                    }else if(i===1){
-                        ctx.clearRect(0,0,canvas.width,canvas.height);
-                        for (var j = 0; j < 5; j++){
-                            ctx.fillStyle = 'black';
-                            ctx.font = "40px Verdana";
-                            centerText(ctx, highScores[j], 100+j*75);
-                            ctx.fillStyle = 'blue';
-                            canvas.removeEventListener("mouseup",checkClick);
-                        }
-                    }else if(i===2){
-                        self.drawExit();
-                        canvas.removeEventListener("mouseup",checkClick);
-                    }
-                }
-            }
-        }
-    }
 };
 
 /*
@@ -656,7 +568,7 @@ Renderer.prototype.drawExit = function () {
                 ctx.font = "60px Georgia";
                 centerText(ctx, credits[i], creditsItemY + i * 100);
             } else {
-                ctx.clearRect(0,0,width,height);
+                ctx.clearRect(0, 0, width, height);
                 var speed = -10;
                 creditsItemY = creditsItemY + speed;
                 for (var i = 0; i < credits.length; i += 1) {

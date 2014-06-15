@@ -24,10 +24,11 @@ function Game() {
  */
 Game.prototype.start = function () {
     this.getHighScores();
+
     var renderer = new Renderer(this.width, this.height); // renderer object
     var controller = new Controller(); // controller object
 
-    //renderer.drawIntro(this.highScores);
+    renderer.drawIntro(this.highScores);
 
     var blazeInitialCoordinate = new Coordinate(this.width / 2, this.height / 2);
     var blaze = new Blaze(blazeInitialCoordinate); // blaze object
@@ -49,7 +50,7 @@ Game.CONFIG = function () {
     var constants = {
         WIDTH: 800,
         HEIGHT: 600,
-        INITIAL_WAIT_TIME: 1000,
+        INITIAL_WAIT_TIME: 5000,
         SCORES_MAX_COUNT: 10,
         INITIAL_END: false
     };
