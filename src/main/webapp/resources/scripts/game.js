@@ -36,6 +36,9 @@ Game.prototype.start = function () {
     var sonicInitialCoordinate = new Coordinate(-80, this.height - 100); // TODO: move numbers as constants
     var sonic = new Sonic(sonicInitialCoordinate);
 
+    var sounds = new Sound(Game.CONFIG.get('BACKGROUND_SOUND_PATH'), Game.CONFIG.get("VOLUME"), true);
+    sounds.play();
+
     var self = this;
     setTimeout(function () {
         self.animationGameLoop(renderer, controller, blaze, eggman, sonic);
@@ -52,7 +55,9 @@ Game.CONFIG = function () {
         HEIGHT: 600,
         INITIAL_WAIT_TIME: 5000,
         SCORES_MAX_COUNT: 10,
-        INITIAL_END: false
+        INITIAL_END: false,
+        BACKGROUND_SOUND_PATH: 'resources/sounds/background-loop.wav',
+        VOLUME: 0.3
     };
 
     return {
