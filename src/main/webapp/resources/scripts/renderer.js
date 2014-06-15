@@ -443,7 +443,8 @@ Renderer.prototype.drawScore = function (blaze) {
 /*
  *   Draws the Intro screen.
  */
-Renderer.prototype.drawIntro = function () {
+Renderer.prototype.drawIntro = function (highScores) {
+    var self = this;
     var ctx = this.ctx;
     //canvas background
     var grd = ctx.createLinearGradient(0, 0, 600, 0);
@@ -494,43 +495,65 @@ Renderer.prototype.drawIntro = function () {
         return x;
     }
 
+    //checking the mouse position
+    var mouseX;
+    var mouseY;
+    var time = 0.0;
+    var canvas = document.getElementById("drawing");
+    canvas.addEventListener("mouseup", checkClick);
+
+    function checkClick(mouseEvent) {
+
+        if (mouseEvent.pageX || mouseEvent.pageY == 0) {
+            mouseX = mouseEvent.pageX - this.offsetLeft;
+            mouseY = mouseEvent.pageY - this.offsetTop;
+        } else if (mouseEvent.offsetX || mouseEvent.offsetY == 0) {
+            mouseX = mouseEvent.offsetX;
+            mouseY = mouseEvent.offsetY;
+        }
+        for (var i = 0; i < buttonX.length; i++) {
+            var measure = ctx.measureText(menuItems[i]).width;
+            if (mouseX > buttonX[i] + 2 * measure / 3 && mouseX < buttonX[i] + 5 * measure / 3) {
+                if (mouseY < buttonY[i] && mouseY > buttonY[i] - 40) {
+                    ctx.fillStyle = 'blue';
+                    ctx.font = "40px " + Renderer.CONFIG.get('FONTS');
+                    centerText(ctx, menuItems[i], buttonY[i]);
+                    //invoke button functions here (Play,Highscores or Exit)
+                    if(i===0){
+                        var re
+                        var controller = new Controller(); // controller object
+                        var blazeInitialCoordinate = new Coordinate(this.width / 2, this.height / 2);
+                        var blaze = new Blaze(blazeInitialCoordinate); // blaze object
+                        var eggman = new Eggman(blazeInitialCoordinate); // todo: fix coordinate.
+
+                        document.getElementById('drawing').style.cursor="none";
+                        document.getElementById('container').style.cursor="none";
+                        canvas.removeEventListener("mouseup",checkClick);
+
+                        setTimeout(function () {
+                            animationGameLoop(renderer, controller, blaze, eggman);
+                        },Game.CONFIG.get('INITIAL_WAIT_TIME'));
+
+                    }else if(i===1){
+                        ctx.clearRect(0,0,canvas.width,canvas.height);
+                        for (var j = 0; j < 5; j++){
+                            ctx.fillStyle = 'black';
+                            ctx.font = "40px Verdana";
+                            centerText(ctx, highScores[j], 100+j*75);
+                            ctx.fillStyle = 'blue';
+                            canvas.removeEventListener("mouseup",checkClick);
+                        }
+                    }else if(i===2){
+                        self.drawExit();
+                        canvas.removeEventListener("mouseup",checkClick);
+                    }
+                }
+            }
+        }
+    }
 };
 
 /*
- Renderer.prototype.drawIntro = function () {
-
-
- //checking the mouse position
- var mouseX;
- var mouseY;
- var time = 0.0;
- this.canvas.addEventListener("mouseup", checkClick);
-
- function checkClick(mouseEvent) {
- if (mouseEvent.pageX || mouseEvent.pageY == 0) {
- mouseX = mouseEvent.pageX - this.offsetLeft;
- mouseY = mouseEvent.pageY - this.offsetTop;
- } else if (mouseEvent.offsetX || mouseEvent.offsetY == 0) {
- mouseX = mouseEvent.offsetX;
- mouseY = mouseEvent.offsetY;
- }
- for (var i = 0; i < buttonX.length; i++) {
- var measure = ctx.measureText(menuItems[i]).width;
- if (mouseX > buttonX[i] + 2 * measure / 3 && mouseX < buttonX[i] + 5 * measure / 3) {
- if (mouseY < buttonY[i] && mouseY > buttonY[i] - 40) {
- ctx.fillStyle = 'blue';
- ctx.font = "40px Verdana";
- centerText(ctx, menuItems[i], buttonY[i]);
- ctx.fillStyle = 'blue';
- fadeOut();
- //invoke button finctions here (Play,Highscores or Exit)
-
- //
- }
- }
- }
- }
-
  function fadeOut() {
  window.requestAnimationFrame(fadeOut);
  var alpha = 0.2;
@@ -620,18 +643,16 @@ Renderer.prototype.drawExit = function () {
                 ctx.font = "60px Georgia";
                 centerText(ctx, credits[i], creditsItemY + i * 100);
             } else {
-                ctx.fillStyle = 'black';
-                ctx.fillRect(0, 0, width, height);
+                ctx.clearRect(0,0,width,height);
                 var speed = -10;
                 creditsItemY = creditsItemY + speed;
                 for (var i = 0; i < credits.length; i += 1) {
-                    ctx.fillStyle = 'yellow';
+                    ctx.fillStyle = 'black';
                     ctx.font = "60px Georgia";
                     centerText(ctx, credits[i], creditsItemY + i * 100);
                 }
             }
         }, 30);
-
     }
 
     function getXCoordsOfMenuItem(ctx, text) {
@@ -639,6 +660,8 @@ Renderer.prototype.drawExit = function () {
         var x = (ctx.canvas.width - measurement.width) / 2;
         return x;
     }
+
+    //canvas.removeEventListener("mouseup", checkClick);
 };
 
 Renderer.prototype.drawDayBackground = function () {
