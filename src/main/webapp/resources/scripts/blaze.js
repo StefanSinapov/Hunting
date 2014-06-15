@@ -4,7 +4,7 @@
 function Blaze(coordinate) {
     GameObject.call(this, coordinate);
     this.bullets = Blaze.CONFIG.get('MAX_BULLETS_COUNT');
-    this.score = 0;
+    this.score = Blaze.CONFIG.get('INITIAL_SCORE');
 }
 
 /*
@@ -49,7 +49,8 @@ Blaze.CONFIG = function () {
     var constants = {
         'MAX_BULLETS_COUNT': 3,
         'MIN_BULLETS_COUNT': 0,
-        'RELOADING_TIME': 3000
+        'RELOADING_TIME': 3000,
+        'INITIAL_SCORE': 0
 
     };
 
