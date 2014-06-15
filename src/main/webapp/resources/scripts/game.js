@@ -41,7 +41,11 @@ Game.prototype.start = function () {
     var sonic = new Sonic(sonicInitialCoordinate);
 
     setTimeout(function () {
+<<<<<<< HEAD
+        animationGameLoop(renderer, controller, blaze, eggman, sonic);
+=======
         animationGameLoop(self, renderer, controller, blaze, eggman);
+>>>>>>> 19317d9099b3c5bdf6ae02b3252d6db2233d557c
     }, Game.CONFIG.get('INITIAL_WAIT_TIME'));
 };
 
@@ -99,20 +103,29 @@ Game.prototype.logScores = function (currentName, currentScore) {
 /*
  *   Function for animation loop of the game.
  */
+<<<<<<< HEAD
+function animationGameLoop(renderer, controller, blaze, eggman, sonic) {
+=======
 function animationGameLoop (game, renderer, controller, blaze, eggman) {
 
     if (game.isEnd) {
         return; // TODO: Show end screen -> renderer.drawEnd() ?
     }
 
+>>>>>>> 19317d9099b3c5bdf6ae02b3252d6db2233d557c
     blaze.update(controller, eggman);
     eggman.update(renderer);
+    sonic.update(renderer);
 
     requestAnimFrame(function () {
+<<<<<<< HEAD
+        animationGameLoop(renderer, controller, blaze, eggman, sonic);
+=======
         animationGameLoop(game, renderer, controller, blaze, eggman);
+>>>>>>> 19317d9099b3c5bdf6ae02b3252d6db2233d557c
     });
 
-    renderer.drawAll(blaze, eggman);
+    renderer.drawAll(blaze, eggman, sonic);
 
     if (blaze.missedCount >= 3) {
         game.isEnd = true;
