@@ -152,8 +152,6 @@ Game.prototype.sortHighScores = function () {
     var N = this.highScores.length;
     var i;
 
-    console.log(this.highScores);
-    // sorting
     for (i = 0; i < N; i += 1) {
         for (var j = i + 1; j < N; j += 1) {
             if (this.highScores[i].score < this.highScores[j].score) {
@@ -163,6 +161,5 @@ Game.prototype.sortHighScores = function () {
             }
         }
     }
-    console.log(this.highScores);
 };
 

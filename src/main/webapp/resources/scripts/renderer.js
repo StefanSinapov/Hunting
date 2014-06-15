@@ -475,7 +475,7 @@ Renderer.prototype.drawIntro = function (highScores) {
         self.ctx.drawImage(blazeImage, 100, 250, 150, 300);
     };
 
-    var x = this.width / 2  -110;
+    var x = this.width / 2 - 110;
     var y = 200;
     var text = "", player, i;
 
@@ -492,7 +492,7 @@ Renderer.prototype.drawIntro = function (highScores) {
 /*
  *   Draws the Exit screen
  */
-Renderer.prototype.drawExit = function () {
+Renderer.prototype.drawExit = function (controller) {
 
     this.ctx.canvas.style.cursor = 'pointer';
     var self = this;
@@ -504,13 +504,11 @@ Renderer.prototype.drawExit = function () {
     this.ctx.fillRect(0, 0, this.width, this.height);
     this.ctx.fillStyle = 'black';
     this.ctx.font = '70px ' + Renderer.CONFIG.get('FONTS')
-    centerText(this.ctx, "Thank you for playing!", 100);
 
-    var buttonX = [
-        getXCoordsOfMenuItem(this.ctx, 'Credits')
-    ];
-    var buttonY = [this.height / 2];
-    var menuItems = ['Credits'];
+    var textThanks = "Thank you for playing!"
+    var x = this.findXForCenteredText(textThanks)
+    this.ctx.fillText(textThanks, x, 100);
+
     var credits = ['Pavel Hristov', 'Jivka Stoeva', 'Illiyan Yordanov', 'Ventsy Konov', 'Stefan Sinapov', 'Miroslav Gatsanoga'];
 
     //draw eggman
@@ -529,20 +527,14 @@ Renderer.prototype.drawExit = function () {
 
 
     this.ctx.fillStyle = 'yellow';
-    this.ctx.font = "40px Verdana";
-    centerText(this.ctx, 'Credits', buttonY[0]);
+    this.ctx.font = "40px " + Renderer.CONFIG.get('FONTS');
+    var textCredits = "Credits"
+    var x = this.findXForCenteredText(textCredits)
+    this.ctx.fillText(textCredits, x, 300);
 
 
-    function centerText(ctx, text, y) {
-        var measurement = ctx.measureText(text);
-        var x = (ctx.canvas.width - measurement.width) / 2;
-        ctx.fillText(text, x, y);
-    }
 
-    var mouseX;
-    var mouseY;
 
-    this.ctx.canvas.addEventListener("mouseup", checkClick);
 
     function checkClick(mouseEvent) {
         if (mouseEvent.pageX || mouseEvent.pageY == 0) {
@@ -594,6 +586,12 @@ Renderer.prototype.drawExit = function () {
     }
 
 
+};
+
+Renderer.prototype.findXForCenteredText = function (text) {
+    var measurement = this.ctx.measureText(text);
+    var x = (this.width - measurement.width) / 2;
+    return x;
 };
 
 Renderer.prototype.drawDayBackground = function () {
