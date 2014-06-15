@@ -509,7 +509,6 @@ Renderer.prototype.drawExit = function (controller) {
     var x = this.findXForCenteredText(textThanks)
     this.ctx.fillText(textThanks, x, 100);
 
-    var credits = ['Pavel Hristov', 'Jivka Stoeva', 'Illiyan Yordanov', 'Ventsy Konov', 'Stefan Sinapov', 'Miroslav Gatsanoga'];
 
     //draw eggman
     var eggmanImage = new Image();
@@ -529,61 +528,23 @@ Renderer.prototype.drawExit = function (controller) {
     this.ctx.fillStyle = 'yellow';
     this.ctx.font = "40px " + Renderer.CONFIG.get('FONTS');
     var textCredits = "Credits"
-    var x = this.findXForCenteredText(textCredits)
-    this.ctx.fillText(textCredits, x, 300);
+    var x = parseInt(this.findXForCenteredText(textCredits));
+    var y = 200
+    var length = parseInt(this.ctx.measureText(textCredits).width + x);
+    var height = 200 - 40;
+    this.ctx.fillText(textCredits, x, y);
 
+    setInterval(function () {
 
+        if (controller.mouseClick !== null) {
 
-
-
-    function checkClick(mouseEvent) {
-        if (mouseEvent.pageX || mouseEvent.pageY == 0) {
-            mouseX = mouseEvent.pageX - this.offsetLeft;
-            mouseY = mouseEvent.pageY - this.offsetTop;
-        } else if (mouseEvent.offsetX || mouseEvent.offsetY == 0) {
-            mouseX = mouseEvent.offsetX;
-            mouseY = mouseEvent.offsetY;
-        }
-        for (var i = 0; i < menuItems.length; i++) {
-            var measure = self.ctx.measureText(menuItems[i]).width;
-            if (mouseX > buttonX[i] + 35 && mouseX < buttonX[i] + measure + 35) {
-                if (mouseY < buttonY[i] && mouseY > buttonY[i] - 40) {
-                    self.ctx.fillStyle = 'blue';
-                    self.ctx.font = "40px " + Game.CONFIG.get('FONTS');
-                    centerText(self.ctx, menuItems[i], buttonY[i]);
-                    self.ctx.fillStyle = 'blue';
-                    //invoke button finctions here (Credits)
-                    showCredits(600);
-                    //
-                }
+            if (x < controller.mouseClick.x && controller.mouseClick.x < length &&
+                height < controller.mouseClick.y && controller.mouseClick.y < y) {
+                self.drawCredits();
             }
         }
-    }
 
-    function showCredits(creditsItemY) {
-        setInterval(function () {
-            if (creditsItemY <= 80) {
-                self.ctx.fillStyle = 'yellow';
-                self.ctx.font = "60px Georgia";
-                centerText(self.ctx, credits[i], creditsItemY + i * 100);
-            } else {
-                self.ctx.clearRect(0, 0, this.width, this.height);
-                var speed = -10;
-                creditsItemY = creditsItemY + speed;
-                for (var i = 0; i < credits.length; i += 1) {
-                    self.ctx.fillStyle = 'black';
-                    self.ctx.font = "60px Georgia";
-                    centerText(self.ctx, credits[i], creditsItemY + i * 100);
-                }
-            }
-        }, 30);
-    }
-
-    function getXCoordsOfMenuItem(ctx, text) {
-        var measurement = ctx.measureText(text);
-        var x = (ctx.canvas.width - measurement.width) / 2;
-        return x;
-    }
+    }, 300);
 
 
 };
@@ -593,6 +554,15 @@ Renderer.prototype.findXForCenteredText = function (text) {
     var x = (this.width - measurement.width) / 2;
     return x;
 };
+
+Renderer.prototype.drawCredits = function () {
+    var credits = ['Pavel Hristov', 'Jivka Stoeva', 'Illiyan Yordanov', 'Ventsy Konov', 'Stefan Sinapov', 'Miroslav Gatsanoga'];
+
+    for (var i = 0; i < credits.length; i++) {
+        var credit = credits[i];
+
+    }
+}
 
 Renderer.prototype.drawDayBackground = function () {
 

@@ -119,7 +119,7 @@ Game.prototype.animationGameLoop = function (renderer, controller, blaze, eggman
     if (blaze.missedCount >= 3) {
         this.isEnd = true;
         this.logScores('someName', blaze.score);
-        renderer.drawExit();
+        renderer.drawExit(controller);
     }
 }
 
