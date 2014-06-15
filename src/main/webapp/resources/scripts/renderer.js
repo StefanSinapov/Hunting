@@ -449,9 +449,7 @@ Renderer.prototype.drawScore = function (blaze) {
  *   Draws the Intro screen.
  */
 Renderer.prototype.drawIntro = function (highScores) {
-
     var self = this;
-    //canvas background
     var grd = this.ctx.createLinearGradient(0, 0, 600, 0);
     grd.addColorStop(0, "#f210e6");
     grd.addColorStop(1, "#f41118");
@@ -472,58 +470,54 @@ Renderer.prototype.drawIntro = function (highScores) {
     //draw blaze
     var blazeImage = new Image();
     blazeImage.src = 'resources/imgs/blaze.png';
-    blazeImage.onload = function(){
+    blazeImage.onload = function () {
         self.ctx.drawImage(blazeImage, 100, 250, 150, 300);
     };
 
 };
 
 /*
- function fadeOut() {
- window.requestAnimationFrame(fadeOut);
- var alpha = 0.2;
- alpha += 0.1;
- ctx.fillStyle = "rgba(0,0,0, " + alpha + ")";
- ctx.fillRect(0, 0, width, height);
- }
- };*/
-
-/*
  *   Draws the Exit screen
  */
 Renderer.prototype.drawExit = function () {
-    var canvas = document.getElementById("drawing");
-    var ctx = canvas.getContext("2d");
-    var width = canvas.getAttribute('width');
-    var height = canvas.getAttribute('height');
+    var self = this;
 
     //canvas background
-    var grd1 = ctx.createLinearGradient(0, 0, 750, 0);
+    var grd1 = this.ctx.createLinearGradient(0, 0, 750, 0);
     grd1.addColorStop(0, "#ffb7f6");
     grd1.addColorStop(0.5, "#f210e6");
     grd1.addColorStop(1.0, "#ffb7f6");
-    ctx.fillStyle = grd1;
-    ctx.fillRect(0, 0, width, height);
-    ctx.fillStyle = 'black';
-    ctx.font = "70px Georgia";
-    centerText(ctx, "Thank you for playing!", 100);
+    this.ctx.fillStyle = grd1;
+    this.ctx.fillRect(0, 0, this.width, this.height);
+    this.ctx.fillStyle = 'black';
+    this.ctx.font = '70px ' + Renderer.CONFIG.get('FONTS')
+    centerText(this.ctx, "Thank you for playing!", 100);
+
     var buttonX = [
-        getXCoordsOfMenuItem(ctx, 'Credits')
+        getXCoordsOfMenuItem(this.ctx, 'Credits')
     ];
-    var buttonY = [height / 2];
+    var buttonY = [this.height / 2];
     var menuItems = ['Credits'];
     var credits = ['Pavel Hristov', 'Jivka Stoeva', 'Illiyan Yordanov', 'Ventsy Konov', 'Stefan Sinapov', 'Miroslav Gatsanoga'];
 
+    //draw eggman
+    var eggmanImage = new Image();
+    eggmanImage.src = 'resources/imgs/eggman.png';
+    eggmanImage.onload = function () {
+        self.ctx.drawImage(eggmanImage, 500, 250, 250, 300);
+    };
+
     //draw blaze
     var blazeImage = new Image();
+    blazeImage.src = 'resources/imgs/blaze.png';
     blazeImage.onload = function () {
-        ctx.drawImage(blazeImage, 300, 300, 200, 300);
-    }
-    blazeImage.src = 'http://img3.wikia.nocookie.net/__cb20080120062526/sonic/images/6/67/Sonicchannel_blaze.png';
+        self.ctx.drawImage(blazeImage, 100, 250, 150, 300);
+    };
 
-    ctx.fillStyle = 'yellow';
-    ctx.font = "40px Verdana";
-    centerText(ctx, 'Credits', buttonY[0]);
+
+    this.ctx.fillStyle = 'yellow';
+    this.ctx.font = "40px Verdana";
+    centerText(this.ctx, 'Credits', buttonY[0]);
 
 
     function centerText(ctx, text, y) {
@@ -534,8 +528,8 @@ Renderer.prototype.drawExit = function () {
 
     var mouseX;
     var mouseY;
-    var time = 0.0;
-    canvas.addEventListener("mouseup", checkClick);
+
+    this.ctx.canvas.addEventListener("mouseup", checkClick);
 
     function checkClick(mouseEvent) {
         if (mouseEvent.pageX || mouseEvent.pageY == 0) {
@@ -546,13 +540,13 @@ Renderer.prototype.drawExit = function () {
             mouseY = mouseEvent.offsetY;
         }
         for (var i = 0; i < menuItems.length; i++) {
-            var measure = ctx.measureText(menuItems[i]).width;
+            var measure = self.ctx.measureText(menuItems[i]).width;
             if (mouseX > buttonX[i] + 35 && mouseX < buttonX[i] + measure + 35) {
                 if (mouseY < buttonY[i] && mouseY > buttonY[i] - 40) {
-                    ctx.fillStyle = 'blue';
-                    ctx.font = "40px Verdana";
-                    centerText(ctx, menuItems[i], buttonY[i]);
-                    ctx.fillStyle = 'blue';
+                    self.ctx.fillStyle = 'blue';
+                    self.ctx.font = "40px " + Game.CONFIG.get('FONTS');
+                    centerText(self.ctx, menuItems[i], buttonY[i]);
+                    self.ctx.fillStyle = 'blue';
                     //invoke button finctions here (Credits)
                     showCredits(600);
                     //
@@ -564,17 +558,17 @@ Renderer.prototype.drawExit = function () {
     function showCredits(creditsItemY) {
         setInterval(function () {
             if (creditsItemY <= 80) {
-                ctx.fillStyle = 'yellow';
-                ctx.font = "60px Georgia";
-                centerText(ctx, credits[i], creditsItemY + i * 100);
+                self.ctx.fillStyle = 'yellow';
+                self.ctx.font = "60px Georgia";
+                centerText(self.ctx, credits[i], creditsItemY + i * 100);
             } else {
-                ctx.clearRect(0, 0, width, height);
+                self.ctx.clearRect(0, 0, this.width, this.height);
                 var speed = -10;
                 creditsItemY = creditsItemY + speed;
                 for (var i = 0; i < credits.length; i += 1) {
-                    ctx.fillStyle = 'black';
-                    ctx.font = "60px Georgia";
-                    centerText(ctx, credits[i], creditsItemY + i * 100);
+                    self.ctx.fillStyle = 'black';
+                    self.ctx.font = "60px Georgia";
+                    centerText(self.ctx, credits[i], creditsItemY + i * 100);
                 }
             }
         }, 30);
