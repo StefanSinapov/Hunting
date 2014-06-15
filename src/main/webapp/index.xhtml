@@ -5,27 +5,32 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <f:view>
         <f:metadata>
-            <f:event type="preRenderView" listener="#{formGame.init()}" />
+            <f:event type="preRenderView" listener="#{formGame.loadScores()}" />
         </f:metadata>
         <h:head>
             <title>Blaze</title>
-            <h:outputScript library="scripts" name="common.js" />
-            <h:outputScript library="scripts" name="coordinate.js" />
-            <h:outputScript library="scripts" name="renderer.js" />
-            <h:outputScript library="scripts" name="game.js" />
-            <h:outputScript library="scripts" name="controller.js" />
-            <h:outputScript library="scripts" name="gameobject.js" />
-            <h:outputScript library="scripts" name="eggman.js" />
-            <h:outputScript library="scripts" name="blaze.js" />
-            <h:outputScript library="scripts" name="init.js" />
-            <h:outputStylesheet library="css" name="style.css"/>
+            <script src="resources/vendor/raphael-min.js"></script>
+            <script src="resources/scripts/common.js"></script>
+            <script src="resources/scripts/coordinate.js"></script>
+            <script src="resources/scripts/renderer.js"></script>
+            <script src="resources/scripts/game.js"></script>
+            <script src="resources/scripts/controller.js"></script>
+            <script src="resources/scripts/gameobject.js"></script>
+            <script src="resources/scripts/eggman.js"></script>
+            <script src="resources/scripts/sonic.js"></script>
+            <script src="resources/scripts/blaze.js"></script>
+            <script src="resources/scripts/init.js"></script>
+            <script src="resources/scripts/player.js"></script>
+            <link href="resources/css/style.css" type="text/css" rel="stylesheet"/>
         </h:head>
         <h:body>
             <h:form id = "myform">
                 <h:inputHidden id="scores" value="#{formGame.formHiddenInput}" valueChangeListener="#{formGame.saveScores()}">
 
                 </h:inputHidden>
+                <h:commandButton value="Submit" />
             </h:form>
+            <p>Test</p>
         </h:body>
     </f:view>
 </html>

@@ -24,7 +24,7 @@ function Game() {
  */
 Game.prototype.start = function () {
     this.getHighScores();
-
+    this.logScores();
     var renderer = new Renderer(this.width, this.height); // renderer object
     var controller = new Controller(); // controller object
 
