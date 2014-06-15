@@ -1,7 +1,7 @@
 /*
  *   Initializes a new instance of the Player class.
  */
-function Player(id, name, score) {
+function Player(name, score) {
     if (!name) {
         throw "The parameter for Player's name is missing.";
     }
@@ -14,7 +14,6 @@ function Player(id, name, score) {
         throw "The parameter for Player's score: " + score + " is less than 0.";
     }
 
-    this.id = id;
     this.name = name;
     this.score = score;
 }
