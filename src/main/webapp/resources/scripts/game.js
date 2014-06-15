@@ -37,8 +37,9 @@ Game.prototype.start = function () {
     var sonicInitialCoordinate = new Coordinate(-80, this.height - 100); // TODO: move numbers as constants
     var sonic = new Sonic(sonicInitialCoordinate);
 
+    var self = this;
     setTimeout(function () {
-        animationGameLoop(renderer, controller, blaze, eggman, sonic);
+        self.animationGameLoop(renderer, controller, blaze, eggman, sonic);
     }, Game.CONFIG.get('INITIAL_WAIT_TIME'));
 
 };
@@ -94,7 +95,8 @@ Game.prototype.logScores = function (currentName, currentScore) {
 /*
  *   Function for animation loop of the game.
  */
-function animationGameLoop(renderer, controller, blaze, eggman, sonic) {
+Game.prototype.animationGameLoop = function (renderer, controller, blaze, eggman, sonic) {
+    var self = this;
 
     if (this.isEnd) {
         return; // TODO: Show end screen -> renderer.drawEnd() ?
@@ -105,7 +107,7 @@ function animationGameLoop(renderer, controller, blaze, eggman, sonic) {
     sonic.update(renderer);
 
     requestAnimFrame(function () {
-        animationGameLoop(renderer, controller, blaze, eggman, sonic);
+        self.animationGameLoop(renderer, controller, blaze, eggman, sonic);
     });
 
     renderer.drawAll(blaze, eggman);
