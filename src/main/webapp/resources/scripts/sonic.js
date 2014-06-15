@@ -24,8 +24,7 @@ Sonic.prototype.constructor = Sonic;
  *   Prints the properties of Sonic.
  */
 Sonic.prototype.toString = function () {
-    var result = "Sonic:\n" + GameObject.prototype.toString.call(this);
-    return result;
+    return "Sonic:\n" + GameObject.prototype.toString.call(this);
 };
 
 /*

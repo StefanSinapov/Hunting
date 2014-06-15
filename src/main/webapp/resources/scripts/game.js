@@ -121,7 +121,7 @@ Game.prototype.animationGameLoop = function (renderer, controller, blaze, eggman
         this.logScores('someName', blaze.score);
         renderer.drawExit(controller);
     }
-}
+};
 
 
 /*
