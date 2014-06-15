@@ -108,7 +108,7 @@ Game.prototype.animationGameLoop = function (renderer, controller, blaze, eggman
 
     blaze.update(controller, eggman);
     eggman.update(renderer);
-    sonic.update(renderer);
+    sonic.update(renderer, eggman);
 
     requestAnimFrame(function () {
         self.animationGameLoop(renderer, controller, blaze, eggman, sonic);

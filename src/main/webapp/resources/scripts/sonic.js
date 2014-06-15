@@ -6,8 +6,13 @@ function Sonic(coordinate) {
     this.onScreen = false;
     this.width = Sonic.CONFIG.get('SONIC_WIDTH');
     this.height = Sonic.CONFIG.get('SONIC_HEIGHT');
-    this.speed = Sonic.CONFIG.get('SONIC_SPEED');
+    this.speed = Sonic.CONFIG.get('SONIC_MIN_SPEED');
     this.isDrawed = false;
+    this.isRunning = false;
+    this.destination = {
+        x: 0,
+        y: 0
+    };
 }
 
 /*
@@ -70,14 +75,14 @@ Sonic.CONFIG = function () {
     var constants = {
         'SONIC_WIDTH': 60,
         'SONIC_HEIGHT': 60,
-        'SONIC_COOLDOWN': 1,
-        'SONIC_MINSPEED': 2,
-        'SONIC_MAXSPEED': 10,
+        "SONIC_MIN_SPEED": 2,
+        "SONIC_MAX_SPEED": 10,
         'SONIC_FRAME_RATE': 18,
+        'SONIC_MIN_MOVE_STEP': 8,
         'SONIC_ANIMATIONS': animations,
         'SONIC_SPRITE': "resources/imgs/sonic-sprite.png",
         'SONIC_ANIMATION_INIT': 'idle',
-        'SONIC_OFFSET_Y': 80
+        "SONIC_OFFSET_X": 80
     };
 
     return {
@@ -87,6 +92,24 @@ Sonic.CONFIG = function () {
     };
 }();
 
-Sonic.prototype.update = function (renderer) {
+Sonic.prototype.update = function (renderer, eggman) {
+    if (eggman.isHit) {
+        this.destination = eggman.position;
+        this.isRunning = true;
+    }
 
+    if (this.isRunning) {
+        var travelPercent = Math.max(this.position.x, 0) / this.destination.x,
+            minSpeed = Sonic.CONFIG.get('SONIC_MIN_SPEED'),
+            maxSpeed = Sonic.CONFIG.get('SONIC_MAX_SPEED'),
+            minMoveStep = Sonic.CONFIG.get('SONIC_MIN_MOVE_STEP'),
+            acceleration = travelPercent * (maxSpeed - minSpeed + 1) + minSpeed;
+
+        this.position.x += minMoveStep + acceleration; // TODO: to implement logic more complicated logic (jump, catch the eggman and escape from screen)
+    }
+
+    if (this.position.x > renderer.width) {
+        this.isRunning = false;
+        this.position.x = 0 - Sonic.CONFIG.get('SONIC_OFFSET_X');
+    }
 }
