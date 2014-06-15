@@ -40,16 +40,12 @@ Game.prototype.start = function () {
     var sonicInitialCoordinate = new Coordinate(-80, this.height - 100); // TODO: move numbers as constants
     var sonic = new Sonic(sonicInitialCoordinate);
 
-<<<<<<< HEAD
-    /*setTimeout(function () {
-        animationGameLoop(renderer, controller, blaze, eggman);
-    },Game.CONFIG.get('INITIAL_WAIT_TIME'));
-    */
-=======
+
+
     setTimeout(function () {
         animationGameLoop(self, renderer, controller, blaze, eggman, sonic);
     }, Game.CONFIG.get('INITIAL_WAIT_TIME'));
->>>>>>> 48282b2f16236b99480cc18e280197e976a7b4a6
+
 };
 
 /*
@@ -123,14 +119,13 @@ function animationGameLoop(game, renderer, controller, blaze, eggman, sonic) {
     renderer.drawAll(blaze, eggman, sonic);
 
     if (blaze.missedCount >= 3) {
-<<<<<<< HEAD
+
         this.isEnd = true;
         this.logScores();
         renderer.drawExit();
-=======
+
         game.isEnd = true;
         game.logScores('someName', blaze.score);
->>>>>>> 48282b2f16236b99480cc18e280197e976a7b4a6
     }
 }
 
@@ -180,5 +175,5 @@ Game.prototype.sortHighScores = function () {
         }
     }
     console.log(this.highScores);
-}
+};
 
