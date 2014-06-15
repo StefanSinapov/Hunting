@@ -110,7 +110,7 @@ Game.prototype.animationGameLoop = function (renderer, controller, blaze, eggman
         self.animationGameLoop(renderer, controller, blaze, eggman, sonic);
     });
 
-    renderer.drawAll(blaze, eggman);
+    renderer.drawAll(blaze, eggman, sonic);
 
     if (blaze.missedCount >= 3) {
         this.isEnd = true;

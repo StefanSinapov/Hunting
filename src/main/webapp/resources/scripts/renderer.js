@@ -36,7 +36,7 @@ Renderer.prototype.drawAll = function (blaze, eggman, sonic) {
     }
 
     if (eggman.isHit && !sonic.isDrawed) {
-        //this.drawSonic(sonic);
+        this.drawSonic(sonic);
     }
 
     this.drawBlaze(blaze);
@@ -472,7 +472,7 @@ Renderer.prototype.drawIntro = function (highScores) {
     //draw blaze
     var blazeImage = new Image();
     blazeImage.src = 'resources/imgs/blaze.png';
-    blazeImage.onload = function(){
+    blazeImage.onload = function () {
         self.ctx.drawImage(blazeImage, 100, 250, 150, 300);
     };
 
