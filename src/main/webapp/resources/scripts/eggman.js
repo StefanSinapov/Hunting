@@ -24,8 +24,7 @@ Eggman.prototype.constructor = Eggman;
  *   Prints the properties of eggman.
  */
 Eggman.prototype.toString = function() {
-    var result = "Eggman:\n" + GameObject.prototype.toString.call(this);
-    return result;
+    return "Eggman:\n" + GameObject.prototype.toString.call(this);
 };
 
 /*
@@ -37,7 +36,6 @@ Eggman.CONFIG = function () {
         'EGGMAN_HEIGHT': 60,
         'EGGMAN_COOLDOWN': 100,
         'EGGMAN_MAXSPEED': 5
-
     };
 
     return {
@@ -87,7 +85,7 @@ Eggman.prototype.Hit = function () {
 	this.speedX = 0;
 	this.speedY = 15;
 
-}
+};
 
 Eggman.prototype.update = function(renderer) {
 	if(!this.onScreen){
@@ -108,4 +106,4 @@ Eggman.prototype.update = function(renderer) {
 	}
 
 	this.Move(renderer);
-}
+};
