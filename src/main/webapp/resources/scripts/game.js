@@ -34,6 +34,9 @@ Game.prototype.start = function () {
     var blaze = new Blaze(blazeInitialCoordinate); // blaze object
     var eggman = new Eggman(blazeInitialCoordinate); // todo: fix coordinate.
 
+    var sonicInitialCoordinate = new Coordinate(-80, this.height - 100); // TODO: move numbers as constants
+    var sonic = new Sonic(sonicInitialCoordinate);
+
     setTimeout(function () {
         animationGameLoop(renderer, controller, blaze, eggman);
     }, Game.CONFIG.get('INITIAL_WAIT_TIME'));
@@ -135,6 +138,7 @@ Game.prototype.logScores = function (currentName, currentScore) {
         }
     }
 
+
     this.scoreHolder.value = text;
 };
 
@@ -157,4 +161,4 @@ Game.prototype.sortHighScores = function () {
         }
     }
     console.log(this.highScores);
-};
+}

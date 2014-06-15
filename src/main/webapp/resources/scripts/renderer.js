@@ -272,6 +272,47 @@ Renderer.prototype.drawEggman = function (eggman) {
 };
 
 /*
+ *   Draws Sonic.
+ */
+Renderer.prototype.drawSonic = function (sonic) {
+    var x = sonic.position.x;
+    var y = sonic.position.y;
+
+    stage = new Kinetic.Stage({
+        container: Controller.canvas, //TODO: 'drawing'
+        width: this.width,
+        height: this.height
+    });
+
+    layer = new Kinetic.Layer();
+
+    this.sonicImage = new Image();
+    this.sonicImage.src = Sonic.CONFIG.get('SONIC_SPRITE');
+
+    var sonicSprite;
+    imageObj.onload = function () {
+        sonicSprite = new Kinetic.Sprite({
+            x: x,  //TODO: startPosition,
+            y: y, //TODO: wrapper.height - 160,
+            image: imageObj,
+            animation: Sonic.CONFIG.get('SONIC_ANIMATION_INIT'),
+            animations: Sonic.CONFIG.get('SONIC_ANIMATIONS'),
+            frameRate: this.frameRate,
+            frameIndex: 0,
+            scale: {
+                x: 0.4,
+                y: 0.4
+            }
+        });
+
+        layer.add(sonicSprite);
+        stage.add(layer);
+
+        sonicSprite.start();
+    };
+};
+
+/*
  *   Creates the background.
  */
 Renderer.prototype.createBackgroundSVG = function () {
