@@ -30,6 +30,7 @@ Renderer.prototype.drawAll = function (blaze, eggman, sonic) {
     this.ctx.clearRect(0, 0, this.width, this.height);
     this.drawClip(blaze);
     this.drawScore(blaze);
+    this.drawMissed(blaze);
 
     if (eggman.isOnScreen) {
         this.drawEggman(eggman);
@@ -40,6 +41,16 @@ Renderer.prototype.drawAll = function (blaze, eggman, sonic) {
     }
 
     this.drawBlaze(blaze);
+};
+
+/*
+ *   Draws the missed count.
+ */
+Renderer.prototype.drawMissed = function (blaze) {
+    var scoreText = "Missed: " + blaze.missedCount;
+    this.ctx.font = '30px ' + Renderer.CONFIG.get('FONTS');
+    this.ctx.fillStyle = '#dcdcdc';
+    this.ctx.fillText(scoreText, 10, 60);
 };
 
 /*
@@ -486,7 +497,6 @@ Renderer.prototype.drawIntro = function (highScores) {
         this.ctx.fillText(text, x, y);
         y += 30;
     }
-
 };
 
 /*
@@ -503,13 +513,11 @@ Renderer.prototype.drawExit = function (controller) {
     this.ctx.fillStyle = grd1;
     this.ctx.fillRect(0, 0, this.width, this.height);
     this.ctx.fillStyle = 'black';
-    this.ctx.font = '70px ' + Renderer.CONFIG.get('FONTS')
+    this.ctx.font = '70px ' + Renderer.CONFIG.get('FONTS');
 
-    var textThanks = "Thank you for playing!"
-    var x = this.findXForCenteredText(textThanks)
-    this.ctx.fillText(textThanks, x, 100);
-
-    var credits = ['Pavel Hristov', 'Jivka Stoeva', 'Illiyan Yordanov', 'Ventsy Konov', 'Stefan Sinapov', 'Miroslav Gatsanoga'];
+    var textThanks = "Thank you for playing!";
+    var textTanksXPosition = this.findXForCenteredText(textThanks);
+    this.ctx.fillText(textThanks, textTanksXPosition, 100);
 
     //draw eggman
     var eggmanImage = new Image();
@@ -525,73 +533,51 @@ Renderer.prototype.drawExit = function (controller) {
         self.ctx.drawImage(blazeImage, 100, 250, 150, 300);
     };
 
-
     this.ctx.fillStyle = 'yellow';
     this.ctx.font = "40px " + Renderer.CONFIG.get('FONTS');
-    var textCredits = "Credits"
-    var x = this.findXForCenteredText(textCredits)
-    this.ctx.fillText(textCredits, x, 300);
+    var textCredits = "Credits";
+    var x = parseInt(this.findXForCenteredText(textCredits));
+    var y = 200;
+    var length = parseInt(this.ctx.measureText(textCredits).width + x);
+    var height = 200 - 40;
+    this.ctx.fillText(textCredits, x, y);
 
+    setInterval(function () {
 
+        if (controller.mouseClick !== null) {
 
-
-
-    function checkClick(mouseEvent) {
-        if (mouseEvent.pageX || mouseEvent.pageY == 0) {
-            mouseX = mouseEvent.pageX - this.offsetLeft;
-            mouseY = mouseEvent.pageY - this.offsetTop;
-        } else if (mouseEvent.offsetX || mouseEvent.offsetY == 0) {
-            mouseX = mouseEvent.offsetX;
-            mouseY = mouseEvent.offsetY;
-        }
-        for (var i = 0; i < menuItems.length; i++) {
-            var measure = self.ctx.measureText(menuItems[i]).width;
-            if (mouseX > buttonX[i] + 35 && mouseX < buttonX[i] + measure + 35) {
-                if (mouseY < buttonY[i] && mouseY > buttonY[i] - 40) {
-                    self.ctx.fillStyle = 'blue';
-                    self.ctx.font = "40px " + Game.CONFIG.get('FONTS');
-                    centerText(self.ctx, menuItems[i], buttonY[i]);
-                    self.ctx.fillStyle = 'blue';
-                    //invoke button finctions here (Credits)
-                    showCredits(600);
-                    //
-                }
+            if (x < controller.mouseClick.x && controller.mouseClick.x < length &&
+                height < controller.mouseClick.y && controller.mouseClick.y < y) {
+                self.drawCredits();
             }
         }
-    }
 
-    function showCredits(creditsItemY) {
-        setInterval(function () {
-            if (creditsItemY <= 80) {
-                self.ctx.fillStyle = 'yellow';
-                self.ctx.font = "60px Georgia";
-                centerText(self.ctx, credits[i], creditsItemY + i * 100);
-            } else {
-                self.ctx.clearRect(0, 0, this.width, this.height);
-                var speed = -10;
-                creditsItemY = creditsItemY + speed;
-                for (var i = 0; i < credits.length; i += 1) {
-                    self.ctx.fillStyle = 'black';
-                    self.ctx.font = "60px Georgia";
-                    centerText(self.ctx, credits[i], creditsItemY + i * 100);
-                }
-            }
-        }, 30);
-    }
-
-    function getXCoordsOfMenuItem(ctx, text) {
-        var measurement = ctx.measureText(text);
-        var x = (ctx.canvas.width - measurement.width) / 2;
-        return x;
-    }
-
-
+    }, 300);
 };
 
 Renderer.prototype.findXForCenteredText = function (text) {
     var measurement = this.ctx.measureText(text);
-    var x = (this.width - measurement.width) / 2;
-    return x;
+    return (this.width - measurement.width) / 2;
+};
+
+Renderer.prototype.drawCredits = function () {
+    var credits = ['Pavel Hristov', 'Jivka Stoeva', 'Illiyan Yordanov', 'Ventsy Konov', 'Stefan Sinapov', 'Miroslav Gatsanoga'];
+    var grd1 = this.ctx.createLinearGradient(0, 0, 750, 0);
+    grd1.addColorStop(0, "#ffb7f6");
+    grd1.addColorStop(0.5, "#f210e6");
+    grd1.addColorStop(1.0, "#ffb7f6");
+    this.ctx.fillStyle = grd1;
+    this.ctx.fillRect(0, 0, this.width, this.height);
+    var credit, x, y = 120;
+    this.ctx.fillStyle = 'black';
+    this.ctx.font = '50px ' + Renderer.CONFIG.get('FONTS');
+
+    for (var i = 0; i < credits.length; i++) {
+        credit = credits[i];
+        x = this.findXForCenteredText(credit);
+        this.ctx.fillText(credit, x, y);
+        y += 80;
+    }
 };
 
 Renderer.prototype.drawDayBackground = function () {
