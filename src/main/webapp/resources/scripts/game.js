@@ -15,6 +15,8 @@ function Game() {
     })();
 
     this.highScores = [];
+    this.isEnd = Game.CONFIG.get('INITIAL_END');
+    this.scoreHolder = document.getElementById('myform:scores');
 }
 
 /*
@@ -22,7 +24,7 @@ function Game() {
  */
 Game.prototype.start = function () {
     this.getHighScores();
-    console.log(this.highScores);
+
     var renderer = new Renderer(this.width, this.height); // renderer object
     var controller = new Controller(); // controller object
 
@@ -45,7 +47,8 @@ Game.CONFIG = function () {
         WIDTH: 800,
         HEIGHT: 600,
         INITIAL_WAIT_TIME: 1000,
-        SCORES_MAX_COUNT: 10
+        SCORES_MAX_COUNT: 10,
+        INITIAL_END: false
     };
 
     return {
@@ -59,6 +62,11 @@ Game.CONFIG = function () {
  *   Function for animation loop of the game.
  */
 function animationGameLoop(renderer, controller, blaze, eggman) {
+
+    if (this.isEnd) {
+        return;
+    }
+
     blaze.update(controller, eggman);
     eggman.update(renderer);
 
@@ -69,8 +77,8 @@ function animationGameLoop(renderer, controller, blaze, eggman) {
     renderer.drawAll(blaze, eggman);
 
     if (blaze.missedCount >= 3) {
-        // this.logScores();
-        return;
+        this.isEnd = true;
+        this.logScores();
     }
 }
 
@@ -78,20 +86,21 @@ function animationGameLoop(renderer, controller, blaze, eggman) {
  *   Gets the high scores from local storage.
  */
 Game.prototype.getHighScores = function () {
-    var highScoresText = document.getElementById('myform:scores').value;
+    var highScoresText = this.scoreHolder.value;
 
-    var i, player, spitArray, length, playerName, playerScore;
+    var i, player, spitArray, length, playerName, playerScore, playerId;
 
     if (highScoresText) {
-        spitArray = highScoresText.split(",");
+        spitArray = highScoresText.split(',');
         length = spitArray.length;
 
-        for (i = 0; i < length; i += 2) {
-            playerName = spitArray[i];
-            playerScore = parseInt(spitArray[i + 1]);
+        for (i = 0; i < length; i += 3) {
+            playerId = parseInt(spitArray[i]);
+            playerName = spitArray[i + 1];
+            playerScore = parseInt(spitArray[i + 2]);
 
             if (playerName !== undefined && !isNaN(playerScore)) {
-                player = new Player(playerName, playerScore);
+                player = new Player(playerId, playerName, playerScore);
                 this.highScores.push(player);
             }
         }
@@ -101,38 +110,51 @@ Game.prototype.getHighScores = function () {
 /*
  *  Writes the high scores to the local storage.
  */
-Game.prototype.logScores = function (highScores, currentName, currentScore) {
-    var player = new Player(currentName, currentScore);
+Game.prototype.logScores = function (currentName, currentScore) {
+    currentName = 'Pavel';
+    currentScore = 600;
+    var player = new Player(11, currentName, currentScore);
     this.highScores.push(player);
+    this.sortHighScores();
 
-    var N = highScores.length;
+    var N = this.highScores.length;
     var i;
 
-    // sorting
-    for (i = 0; i < N; i += 1) {
-        for (var j = i + 1; j < N; j += 1) {
-            if (highScores[i].score < highScores[j].score) {
-                var oldValue = highScores[i];
-                highScores[i] = highScores[j];
-                highScores[j] = oldValue;
-            }
-        }
-    }
-
-    // preparing string
-    var text = "";
+    var text = '';
 
     for (i = 0; i < N; i += 1) {
         if (i === 10) {
             break;
         }
 
-        if (highScores[i] instanceof  Object) {
-            var name = highScores[i].name === null ? "Unknown" : highScores[i].name;
-            var score = highScores[i].score.toString();
-            text = text + name + "," + score + ",";
+        if (this.highScores[i] instanceof  Player) {
+            var id = this.highScores[i].id.toString();
+            var name = this.highScores[i].name === null ? 'Unknown' : this.highScores[i].name;
+            var score = this.highScores[i].score.toString();
+            text = text + id + ',' + name + ',' + score + ',';
         }
     }
 
-    localStorage["blazeScores"] = text;
+    this.scoreHolder.value = text;
+};
+
+/*
+ *  Sorts the high scores.
+ */
+Game.prototype.sortHighScores = function () {
+    var N = this.highScores.length;
+    var i;
+
+    console.log(this.highScores);
+    // sorting
+    for (i = 0; i < N; i += 1) {
+        for (var j = i + 1; j < N; j += 1) {
+            if (this.highScores[i].score < this.highScores[j].score) {
+                var oldValue = this.highScores[i];
+                this.highScores[i] = this.highScores[j];
+                this.highScores[j] = oldValue;
+            }
+        }
+    }
+    console.log(this.highScores);
 };
