@@ -26,13 +26,17 @@ function Renderer(width, height) {
 /*
  *   Draws all objects.
  */
-Renderer.prototype.drawAll = function (blaze, eggman) {
+Renderer.prototype.drawAll = function (blaze, eggman, sonic) {
     this.ctx.clearRect(0, 0, this.width, this.height);
     this.drawClip(blaze);
     this.drawScore(blaze);
 
     if (eggman.isOnScreen) {
         this.drawEggman(eggman);
+    }
+
+    if (eggman.isHit && !sonic.isDrawed) {
+        this.drawSonic(sonic);
     }
 
     this.drawBlaze(blaze);
@@ -278,23 +282,22 @@ Renderer.prototype.drawSonic = function (sonic) {
     var x = sonic.position.x;
     var y = sonic.position.y;
 
-    stage = new Kinetic.Stage({
-        container: Controller.canvas, //TODO: 'drawing'
+    var stage = new Kinetic.Stage({
+        container: 'drawing',
         width: this.width,
         height: this.height
     });
 
-    layer = new Kinetic.Layer();
+    var layer = new Kinetic.Layer();
 
-    this.sonicImage = new Image();
-    this.sonicImage.src = Sonic.CONFIG.get('SONIC_SPRITE');
+    var sonicImage = new Image();
+    sonicImage.src = Sonic.CONFIG.get('SONIC_SPRITE');
 
-    var sonicSprite;
-    imageObj.onload = function () {
-        sonicSprite = new Kinetic.Sprite({
+    sonicImage.onload = function () {
+        var sonicSprite = new Kinetic.Sprite({
             x: x,  //TODO: startPosition,
             y: y, //TODO: wrapper.height - 160,
-            image: imageObj,
+            image: sonicImage,
             animation: Sonic.CONFIG.get('SONIC_ANIMATION_INIT'),
             animations: Sonic.CONFIG.get('SONIC_ANIMATIONS'),
             frameRate: this.frameRate,
@@ -310,6 +313,8 @@ Renderer.prototype.drawSonic = function (sonic) {
 
         sonicSprite.start();
     };
+
+    sonic.isDrawed = true;
 };
 
 /*
