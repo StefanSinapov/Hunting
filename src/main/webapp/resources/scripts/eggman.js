@@ -45,7 +45,6 @@ Eggman.CONFIG = function () {
     };
 }();
 
-
 // Moves eggman with own speed
 Eggman.prototype.move = function(renderer) {
 
