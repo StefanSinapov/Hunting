@@ -6,11 +6,14 @@ import com.team.blaze.models.ConnectionType;
 import com.team.blaze.models.Player;
 import java.io.Serializable;
 import java.util.List;
-import javax.enterprise.context.RequestScoped;
+import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 @Named(value = "formGame")
-@RequestScoped
+@ViewScoped
 public class FormGame implements Serializable
 {
     private static final long serialVersionUID = 1L;
@@ -18,16 +21,20 @@ public class FormGame implements Serializable
     private final ScoreDAO scoreDAO;
 
     private String formHiddenInput;
+    private String formName;
 
     public FormGame()
     {
         this.dao = DAOFactory.getInstance(ConnectionType.Default);
         this.scoreDAO = dao.getScoreDAO();
-
+        System.out.println("Constructor");
     }
 
+    @PostConstruct
     public void loadScores()
     {
+        System.out.println("PostConstructor");
+
         List<Player> players = scoreDAO.listAllPlayers();
 
         StringBuilder sb = new StringBuilder();
@@ -61,10 +68,27 @@ public class FormGame implements Serializable
         this.formHiddenInput = formHiddenInput;
     }
 
-    public void saveScores()
+    public String getFormName()
     {
-        System.out.println("Need to be implemeted.");
-        System.out.println("Saving " + this.formHiddenInput);
+        return formName;
+    }
+
+    public void setFormName(String formName)
+    {
+        this.formName = formName;
+    }
+
+    public void saveScores(AjaxBehaviorEvent event)
+    {
+        /*
+         System.out.println("Need to be implemeted.");
+         System.out.println("Saving " + this.formHiddenInput);
+         */
+
+        String value = FacesContext.getCurrentInstance().
+                getExternalContext().getRequestParameterMap().get("myform:scores");
+
+        System.out.println(value);
         /*
          List<Player> list = new ArrayList<>();
 
@@ -91,6 +115,12 @@ public class FormGame implements Serializable
          scoreDAO.deletePlayer(deletePlayer);
          scoreDAO.createPlayer(newplayer);*/
 
+    }
+
+    public void submit()
+    {
+        System.out.println("Button");
+        System.out.println(this.formHiddenInput);
     }
 
 }

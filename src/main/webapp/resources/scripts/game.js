@@ -68,35 +68,6 @@ Game.CONFIG = function () {
 }();
 
 /*
- *  Writes the high scores to the local storage.
- */
-Game.prototype.logScores = function (currentName, currentScore) {
-    var player = new Player(11, currentName, currentScore);
-    this.highScores.push(player);
-    this.sortHighScores();
-
-    var N = this.highScores.length;
-    var i;
-
-    var text = '';
-
-    for (i = 0; i < N; i += 1) {
-        if (i === 10) {
-            break;
-        }
-
-        if (this.highScores[i] instanceof  Player) {
-            var id = this.highScores[i].id.toString();
-            var name = this.highScores[i].name === null ? 'Unknown' : this.highScores[i].name;
-            var score = this.highScores[i].score.toString();
-            text = text + id + ',' + name + ',' + score + ',';
-        }
-    }
-
-    this.scoreHolder.value = text;
-};
-
-/*
  *   Function for animation loop of the game.
  */
 Game.prototype.animationGameLoop = function (renderer, controller, blaze, eggman, sonic) {
@@ -118,11 +89,10 @@ Game.prototype.animationGameLoop = function (renderer, controller, blaze, eggman
 
     if (blaze.missedCount >= 3) {
         this.isEnd = true;
-        this.logScores('someName', blaze.score);
+        this.logScores(blaze.score);
         renderer.drawExit(controller);
     }
 };
-
 
 /*
  *   Gets the high scores from local storage.
@@ -149,22 +119,10 @@ Game.prototype.getHighScores = function () {
     }
 };
 
-
 /*
- *  Sorts the high scores.
+ *  Writes the high scores to the local storage.
  */
-Game.prototype.sortHighScores = function () {
-    var N = this.highScores.length;
-    var i;
-
-    for (i = 0; i < N; i += 1) {
-        for (var j = i + 1; j < N; j += 1) {
-            if (this.highScores[i].score < this.highScores[j].score) {
-                var oldValue = this.highScores[i];
-                this.highScores[i] = this.highScores[j];
-                this.highScores[j] = oldValue;
-            }
-        }
-    }
+Game.prototype.logScores = function (currentScore) {
+    this.scoreHolder.value = currentScore;
 };
 
