@@ -9,20 +9,20 @@ function Game() {
     this.isEnd = Game.CONFIG.get('INITIAL_END');
     this.scoreHolder = document.getElementById('myform:scores');
 
-    window.requestAnimFrame = (function () {
+    window.requestAnimFrame = (function() {
         return  window.requestAnimationFrame ||
-            window.webkitRequestAnimationFrame ||
-            window.mozRequestAnimationFrame ||
-            function (callback) {
-                window.setTimeout(callback, 1000 / 60);
-            };
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame ||
+                function(callback) {
+                    window.setTimeout(callback, 1000 / 60);
+                };
     })();
 }
 
 /*
  *   Function that starts the game.
  */
-Game.prototype.start = function () {
+Game.prototype.start = function() {
     this.getHighScores();
 
     var renderer = new Renderer(this.width, this.height); // renderer object
@@ -40,7 +40,7 @@ Game.prototype.start = function () {
     sounds.play();
 
     var self = this;
-    setTimeout(function () {
+    setTimeout(function() {
         self.animationGameLoop(renderer, controller, blaze, eggman, sonic);
     }, Game.CONFIG.get('INITIAL_WAIT_TIME'));
 
@@ -49,7 +49,7 @@ Game.prototype.start = function () {
 /*
  *   Constants for the game object.
  */
-Game.CONFIG = function () {
+Game.CONFIG = function() {
     var constants = {
         WIDTH: 800,
         HEIGHT: 600,
@@ -61,7 +61,7 @@ Game.CONFIG = function () {
     };
 
     return {
-        get: function (name) {
+        get: function(name) {
             return constants[name];
         }
     };
@@ -70,7 +70,7 @@ Game.CONFIG = function () {
 /*
  *   Function for animation loop of the game.
  */
-Game.prototype.animationGameLoop = function (renderer, controller, blaze, eggman, sonic) {
+Game.prototype.animationGameLoop = function(renderer, controller, blaze, eggman, sonic) {
     var self = this;
 
     if (this.isEnd) {
@@ -81,7 +81,7 @@ Game.prototype.animationGameLoop = function (renderer, controller, blaze, eggman
     eggman.update(renderer);
     sonic.update(renderer, eggman);
 
-    requestAnimFrame(function () {
+    requestAnimFrame(function() {
         self.animationGameLoop(renderer, controller, blaze, eggman, sonic);
     });
 
@@ -97,7 +97,7 @@ Game.prototype.animationGameLoop = function (renderer, controller, blaze, eggman
 /*
  *   Gets the high scores from local storage.
  */
-Game.prototype.getHighScores = function () {
+Game.prototype.getHighScores = function() {
     var highScoresText = this.scoreHolder.value;
 
     var i, player, spitArray, length, playerName, playerScore, playerId;
@@ -122,7 +122,19 @@ Game.prototype.getHighScores = function () {
 /*
  *  Writes the high scores to the local storage.
  */
-Game.prototype.logScores = function (currentScore) {
+Game.prototype.logScores = function(currentScore) {
     this.scoreHolder.value = currentScore;
+    var message = document.getElementById('myform:message');
+    message.innerHTML = currentScore + " points";
+    var form = document.getElementById('myform');
+    form.style.setProperty('display', 'block');
+    var position = 650;
+    var timer = setInterval(function() {
+        form.style.setProperty('left', (position++) + "px");
+        console.log(position);
+        if (position === 833) {
+            clearInterval(timer);
+        }
+    }, 5);
 };
 

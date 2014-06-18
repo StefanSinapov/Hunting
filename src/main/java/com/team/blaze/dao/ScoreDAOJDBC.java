@@ -12,7 +12,7 @@ import java.util.List;
 public class ScoreDAOJDBC extends DAO implements ScoreDAO
 {
     private final DAOFactory daoFactory;
-    private final String SQL_INSERT_PLAYER = "INSERT INTO player (player.id, player.name, player.score) VALUES (?, ?, ?)";
+    private final String SQL_INSERT_PLAYER = "INSERT INTO player (player.name, player.score) VALUES (?, ?)";
     private final String SQL_LIST_ALL_PLAYERS = "SELECT * FROM player ORDER BY player.score DESC, player.name LIMIT 0,10";
     private final String SQL_DELETE_PLAYER = "DELETE FROM player WHERE player.id = ?";
 
@@ -36,7 +36,8 @@ public class ScoreDAOJDBC extends DAO implements ScoreDAO
     {
         Object[] values =
         {
-
+            player.getName(),
+            player.getScore()
         };
 
         try (Connection connection = daoFactory.getConnection())

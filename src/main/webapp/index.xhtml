@@ -28,6 +28,7 @@
         <h:body>
             <h:form id = "myform">
                 <h:inputText id="name" p:placeholder="Enter your name" value="#{formGame.formName}"/>
+                <h:outputText id="message" value="#{formGame.formHiddenInput}"/>
                 <h:inputHidden id="scores" value="#{formGame.formHiddenInput}"/>
                 <h:commandButton value="Submit" type="submit" action="#{formGame.submit()}"/>
             </h:form>

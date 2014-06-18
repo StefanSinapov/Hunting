@@ -14,3 +14,29 @@ canvas:hover {
 svg:hover {
     cursor: none;
 }
+
+#myform{
+    text-align: center;
+    display: none;
+    position:fixed;
+    width:160px;
+    border:1px solid black;
+    top:250px;
+    left:650px;
+    padding:10px;
+}
+
+input[type='text']{
+    display: block;
+    margin-bottom: 10px;
+}
+
+input[type='submit']{
+    display: block;
+
+}
+
+#myform >span{
+    color:red;
+
+}

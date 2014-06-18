@@ -7,12 +7,10 @@ import com.team.blaze.models.Player;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
-@Named(value = "formGame")
+@Named
 @ViewScoped
 public class FormGame implements Serializable
 {
@@ -41,7 +39,7 @@ public class FormGame implements Serializable
 
         for (int i = 0; i < players.size(); i++)
         {
-            sb.append(players.get(i).getPlayerId());
+            sb.append(i + 1);
             sb.append(',');
             sb.append(players.get(i).getName());
             sb.append(',');
@@ -53,9 +51,19 @@ public class FormGame implements Serializable
             }
         }
 
-        System.out.println("Log Scores: " + sb.toString());
         this.formHiddenInput = sb.toString();
 
+    }
+
+    public String submit()
+    {
+        System.out.println("Button :" + this.formName + " " + this.formHiddenInput);
+
+        int score = Integer.parseInt(this.formHiddenInput);
+        Player player = new Player(score, this.formName);
+
+        scoreDAO.createPlayer(player);
+        return "index";
     }
 
     public String getFormHiddenInput()
@@ -76,51 +84,6 @@ public class FormGame implements Serializable
     public void setFormName(String formName)
     {
         this.formName = formName;
-    }
-
-    public void saveScores(AjaxBehaviorEvent event)
-    {
-        /*
-         System.out.println("Need to be implemeted.");
-         System.out.println("Saving " + this.formHiddenInput);
-         */
-
-        String value = FacesContext.getCurrentInstance().
-                getExternalContext().getRequestParameterMap().get("myform:scores");
-
-        System.out.println(value);
-        /*
-         List<Player> list = new ArrayList<>();
-
-         String[] splitted = this.formHiddenInput.split(",");
-
-         Player player;
-         Player newplayer = null;
-         Player deletePlayer = null;
-         for (int i = 0; i < splitted.length; i = i + 3)
-         {
-         long id = Long.parseLong(splitted[i]);
-
-         String name = splitted[i + 1];
-         int score = Integer.parseInt(splitted[i + 2]);
-         if (id == 11)
-         {
-         newplayer = new Player(id, score, name);
-         }
-         player = new Player(id, score, name);
-         list.add(player);
-         }
-         // find missing player.
-
-         scoreDAO.deletePlayer(deletePlayer);
-         scoreDAO.createPlayer(newplayer);*/
-
-    }
-
-    public void submit()
-    {
-        System.out.println("Button");
-        System.out.println(this.formHiddenInput);
     }
 
 }
