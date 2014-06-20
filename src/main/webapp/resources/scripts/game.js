@@ -2,6 +2,7 @@
  *   Initializes a new instance of the Game class.
  */
 function Game() {
+    'use strict';
     this.width = Game.CONFIG.get('WIDTH');
     this.height = Game.CONFIG.get('HEIGHT');
 
@@ -10,7 +11,7 @@ function Game() {
     this.scoreHolder = document.getElementById('myform:scores');
 
     window.requestAnimFrame = (function() {
-        return  window.requestAnimationFrame ||
+        return window.requestAnimationFrame ||
                 window.webkitRequestAnimationFrame ||
                 window.mozRequestAnimationFrame ||
                 function(callback) {
@@ -23,6 +24,7 @@ function Game() {
  *   Function that starts the game.
  */
 Game.prototype.start = function() {
+    'use strict';
     this.getHighScores();
 
     var renderer = new Renderer(this.width, this.height); // renderer object
@@ -36,7 +38,7 @@ Game.prototype.start = function() {
     var sonicInitialCoordinate = new Coordinate(-80, this.height - 100); // TODO: move numbers as constants
     var sonic = new Sonic(sonicInitialCoordinate);
 
-    var sounds = new Sound(Game.CONFIG.get('BACKGROUND_SOUND_PATH'), Game.CONFIG.get("VOLUME"), true);
+    var sounds = new Sound(Game.CONFIG.get('BACKGROUND_SOUND_PATH'), Game.CONFIG.get('VOLUME'), true);
     sounds.play();
 
     var self = this;
@@ -50,6 +52,7 @@ Game.prototype.start = function() {
  *   Constants for the game object.
  */
 Game.CONFIG = function() {
+    'use strict';
     var constants = {
         WIDTH: 800,
         HEIGHT: 600,
@@ -71,6 +74,7 @@ Game.CONFIG = function() {
  *   Function for animation loop of the game.
  */
 Game.prototype.animationGameLoop = function(renderer, controller, blaze, eggman, sonic) {
+    'use strict';
     var self = this;
 
     if (this.isEnd) {
@@ -98,6 +102,7 @@ Game.prototype.animationGameLoop = function(renderer, controller, blaze, eggman,
  *   Gets the high scores from local storage.
  */
 Game.prototype.getHighScores = function() {
+    'use strict';
     var highScoresText = this.scoreHolder.value;
 
     var i, player, spitArray, length, playerName, playerScore, playerId;
@@ -123,15 +128,15 @@ Game.prototype.getHighScores = function() {
  *  Writes the high scores to the local storage.
  */
 Game.prototype.logScores = function(currentScore) {
+    'use strict';
     this.scoreHolder.value = currentScore;
     var message = document.getElementById('myform:message');
-    message.innerHTML = currentScore + " points";
+    message.innerHTML = currentScore + ' points';
     var form = document.getElementById('myform');
     form.style.setProperty('display', 'block');
     var position = 650;
     var timer = setInterval(function() {
-        form.style.setProperty('left', (position++) + "px");
-        console.log(position);
+        form.style.setProperty('left', (position++) + 'px');
         if (position === 833) {
             clearInterval(timer);
         }

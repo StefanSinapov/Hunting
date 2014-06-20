@@ -26,7 +26,7 @@ function Renderer(width, height) {
 /*
  *   Draws all objects.
  */
-Renderer.prototype.drawAll = function (blaze, eggman, sonic) {
+Renderer.prototype.drawAll = function(blaze, eggman, sonic) {
     this.ctx.clearRect(0, 0, this.width, this.height);
     this.drawClip(blaze);
     this.drawScore(blaze);
@@ -46,7 +46,7 @@ Renderer.prototype.drawAll = function (blaze, eggman, sonic) {
 /*
  *   Draws the missed count.
  */
-Renderer.prototype.drawMissed = function (blaze) {
+Renderer.prototype.drawMissed = function(blaze) {
     var scoreText = "Missed: " + blaze.missedCount;
     this.ctx.font = '30px ' + Renderer.CONFIG.get('FONTS');
     this.ctx.fillStyle = '#dcdcdc';
@@ -56,7 +56,7 @@ Renderer.prototype.drawMissed = function (blaze) {
 /*
  *   Constants for the game object.
  */
-Renderer.CONFIG = function () {
+Renderer.CONFIG = function() {
     var constants = {
         FONTS: 'Comic Sans MS, Arial, Sans',
         BLAZE_LINE_LENGTH: 60,
@@ -74,7 +74,7 @@ Renderer.CONFIG = function () {
     };
 
     return {
-        get: function (name) {
+        get: function(name) {
             return constants[name];
         }
     };
@@ -83,7 +83,7 @@ Renderer.CONFIG = function () {
 /*
  *   Draws Blaze.
  */
-Renderer.prototype.drawBlaze = function (blaze) {
+Renderer.prototype.drawBlaze = function(blaze) {
 
     var LINE_LENGTH = Renderer.CONFIG.get('BLAZE_LINE_LENGTH');
     var INNER_RADIUS = Renderer.CONFIG.get('BLAZE_INNER_RADIUS');
@@ -120,7 +120,7 @@ Renderer.prototype.drawBlaze = function (blaze) {
 /*
  *   Draws the clip (available bullets).
  */
-Renderer.prototype.drawClip = function (blaze) {
+Renderer.prototype.drawClip = function(blaze) {
     var sx = 20;
     var sy = this.height - Renderer.CONFIG.get('BULLET_HEIGHT') - sx;
     var bulletsCount = blaze.bullets;
@@ -136,7 +136,7 @@ Renderer.prototype.drawClip = function (blaze) {
 /*
  *   Draws Eggman.
  */
-Renderer.prototype.drawEggman = function (eggman) {
+Renderer.prototype.drawEggman = function(eggman) {
     var x = eggman.position.x;
     var y = eggman.position.y;
 
@@ -290,7 +290,7 @@ Renderer.prototype.drawEggman = function (eggman) {
 /*
  *   Draws Sonic.
  */
-Renderer.prototype.drawSonic = function (sonic) {
+Renderer.prototype.drawSonic = function(sonic) {
     var x = sonic.position.x;
     var y = sonic.position.y;
 
@@ -305,9 +305,9 @@ Renderer.prototype.drawSonic = function (sonic) {
     var sonicImage = new Image();
     sonicImage.src = Sonic.CONFIG.get('SONIC_SPRITE');
 
-    sonicImage.onload = function () {
+    sonicImage.onload = function() {
         var sonicSprite = new Kinetic.Sprite({
-            x: x,  //TODO: startPosition,
+            x: x, //TODO: startPosition,
             y: y, //TODO: wrapper.height - 160,
             image: sonicImage,
             animation: Sonic.CONFIG.get('SONIC_ANIMATION_INIT'),
@@ -332,7 +332,7 @@ Renderer.prototype.drawSonic = function (sonic) {
 /*
  *   Creates the background.
  */
-Renderer.prototype.createBackgroundSVG = function () {
+Renderer.prototype.createBackgroundSVG = function() {
     // Creates the svg element
     var svg = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'svg');
     svg.setAttribute('id', 'container');
@@ -344,7 +344,7 @@ Renderer.prototype.createBackgroundSVG = function () {
     return svg;
 };
 
-Renderer.prototype.drawNightBackground = function () {
+Renderer.prototype.drawNightBackground = function() {
     // Sets the background color.
     this.drawClipBackground();
 
@@ -379,7 +379,7 @@ Renderer.prototype.drawNightBackground = function () {
 /*
  *   Draws the clip background rectangle.
  */
-Renderer.prototype.drawClipBackground = function () {
+Renderer.prototype.drawClipBackground = function() {
     var rect = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'rect');
     rect.setAttribute('x', '0');
     rect.setAttribute('y', '0');
@@ -389,7 +389,7 @@ Renderer.prototype.drawClipBackground = function () {
     this.svg.appendChild(rect);
 };
 
-Renderer.prototype.creteCanvas = function () {
+Renderer.prototype.creteCanvas = function() {
     var canvas = document.createElement('canvas');
     canvas.setAttribute('id', 'drawing');
     canvas.setAttribute('width', this.width.toString());
@@ -403,7 +403,7 @@ Renderer.prototype.creteCanvas = function () {
 /*
  *   Creates a random star.
  */
-Renderer.prototype.createRandomStar = function () {
+Renderer.prototype.createRandomStar = function() {
     var polygon = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'polygon');
 
     var x = Common.getRandomInt(50, this.width - 50);
@@ -435,7 +435,7 @@ Renderer.prototype.createRandomStar = function () {
 /*
  *   Creates a random planet.
  */
-Renderer.prototype.createRandomPlanet = function () {
+Renderer.prototype.createRandomPlanet = function() {
     var circle = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'circle');
     var cx = Common.getRandomInt(100, this.width - 100);
     var cy = Common.getRandomInt(100, this.height - 100);
@@ -450,7 +450,7 @@ Renderer.prototype.createRandomPlanet = function () {
 /*
  *   Draws the score.
  */
-Renderer.prototype.drawScore = function (blaze) {
+Renderer.prototype.drawScore = function(blaze) {
     var scoreText = "Score: " + blaze.score;
     this.ctx.font = '30px ' + Renderer.CONFIG.get('FONTS');
     this.ctx.fillStyle = '#dcdcdc';
@@ -460,7 +460,7 @@ Renderer.prototype.drawScore = function (blaze) {
 /*
  *   Draws the Intro screen.
  */
-Renderer.prototype.drawIntro = function (highScores) {
+Renderer.prototype.drawIntro = function(highScores) {
 
     var self = this;
     var grd = this.ctx.createLinearGradient(0, 0, 600, 0);
@@ -475,14 +475,14 @@ Renderer.prototype.drawIntro = function (highScores) {
     //draw eggman
     var eggmanImage = new Image();
     eggmanImage.src = 'resources/imgs/eggman.png';
-    eggmanImage.onload = function () {
+    eggmanImage.onload = function() {
         self.ctx.drawImage(eggmanImage, 500, 250, 250, 300);
     };
 
     //draw blaze
     var blazeImage = new Image();
     blazeImage.src = 'resources/imgs/blaze.png';
-    blazeImage.onload = function () {
+    blazeImage.onload = function() {
         self.ctx.drawImage(blazeImage, 100, 250, 150, 300);
     };
 
@@ -502,7 +502,7 @@ Renderer.prototype.drawIntro = function (highScores) {
 /*
  *   Draws the Exit screen
  */
-Renderer.prototype.drawExit = function (controller) {
+Renderer.prototype.drawExit = function(controller) {
 
     this.ctx.canvas.style.cursor = 'pointer';
     var self = this;
@@ -522,14 +522,14 @@ Renderer.prototype.drawExit = function (controller) {
     //draw eggman
     var eggmanImage = new Image();
     eggmanImage.src = 'resources/imgs/eggman.png';
-    eggmanImage.onload = function () {
+    eggmanImage.onload = function() {
         self.ctx.drawImage(eggmanImage, 500, 250, 250, 300);
     };
 
     //draw blaze
     var blazeImage = new Image();
     blazeImage.src = 'resources/imgs/blaze.png';
-    blazeImage.onload = function () {
+    blazeImage.onload = function() {
         self.ctx.drawImage(blazeImage, 100, 250, 150, 300);
     };
 
@@ -542,12 +542,12 @@ Renderer.prototype.drawExit = function (controller) {
     var height = 200 - 40;
     this.ctx.fillText(textCredits, x, y);
 
-    setInterval(function () {
+    setInterval(function() {
 
         if (controller.mouseClick !== null) {
 
             if (x < controller.mouseClick.x && controller.mouseClick.x < length &&
-                height < controller.mouseClick.y && controller.mouseClick.y < y) {
+                    height < controller.mouseClick.y && controller.mouseClick.y < y) {
                 self.drawCredits();
             }
         }
@@ -555,12 +555,12 @@ Renderer.prototype.drawExit = function (controller) {
     }, 300);
 };
 
-Renderer.prototype.findXForCenteredText = function (text) {
+Renderer.prototype.findXForCenteredText = function(text) {
     var measurement = this.ctx.measureText(text);
     return (this.width - measurement.width) / 2;
 };
 
-Renderer.prototype.drawCredits = function () {
+Renderer.prototype.drawCredits = function() {
     var credits = ['Pavel Hristov', 'Jivka Stoeva', 'Illiyan Yordanov', 'Ventsy Konov', 'Stefan Sinapov', 'Miroslav Gatsanoga'];
     var grd1 = this.ctx.createLinearGradient(0, 0, 750, 0);
     grd1.addColorStop(0, "#ffb7f6");
@@ -580,267 +580,267 @@ Renderer.prototype.drawCredits = function () {
     }
 };
 
-Renderer.prototype.drawDayBackground = function () {
+Renderer.prototype.drawDayBackground = function() {
 
     var x = 0,
-        y = 0;
+            y = 0;
     var paper = Raphael(this.svg, 900, 700);
 
     /*Draw background - sky*/
 
     paper.rect(x, y, 800, 600)
-        .attr({
-            fill: 'lightblue',
-            'stroke-width': 0
-        });
+            .attr({
+                fill: 'lightblue',
+                'stroke-width': 0
+            });
 
     /*Draw sun ;)*/
 
     paper.ellipse((x + 645), (y + 60), 6, 60)
-        .attr({
-            transform: "r15",
-            fill: "110-orange-yellow",
-            opacity: 0.2,
-            'stroke-width': 0
-        });
+            .attr({
+                transform: "r15",
+                fill: "110-orange-yellow",
+                opacity: 0.2,
+                'stroke-width': 0
+            });
     paper.ellipse((x + 645), (y + 60), 6, 50)
-        .attr({
-            transform: "r35",
-            fill: "110-orange-yellow",
-            opacity: 0.3,
-            'stroke-width': 0
-        });
+            .attr({
+                transform: "r35",
+                fill: "110-orange-yellow",
+                opacity: 0.3,
+                'stroke-width': 0
+            });
     paper.ellipse((x + 645), (y + 60), 6, 60)
-        .attr({
-            transform: "r55",
-            fill: "110-orange-yellow",
-            opacity: 0.2,
-            'stroke-width': 0
-        });
+            .attr({
+                transform: "r55",
+                fill: "110-orange-yellow",
+                opacity: 0.2,
+                'stroke-width': 0
+            });
     paper.ellipse((x + 645), (y + 60), 6, 50)
-        .attr({
-            transform: "r75",
-            fill: "110-orange-yellow",
-            opacity: 0.3,
-            'stroke-width': 0
-        });
+            .attr({
+                transform: "r75",
+                fill: "110-orange-yellow",
+                opacity: 0.3,
+                'stroke-width': 0
+            });
 
     paper.ellipse((x + 645), (y + 60), 6, 60)
-        .attr({
-            transform: "r95",
-            fill: "110-orange-yellow",
-            opacity: 0.2,
-            'stroke-width': 0
-        });
+            .attr({
+                transform: "r95",
+                fill: "110-orange-yellow",
+                opacity: 0.2,
+                'stroke-width': 0
+            });
     paper.ellipse((x + 645), (y + 60), 6, 50)
-        .attr({
-            transform: "r115",
-            fill: "110-orange-yellow",
-            opacity: 0.3,
-            'stroke-width': 0
-        });
+            .attr({
+                transform: "r115",
+                fill: "110-orange-yellow",
+                opacity: 0.3,
+                'stroke-width': 0
+            });
 
     paper.ellipse((x + 645), (y + 60), 6, 60)
-        .attr({
-            transform: "r135",
-            fill: "100-orange-yellow",
-            opacity: 0.2,
-            'stroke-width': 0
-        });
+            .attr({
+                transform: "r135",
+                fill: "100-orange-yellow",
+                opacity: 0.2,
+                'stroke-width': 0
+            });
 
     paper.ellipse((x + 645), (y + 60), 6, 50)
-        .attr({
-            transform: "r155",
-            fill: "80-orange-yellow",
-            opacity: 0.3,
-            'stroke-width': 0
-        });
+            .attr({
+                transform: "r155",
+                fill: "80-orange-yellow",
+                opacity: 0.3,
+                'stroke-width': 0
+            });
 
     paper.ellipse((x + 645), (y + 60), 6, 60)
-        .attr({
-            transform: "r175",
-            fill: "70-orange-yellow",
-            opacity: 0.2,
-            'stroke-width': 0
-        });
+            .attr({
+                transform: "r175",
+                fill: "70-orange-yellow",
+                opacity: 0.2,
+                'stroke-width': 0
+            });
 
 
     paper.circle((x + 645), (y + 60), 18)
-        .attr({
-            fill: "90-yellow-orange-yellow",
-            opacity: 0.9,
-            "stroke-width": 0
+            .attr({
+                fill: "90-yellow-orange-yellow",
+                opacity: 0.9,
+                "stroke-width": 0
 
-        });
+            });
 
 
     /* Draw sand.*/
 
     paper.rect(x, (y + 400), 800, 200)
-        .attr({
-            fill: '100-darkgoldenrod-gold',
-            opacity: 0.8,
-            'stroke-width': 0
-        });
+            .attr({
+                fill: '100-darkgoldenrod-gold',
+                opacity: 0.8,
+                'stroke-width': 0
+            });
 
     /* Draw sea. */
     paper.rect(x, (y + 350), 800, 50)
-        .attr({
-            fill: '100-blue:5-darkblue:50-#010746:80',
-            opacity: 1,
-            'stroke-width': 3,
-            stroke: '40-blue-darkblue',
-            'stroke-linecap': 'round'
-        });
+            .attr({
+                fill: '100-blue:5-darkblue:50-#010746:80',
+                opacity: 1,
+                'stroke-width': 3,
+                stroke: '40-blue-darkblue',
+                'stroke-linecap': 'round'
+            });
 
     /*
      *   Draw waves.
      */
     paper.path("M" + (x + 0) + "," + (y + 400)
-        + "C" + (x + 50) + "," + (y + 450) + "," + (x + 150) + "," + (y + 400) + "," + (x + 170) + "," + (y + 400)
-        + "C" + (x + 170) + "," + (y + 400) + "," + (x + 380) + "," + (y + 470) + "," + (x + 450) + "," + (y + 400)
-        + "C" + (x + 450) + "," + (y + 400) + "," + (x + 570) + "," + (y + 440) + "," + (x + 650) + "," + (y + 400)
-        + "C" + (x + 650) + "," + (y + 400) + "," + (x + 700) + "," + (y + 450) + "," + (x + 800) + "," + (y + 400)
-        + "Z")
-        .attr({
-            fill: '90-white:25-blue',
-            opacity: 0.9,
-            stroke: '90-#000f48-#ffffff',
-            'stroke-width': 5,
-            'stroke-linecap': 'round',
-            'stroke-linejoin': 'round'
-        });
+            + "C" + (x + 50) + "," + (y + 450) + "," + (x + 150) + "," + (y + 400) + "," + (x + 170) + "," + (y + 400)
+            + "C" + (x + 170) + "," + (y + 400) + "," + (x + 380) + "," + (y + 470) + "," + (x + 450) + "," + (y + 400)
+            + "C" + (x + 450) + "," + (y + 400) + "," + (x + 570) + "," + (y + 440) + "," + (x + 650) + "," + (y + 400)
+            + "C" + (x + 650) + "," + (y + 400) + "," + (x + 700) + "," + (y + 450) + "," + (x + 800) + "," + (y + 400)
+            + "Z")
+            .attr({
+                fill: '90-white:25-blue',
+                opacity: 0.9,
+                stroke: '90-#000f48-#ffffff',
+                'stroke-width': 5,
+                'stroke-linecap': 'round',
+                'stroke-linejoin': 'round'
+            });
 
     /*Draw cloud.*/
 
     paper.path("M" + (x + 700) + "," + (y + 50)
-        + "C" + (x + 720) + "," + (y + 70) + "," + (x + 710) + "," + (y + 100) + "," + (x + 690) + "," + (y + 90)
-        + "C" + (x + 680) + "," + (y + 110) + "," + (x + 660) + "," + (y + 95) + "," + (x + 650) + "," + (y + 90)
-        + "C" + (x + 630) + "," + (y + 100) + "," + (x + 620) + "," + (y + 90) + "," + (x + 650) + "," + (y + 70)
-        + "C" + (x + 620) + "," + (y + 60) + "," + (x + 655) + "," + (y + 50) + "," + (x + 660) + "," + (y + 45)
-        + "C" + (x + 675) + "," + (y + 35) + "," + (x + 680) + "," + (y + 45) + "," + (x + 690) + "," + (y + 40)
-        + "Z")
-        .attr({
-            fill: '270-white-azure',
-            opacity: 0.2,
-            stroke: '100-gray-white-blue',
-            'stroke-width': 5,
-            'stroke-linecap': 'round',
-            'stroke-linejoin': 'round'
+            + "C" + (x + 720) + "," + (y + 70) + "," + (x + 710) + "," + (y + 100) + "," + (x + 690) + "," + (y + 90)
+            + "C" + (x + 680) + "," + (y + 110) + "," + (x + 660) + "," + (y + 95) + "," + (x + 650) + "," + (y + 90)
+            + "C" + (x + 630) + "," + (y + 100) + "," + (x + 620) + "," + (y + 90) + "," + (x + 650) + "," + (y + 70)
+            + "C" + (x + 620) + "," + (y + 60) + "," + (x + 655) + "," + (y + 50) + "," + (x + 660) + "," + (y + 45)
+            + "C" + (x + 675) + "," + (y + 35) + "," + (x + 680) + "," + (y + 45) + "," + (x + 690) + "," + (y + 40)
+            + "Z")
+            .attr({
+                fill: '270-white-azure',
+                opacity: 0.2,
+                stroke: '100-gray-white-blue',
+                'stroke-width': 5,
+                'stroke-linecap': 'round',
+                'stroke-linejoin': 'round'
 
-        });
+            });
 
 
     /* Draw back mountains */
 
     paper.path("M" + (x + 0) + "," + (y + 350)
-        + "L" + (x + 0) + "," + (y + 150)
-        + "C" + (x + 50) + "," + (y + 100) + "," + (x + 100) + "," + (y + 150) + "," + (x + 350) + "," + (y + 350)
-        + "M" + (x + 200) + "," + (y + 350)
-        + "C" + (x + 320) + "," + (y + 150) + "," + (x + 350) + "," + (y + 280) + "," + (x + 480) + "," + (y + 350)
-        + "M" + (x + 200) + "," + (y + 350)
-        + "C" + (x + 550) + "," + (y + 210) + "," + (x + 630) + "," + (y + 200) + "," + (x + 730) + "," + (y + 320)
-        + "M" + (x + 500) + "," + (y + 350)
-        + "C" + (x + 630) + "," + (y + 320) + "," + (x + 800) + "," + (y + 20) + "," + (x + 800) + "," + (y + 150)
-        + "L" + (x + 800) + "," + (y + 150)
-        + "L" + (x + 800) + "," + (y + 350)
-        + "Z")
-        //paper.path("M"+(x -10) 350 C 130 100 260 340 300 320 C 300 320 350 280 400 310 C 400 310 530 280 630 320 C 630 320 900 20 800 350 Z ')
-        .attr({
-            fill: "90-midnightblue-white:90-navy",
-            opacity: 0.01
+            + "L" + (x + 0) + "," + (y + 150)
+            + "C" + (x + 50) + "," + (y + 100) + "," + (x + 100) + "," + (y + 150) + "," + (x + 350) + "," + (y + 350)
+            + "M" + (x + 200) + "," + (y + 350)
+            + "C" + (x + 320) + "," + (y + 150) + "," + (x + 350) + "," + (y + 280) + "," + (x + 480) + "," + (y + 350)
+            + "M" + (x + 200) + "," + (y + 350)
+            + "C" + (x + 550) + "," + (y + 210) + "," + (x + 630) + "," + (y + 200) + "," + (x + 730) + "," + (y + 320)
+            + "M" + (x + 500) + "," + (y + 350)
+            + "C" + (x + 630) + "," + (y + 320) + "," + (x + 800) + "," + (y + 20) + "," + (x + 800) + "," + (y + 150)
+            + "L" + (x + 800) + "," + (y + 150)
+            + "L" + (x + 800) + "," + (y + 350)
+            + "Z")
+            //paper.path("M"+(x -10) 350 C 130 100 260 340 300 320 C 300 320 350 280 400 310 C 400 310 530 280 630 320 C 630 320 900 20 800 350 Z ')
+            .attr({
+                fill: "90-midnightblue-white:90-navy",
+                opacity: 0.01
 
-        });
+            });
 
     /* Draw front mountains */
 
     paper.path("M" + (x + 0) + "," + (y + 350)
-        + "L" + (x + 0) + "," + (y + 300)
-        + "C" + (x + 50) + "," + (y + 200) + "," + (x + 260) + "," + (y + 340) + "," + (x + 300) + "," + (y + 320)
-        + "C" + (x + 300) + "," + (y + 320) + "," + (x + 350) + "," + (y + 280) + "," + (x + 400) + "," + (y + 310)
-        + "C" + (x + 400) + "," + (y + 310) + "," + (x + 530) + "," + (y + 280) + "," + (x + 630) + "," + (y + 320)
-        + "C" + (x + 630) + "," + (y + 320) + "," + (x + 800) + "," + (y + 200) + "," + (x + 800) + "," + (y + 350)
-        + "L" + (x + 800) + "," + (y + 350)
-        + "Z")
-        .attr({
-            fill: "100-#002c06-green:30-lightgreen:100",
-            opacity: 0.2,
-            stroke: "100-#002c06-green:30-lightgreen:100",
-            'stroke-width': 5,
-            'stroke-linecap': 'round',
-            'stroke-linejoin': 'round'
-        });
+            + "L" + (x + 0) + "," + (y + 300)
+            + "C" + (x + 50) + "," + (y + 200) + "," + (x + 260) + "," + (y + 340) + "," + (x + 300) + "," + (y + 320)
+            + "C" + (x + 300) + "," + (y + 320) + "," + (x + 350) + "," + (y + 280) + "," + (x + 400) + "," + (y + 310)
+            + "C" + (x + 400) + "," + (y + 310) + "," + (x + 530) + "," + (y + 280) + "," + (x + 630) + "," + (y + 320)
+            + "C" + (x + 630) + "," + (y + 320) + "," + (x + 800) + "," + (y + 200) + "," + (x + 800) + "," + (y + 350)
+            + "L" + (x + 800) + "," + (y + 350)
+            + "Z")
+            .attr({
+                fill: "100-#002c06-green:30-lightgreen:100",
+                opacity: 0.2,
+                stroke: "100-#002c06-green:30-lightgreen:100",
+                'stroke-width': 5,
+                'stroke-linecap': 'round',
+                'stroke-linejoin': 'round'
+            });
     /*Draw some rocks*/
 
     paper.ellipse((x + 70), (y + 480), 50, 20)
-        .attr({
-            fill: "100-black-darkgray",
-            opacity: 0.6,
-            stroke: "100-black-darkgray",
-            'stroke-width': 5
-        });
+            .attr({
+                fill: "100-black-darkgray",
+                opacity: 0.6,
+                stroke: "100-black-darkgray",
+                'stroke-width': 5
+            });
 
     /*draw flower*/
     paper.ellipse((x + 70), (y + 450), 1, 40)
-        .attr({
-            fill: "green",
-            stroke: "darkgreen",
-            'stroke-width': 1
-        });
+            .attr({
+                fill: "green",
+                stroke: "darkgreen",
+                'stroke-width': 1
+            });
 
     paper.ellipse((x + 70), (y + 420), 7, 15)
-        .attr({
-            fill: "hotpink",
-            stroke: "white",
-            'stroke-width': 3
-        });
+            .attr({
+                fill: "hotpink",
+                stroke: "white",
+                'stroke-width': 3
+            });
 
     paper.ellipse((x + 63), (y + 420), 2, 18)
-        .attr({
-            transform: 'r160',
-            fill: "pink",
-            stroke: "purple",
-            'stroke-width': 2
-        });
+            .attr({
+                transform: 'r160',
+                fill: "pink",
+                stroke: "purple",
+                'stroke-width': 2
+            });
     paper.ellipse((x + 77), (y + 420), 2, 18)
-        .attr({
-            transform: 'r200',
-            fill: "pink",
-            stroke: "purple",
-            'stroke-width': 2
-        });
+            .attr({
+                transform: 'r200',
+                fill: "pink",
+                stroke: "purple",
+                'stroke-width': 2
+            });
     paper.ellipse((x + 58), (y + 450), 3, 40)
-        .attr({
-            transform: 'r160',
-            fill: "green",
-            stroke: "darkgreen",
-            'stroke-width': 1
-        });
+            .attr({
+                transform: 'r160',
+                fill: "green",
+                stroke: "darkgreen",
+                'stroke-width': 1
+            });
 
     paper.ellipse((x + 82), (y + 457), 3, 32)
-        .attr({
-            transform: 'r200',
-            fill: "green",
-            stroke: "darkgreen",
-            'stroke-width': 1
-        });
+            .attr({
+                transform: 'r200',
+                fill: "green",
+                stroke: "darkgreen",
+                'stroke-width': 1
+            });
 
     /*draw more rocks*/
 
     paper.ellipse((x + 75), (y + 490), 30, 15)
-        .attr({
-            fill: "100-black-darkgray",
-            opacity: 0.6,
-            stroke: "100-black-darkgray",
-            'stroke-width': 5
-        });
+            .attr({
+                fill: "100-black-darkgray",
+                opacity: 0.6,
+                stroke: "100-black-darkgray",
+                'stroke-width': 5
+            });
     paper.ellipse((x + 55), (y + 495), 20, 10)
-        .attr({
-            fill: "100-black-darkgray",
-            opacity: 0.6,
-            stroke: "100-black-darkgray",
-            'stroke-width': 5
-        });
+            .attr({
+                fill: "100-black-darkgray",
+                opacity: 0.6,
+                stroke: "100-black-darkgray",
+                'stroke-width': 5
+            });
 
     /*Insert palm tree*/
     paper.image("resources/imgs/PalmTree.png", (x + 530), (y + 190), 250, 250);
@@ -850,18 +850,18 @@ Renderer.prototype.drawDayBackground = function () {
 /*
  *   Creates a random cloud;
  */
-Renderer.prototype.createRandomCloud = function () {
+Renderer.prototype.createRandomCloud = function() {
 
     var cloud = document.createElementNS(Renderer.CONFIG.get('SVG_NS'), 'path');
     var x = Common.getRandomInt(100, this.width - 200);
     var y = Common.getRandomInt(100, this.height - 200);
 
-    var points = "M" + (x ) + "," + (y) + "C" + (x + 20) + "," + (y + 30) + "," + (x + 10) + "," + (y + 50) + "," + (x - 10 ) + "," + (y + 40)
-        + "C" + (x - 20) + "," + (y + 35) + "," + (x - 40) + "," + (y + 45) + "," + (x - 50) + "," + (y + 40)
-        + "C" + (x - 70) + "," + (y + 50) + "," + (x - 80) + "," + (y + 40) + "," + (x - 50) + "," + (y + 20)
-        + "C" + (x - 60) + "," + (y + 10) + "," + (x - 45) + "," + (y) + "," + (x - 40) + "," + (y - 5)
-        + "C" + (x - 10) + "," + (y - 15) + "," + (x - 20) + "," + (y - 5) + "," + (x - 10) + "," + (y - 10)
-        + "Z";
+    var points = "M" + (x) + "," + (y) + "C" + (x + 20) + "," + (y + 30) + "," + (x + 10) + "," + (y + 50) + "," + (x - 10) + "," + (y + 40)
+            + "C" + (x - 20) + "," + (y + 35) + "," + (x - 40) + "," + (y + 45) + "," + (x - 50) + "," + (y + 40)
+            + "C" + (x - 70) + "," + (y + 50) + "," + (x - 80) + "," + (y + 40) + "," + (x - 50) + "," + (y + 20)
+            + "C" + (x - 60) + "," + (y + 10) + "," + (x - 45) + "," + (y) + "," + (x - 40) + "," + (y - 5)
+            + "C" + (x - 10) + "," + (y - 15) + "," + (x - 20) + "," + (y - 5) + "," + (x - 10) + "," + (y - 10)
+            + "Z";
 
     cloud.setAttribute('d', points);
     var style = "fill: white;opacity: 0.8;stroke:black;stroke-width:1;";
